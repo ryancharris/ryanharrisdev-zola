@@ -1,0 +1,106 @@
+body {
+    font-family: "JetBrains Mono", monospace;
+}
+
+p {
+    line-height: 1.7;
+}
+
+/* h1::before, */
+/* h4::before { */
+/*     content: none; */
+/* } */
+
+h1 {
+    margin-bottom: 3rem;
+}
+
+#nav-bar {
+    margin-bottom: 1rem;
+}
+
+#nav-bar > a {
+    margin-right: 8px;
+    padding: 0 4px;
+}
+
+.content-list {
+    padding-inline-start: 0;
+}
+
+.post-item {
+    margin-bottom: 3.5rem;
+}
+
+.post-item > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.post-item > p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.post-item > a {
+    color: var(--link);
+    background-color: transparent;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-item > a:hover {
+    color: var(--text);
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.post-date {
+    font-size: 0.75em;
+    opacity: 0.5;
+    white-space: nowrap;
+    margin-left: 1rem;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.footer-row p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.footer-icons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.footer-icons a,
+.footer-icons a:visited {
+    color: var(--text);
+    background-color: transparent;
+    opacity: 0.6;
+    transition: color 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.footer-icons a:hover {
+    color: var(--accent);
+    background-color: transparent;
+    opacity: 1;
+}
+
+.footer-icons svg {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    display: block;
+}

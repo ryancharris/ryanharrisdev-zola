@@ -1,0 +1,24 @@
+# The URL the site will be built for
+base_url = "https://ryanharris.dev"
+
+title = "ryan harris"
+description = "writing about code, tools, and things i'm figuring out"
+
+theme = "anemone"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
+
+[markdown]
+
+[markdown.highlighting]
+theme = "catppuccin-mocha"
+
+[extra]
+header_nav = [
+  { url = "/", name_en = "about" },
+  { url = "/writing", name_en = "writing" }
+]
