@@ -18,7 +18,7 @@ Before we continue, let’s take a step back and talk a little more about what m
 
 Below is a screenshot of the primary Scene from [Chris Biscardi’s Twitch stream](https://www.twitch.tv/chrisbiscardi). While you can see there is only one canvas, the Scene is, in fact, made up of multiple elements. Can you identify them all?
 
-![Chris Biscardi's stream](/assets/obs-scenes/02-chris-biscardi-stream.png)
+![Chris Biscardi's stream](02-chris-biscardi-stream.png)
 
 This example illustrates how much you can do within a given Scene really well. From what I can tell, Chris has at least five elements in this Scene:
 
@@ -42,7 +42,7 @@ Right now my own setup is a bit more basic, but gets the job done. Currently, I 
 
 This was the simplest to set up. Currently, it directly captures the camera on my MacBook Pro and takes up 100% of the OBS broadcast canvas.
 
-![Webcam scene](/assets/obs-scenes/03-webcam.png)
+![Webcam scene](03-webcam.png)
 
 I use this primarily when interacting with users in the chat or when there’s a discussion that doesn’t require looking directly at code. In the future, I will swap out the webcam in favor of a DSLR in order to improve the visual quality of this Scene.
 
@@ -50,7 +50,7 @@ I use this primarily when interacting with users in the chat or when there’s a
 
 In my case, this Scene is a direct capture of my MacBook Pro screen, which like the previous Scene, takes up 100% of the canvas. Once I hook up the [new monitor I bought over Black Friday](https://www.amazon.com/LG-32GK650F-B-Monitor-FreeSync-Technology/dp/B07FLGR2PN), I’ll be able to choose which display I want to capture.
 
-![Desktop scene](/assets/obs-scenes/04-desktop.png)
+![Desktop scene](04-desktop.png)
 
 This will come in handy when working with sensitive information because I can simply move those windows to the non-capture display and hide it from viewers. This is a great strategy if you’re working with API keys, environment variables, etc.
 
@@ -62,7 +62,7 @@ While I prefer the former, I will most likely end up cropping my stream output w
 
 Up until now, all of my Scenes have only had one visual element within them, look alive cause this one has two!
 
-![Desktop with webcam scene](/assets/obs-scenes/05-desktop-with-webcam.png)
+![Desktop with webcam scene](05-desktop-with-webcam.png)
 
 Essentially, this Scene combines the two previous ones. Taking advantage of OBS’ resizing/repositioning capabilities, I shrank the input from my Webcam and positioned it in the bottom right hand corner of my screen (on top of the Desktop) to achieve a picture-in-picture effect.
 
@@ -84,7 +84,7 @@ You’ve seen this before (even if you didn’t know it).
 
 It’s a pretty common effect used in TV, especially news, to inform the viewer as to who is currently speaking on camera. This would work great in my Webcam Scene for when the viewer is thinking, “Who the heck is this guy?”
 
-![Example of a lower third graphic](/assets/obs-scenes/06-lower-third.jpg)
+![Example of a lower third graphic](06-lower-third.jpg)
 
 Again, while this isn’t necessary, it could add a little production value that helps my stream stand out. With the help of a designer, this could also be a good opportunity for visual branding too. (If you know of any, send ‘em my way!)
 

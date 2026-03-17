@@ -19,6 +19,6 @@ theme = "catppuccin-mocha"
 
 [extra]
 header_nav = [
-  { url = "/", name_en = "about" },
-  { url = "/writing", name_en = "writing" }
+  { url = "/", name_en = "writing" },
+  { url = "/about", name_en = "about" }
 ]

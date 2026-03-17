@@ -36,19 +36,19 @@ The official Context API was added to React in v16.3 and is intended to avoid wh
 
 While there is nothing wrong with this approach, it can be unwieldy when dealing with complex component hierarchies, especially if some components don’t care about the data and are simply passing it on.
 
-![Without Context](https://drive.google.com/uc?export=view&id=1eJ_V1v65mDzlrjWftb6cHmGOPuHNBV6c)
+![Without Context](01-without-context.png)
 
 In order to use the Context API, you need to create a Context.Provider that takes a value prop representing all the data you want to inject into the child components that need it.
 
 Before the advent of [Hooks](https://blog.logrocket.com/frustrations-with-react-hooks/), you would do this by using an associated Context.Consumer, but in the post-Hooks world, we can leverage the useContext Hook to subscribe a component to the closest Provider above it in the component tree.
 
-![With Context](https://drive.google.com/uc?export=view&id=12ib9i5CnTFI63l5iaVfQEff4na5Zr-oL)
+![With Context](02-with-context.png)
 
 In this case, Context provides a way to keep track of which menu should be open in our parent component, and then passes that value down to its children who, in turn, conditionally render the appropriate dropdown.
 
 The key here is that our Context also passes down a setter function. This is important because it allows the components consuming our context value to then update the state in our parent component, which causes the tree to re-render with the new menu now visible.
 
-![Menu value with getter and setter](https://drive.google.com/uc?export=view&id=1czOGG0jufp6UMXftWV3PXgRMvLpLH1fE)
+![Menu value with getter and setter](03-menu-value.png)
 
 By using the pattern described above, we can similarly manage the focus state of the various inputs in the search bar and filter menus.
 

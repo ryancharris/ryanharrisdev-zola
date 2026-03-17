@@ -51,7 +51,7 @@ Enter file in which to save the key (/Users/ryan/.ssh/id_rsa): id_rsa_work
 
 Next, we'll need to log into both GitHub accounts and add the new SSH key. Go into account settings and open the SSH and GPG keys sections. Then, add a new SSH key:
 
-![GitHub's SSH key interface](/assets/managing-ssh-keys-for-github/02-add-a-key.png)
+![GitHub's SSH key interface](02-add-a-key.png)
 
 In the textfield below, we need to enter the public key we generated above. You can do this in a couple ways:
 
