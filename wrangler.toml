@@ -1,0 +1,8 @@
+name = "ryan harris"
+compatibility_date = "2026-03-16"
+
+[build]
+command = "./build.sh"
+
+[assets]
+directory = "./public"
