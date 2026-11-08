@@ -8,7 +8,7 @@ Personal blog built with [Zola](https://www.getzola.org/) and deployed to Cloudf
 - Node.js 20+ (generates `llms.txt` and `llms-full.txt`)
 - Zola 0.22.1 — `build.sh` downloads the pinned, checksum-verified release automatically
 
-> Zola 0.23+ is not supported yet. It changes Tera and removes the shortcode API used by the image helper, so use the pinned 0.22.1 binary.
+> Zola 0.23+ is not supported yet. It changes Tera and removes the shortcode API used by the image helper, so use the pinned 0.22.1 binary. Zola 0.22.1 also does not implement `include_in_feeds`; pages excluded from feeds use `extra.hidden: true`, which the feed templates filter.
 
 ## Development
 
@@ -62,13 +62,30 @@ Zola generates responsive 800px/1600px WebP variants into `static/processed_imag
 
 ### LLM files
 
-`scripts/gen-llms.mjs` writes `static/llms.txt` and `static/llms-full.txt` from the
-Markdown sources. `build.sh` runs it automatically before every build. Run it manually
-after adding posts:
+`scripts/gen-llms.mjs` writes the machine-readable representations from the Markdown
+sources: `static/llms.txt`, `static/llms-full.txt`, and per-page Markdown files under
+`static/md/` (served as `/md/<slug>/index.md`, discovered via
+`<link rel="alternate" type="text/markdown">`). `scripts/gen-machine.mjs` runs after
+Zola and enriches those mirrors with absolute image URLs, adds `language-*` classes to
+highlighted code, rebuilds `llms-full.txt`, and fills sitemap `lastmod` values.
+`build.sh` runs both automatically. Run the generator manually after adding posts:
 
 ```sh
 node scripts/gen-llms.mjs
 ```
+
+## Machine-readable surfaces
+
+- `/atom.xml`, `/rss.xml`, `/feed.json` — full-content feeds (per-tag feeds too)
+- `/sitemap.xml` — pages, about page, and taxonomy pages
+- `/md/<slug>/index.md` — per-page Markdown, linked with `rel="alternate" type="text/markdown"`
+- `/llms.txt`, `/llms-full.txt` — LLM-oriented index and full text
+- `/.well-known/security.txt`, `/humans.txt`
+- `robots.txt` — sitemap plus a `Content-Signal` AI policy
+- `_headers` — MIME types for feeds/Markdown, CORS for machine files, security headers, immutable caching
+
+The Markdown mirrors use YAML front matter (`title`, `description`, `date`, `updated`,
+`tags`, `category`, `canonical`, `html`) and absolute links/images.
 
 ## Deployment
 

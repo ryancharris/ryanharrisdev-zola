@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="content-section" aria-labelledby="section-title">
+<section class="content-section h-feed" aria-labelledby="section-title">
   <h1 id="section-title">{{ section.title }}</h1>
   {{ section.content | safe }}
 
   <ul class="content-list">
     {% for page in section.pages %}
       {% if page.extra.hidden is defined and page.extra.hidden %}{% continue %}{% endif %}
-      <li class="post-item">
+      <li class="post-item h-entry">
         <div class="post-item-heading">
-          <h2 class="post-item-title"><a href="{{ page.path | safe }}">{{ page.title }}</a></h2>
+          <h2 class="post-item-title p-name"><a class="u-url" href="{{ page.path | safe }}">{{ page.title }}</a></h2>
           {% if page.date %}
-          <time class="post-date" datetime="{{ page.date }}">{{ page.date | date(format="%b %Y") }}</time>
+          <time class="post-date dt-published" datetime="{{ page.date }}">{{ page.date | date(format="%b %Y") }}</time>
           {% endif %}
         </div>
-        {% if page.description %}<p class="post-item-description">{{ page.description }}</p>{% endif %}
+        {% if page.description %}<p class="post-item-description p-summary">{{ page.description }}</p>{% endif %}
       </li>
     {% endfor %}
   </ul>

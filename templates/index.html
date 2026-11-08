@@ -1,35 +1,55 @@
 {% extends "base.html" %}
 
 {% block structured_data %}
-{% set site_url = config.base_url %}
-{% set person_id = site_url ~ "/#person" %}
-{% set website_id = site_url ~ "/#website" %}
-{% set home_url = site_url ~ "/" %}
-{% set about_url = site_url ~ "/about/" %}
-{% set site_lang = lang | default(value=config.default_language) %}
+{% set posts_id = config.base_url ~ "/#posts" %}
+{% set webpage_id = config.base_url ~ "/#webpage" %}
+{% set home_url = config.base_url ~ "/" %}
+{% set website_id = config.base_url ~ "/#website" %}
+{% set person_id = config.base_url ~ "/#person" %}
+{% set site_lang = config.extra.locale | default(value=lang) %}
+{% set blog_id = config.base_url ~ "/#blog" %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
+    {% include "partials/schema-site.html" %},
     {
-      "@type": "WebSite",
-      "@id": {{ website_id | json_encode | safe }},
-      "url": {{ home_url | json_encode | safe }},
-      "name": {{ config.title | json_encode | safe }},
-      "description": {{ config.description | json_encode | safe }},
-      "inLanguage": {{ site_lang | json_encode | safe }},
-      "author": { "@id": {{ person_id | json_encode | safe }} }
+      "@type": "CollectionPage",
+      "@id": {{ webpage_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ home_url | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": {{ config.title | json_encode | replace(from="<", to="\u003c") | safe }},
+      "description": {{ config.description | json_encode | replace(from="<", to="\u003c") | safe }},
+      "inLanguage": {{ site_lang | json_encode | replace(from="<", to="\u003c") | safe }},
+      "isPartOf": { "@id": {{ website_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "mainEntity": { "@id": {{ posts_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "publisher": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "copyrightHolder": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} }
     },
     {
-      "@type": "Person",
-      "@id": {{ person_id | json_encode | safe }},
-      "name": {{ config.extra.author | default(value=config.author) | json_encode | safe }},
-      "url": {{ about_url | json_encode | safe }},
-      "email": {{ config.extra.email | json_encode | safe }},
-      "sameAs": [
-        {{ config.extra.github | json_encode | safe }},
-        {{ config.extra.linkedin | json_encode | safe }}
-      ]
+      "@type": "ItemList",
+      "@id": {{ posts_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": "Writing",
+      "description": {{ config.description | json_encode | replace(from="<", to="\u003c") | safe }},
+      "itemListOrder": "https://schema.org/ItemListOrderDescending",
+      "isPartOf": { "@id": {{ blog_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "itemListElement": [
+        {% set_global position = 0 %}
+        {% set_global first = true %}
+        {% for page in section.pages %}
+        {% if page.extra.hidden is defined and page.extra.hidden %}{% continue %}{% endif %}
+        {% if not first %},{% endif %}
+        {% set_global first = false %}
+        {% set_global position = position + 1 %}
+        {
+          "@type": "ListItem",
+          "position": {{ position }},
+          "url": {{ page.permalink | json_encode | replace(from="<", to="\u003c") | safe }},
+          "name": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }},
+          "datePublished": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }}
+        }
+        {% endfor %}
+      ],
+      "numberOfItems": {{ position }}
     }
   ]
 }
@@ -37,29 +57,31 @@
 {% endblock %}
 
 {% block content %}
-<section class="content-section" aria-labelledby="writing-title">
-  <h1 id="writing-title">{{ config.title }}</h1>
-  <p class="site-description">{{ config.description }}</p>
+<section class="content-section h-feed" aria-labelledby="writing-title">
+  <h1 id="writing-title" class="p-name">{{ config.title }}</h1>
+  <p class="site-description p-summary">{{ config.description }}</p>
 
-  <ul class="content-list">
-    {% set_global current_year = "" %}
-    {% for page in section.pages %}
-      {% if page.extra.hidden is defined and page.extra.hidden %}{% continue %}{% endif %}
-      {% set page_year = page.date | date(format="%Y") %}
-      {% if page_year != current_year %}
-        {% set_global current_year = page_year %}
-        <li class="post-year-item"><h2 class="post-year">{{ page_year }}</h2></li>
-      {% endif %}
-      <li class="post-item">
-        <div class="post-item-heading">
-          <h3 class="post-item-title"><a href="{{ page.path | safe }}">{{ page.title }}</a></h3>
-          {% if page.date %}
-          <time class="post-date" datetime="{{ page.date }}">{{ page.date | date(format="%b") }}</time>
-          {% endif %}
-        </div>
-        {% if page.description %}<p class="post-item-description">{{ page.description }}</p>{% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+  {% set_global current_year = "" %}
+  {% for page in section.pages %}
+    {% if page.extra.hidden is defined and page.extra.hidden %}{% continue %}{% endif %}
+    {% set page_year = page.date | date(format="%Y") %}
+    {% if page_year != current_year %}
+      {% if current_year != "" %}</ul></section>{% endif %}
+      {% set_global current_year = page_year %}
+      <section class="post-year-group" aria-labelledby="year-{{ page_year }}">
+        <h2 id="year-{{ page_year }}" class="post-year">{{ page_year }}</h2>
+        <ul class="content-list">
+    {% endif %}
+    <li class="post-item h-entry">
+      <div class="post-item-heading">
+        <h3 class="post-item-title p-name"><a class="u-url" href="{{ page.path | safe }}">{{ page.title }}</a></h3>
+        {% if page.date %}
+        <time class="post-date dt-published" datetime="{{ page.date | date(format="%+") }}">{{ page.date | date(format="%b %-d, %Y") }}</time>
+        {% endif %}
+      </div>
+      {% if page.description %}<p class="post-item-description p-summary">{{ page.description }}</p>{% endif %}
+    </li>
+  {% endfor %}
+  {% if current_year != "" %}</ul></section>{% endif %}
 </section>
 {% endblock content %}

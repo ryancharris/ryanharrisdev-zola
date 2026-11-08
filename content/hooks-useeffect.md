@@ -6,12 +6,12 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 In <a href="/hooks-usestate/">my last article</a>, we learned about one of the most commonly used hooks, useState. This time around, we are going to look at another commonly used hook: useEffect:
 
-> By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our "effect"), and call it later after performing DOM updates. [[React docs]](https://reactjs.org/docs/hooks-effect.html)
+> By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our "effect"), and call it later after performing DOM updates. [React docs: useEffect](https://reactjs.org/docs/hooks-effect.html)
 
 ## What are effects?
 
@@ -62,7 +62,7 @@ The optional second argument in this example is what's known as the "dependency 
 
 ## What is the dependency array?
 
-> By default, effects run after every completed render, but you can choose to fire them only when certain values have changed. [[React docs]](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)
+> By default, effects run after every completed render, but you can choose to fire them only when certain values have changed. [React docs: skipping effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)
 
 As I mentioned above, the dependency array is an optional secondary argument passed to the useEffect hook. Its purpose is to allow you to more easily control the execution of your effects based upon the values within you component. In class components, we would most likely need to use the componentDidUpdate lifecycle method to achieve the same results, which would've looked something like this:
 
@@ -107,17 +107,17 @@ One thing to note here is that while you can also use if statements within your 
 
 ## In practice
 
-In the sandbox below, I've create a small application that leverages useEffect in numerous ways in order to serve us information about the latest weather on Mars. Elon Musk, eat your heart out!
+In the sandbox below, I've created a small application that leverages useEffect in numerous ways in order to serve us information about the latest weather on Mars. Elon Musk, eat your heart out!
 
-For simplicity's sake, I've created two components: App and WeatherDisplay The former handles fetching our data from the Nasa API and our application logic, whereas the latter simply displays the data we've passed down to it as props. Because of that, all of our useEffect hooks live inside of App
+For simplicity's sake, I've created two components: App and WeatherDisplay. The former handles fetching our data from the Nasa API and our application logic, whereas the latter simply displays the data we've passed down to it as props. Because of that, all of our useEffect hooks live inside of App.
 
 As you will notice, we actually have **three** useEffect hooks inside of our component, which may seem a bit strange, but is the whole idea of hooks! This allows us to compartmentalize our component logic and more easily reason about the effects they trigger. In this example, our three hooks are doing the following:
 
-- Hook #1 sets the title of our document **on every render** using the value of our aystate
-- Hook #2 fetchs our API data **only on the first render** as we don't want to make be making continually API calls as the component updates
-- Hook #3 parses the proper data object based on the value of ay\*_any time the value of ayor ata_ change
+- Hook #1 sets the title of our document **on every render** using the value of our state
+- Hook #2 fetches our API data **only on the first render** as we don't want to make continual API calls as the component updates
+- Hook #3 parses the proper data object based on the value of the array any time the value of the array or data changes
 
-Each of these hooks is using a diffrent variation of the optional dependency array we discussed earlier. Look at the code a bit more closely -- do you know why each array looks the way it does?
+Each of these hooks is using a different variation of the optional dependency array we discussed earlier. Look at the code a bit more closely -- do you know why each array looks the way it does?
 
 <div class="embed-callout">
   <span class="embed-callout-label">Interactive demo</span>

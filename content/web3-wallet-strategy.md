@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "crypto"
 extra:
-  category: "web3"
+  category: "Web3"
 ---
 
 And like that it happened: I got rekt. Over $3000 in ETH gone in an instant (not to mention the SUSHI, AVAX and JOE).

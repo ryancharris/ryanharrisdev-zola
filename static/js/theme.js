@@ -2,76 +2,88 @@
   'use strict';
 
   var root = document.documentElement;
-  var toggle = document.getElementById('theme-toggle');
-  var icon = document.getElementById('theme-icon');
+  var themeMenu = document.getElementById('theme-menu');
+  var schemeInputs = document.querySelectorAll('input[name="scheme"]');
   var transitionTimer = null;
+  var schemes = ['paper', 'gruvbox', 'rose-pine', 'monokai', 'catppuccin-mocha', 'pencil-light'];
+  var schemeModes = {
+    'paper': 'light',
+    'gruvbox': 'dark',
+    'rose-pine': 'dark',
+    'monokai': 'dark',
+    'catppuccin-mocha': 'dark',
+    'pencil-light': 'light'
+  };
 
-  function storedTheme() {
+  function storedScheme() {
     try {
-      var stored = localStorage.getItem('theme');
-      return stored === 'light' || stored === 'dark' ? stored : null;
+      var stored = localStorage.getItem('scheme');
+      return schemes.indexOf(stored) !== -1 ? stored : null;
     } catch (error) {
       return null;
     }
   }
 
-  function systemTheme() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+  function currentScheme() {
+    return storedScheme() || root.getAttribute('data-scheme') || 'paper';
   }
 
-  function currentTheme() {
-    var stored = storedTheme();
-    if (stored) return stored;
-    var attribute = root.getAttribute('data-theme');
-    if (attribute === 'light' || attribute === 'dark') return attribute;
-    return systemTheme();
+  function themeForScheme(scheme) {
+    return schemeModes[scheme] || 'light';
   }
 
   function updateMetaTheme(theme) {
-    var color = theme === 'dark' ? '#1E1E2E' : '#EFF1F5';
+    var color = getComputedStyle(root).getPropertyValue('--bg').trim();
+    if (!color) color = theme === 'dark' ? '#1C1814' : '#F7F3EA';
     var metas = document.querySelectorAll('meta[name="theme-color"]');
     for (var i = 0; i < metas.length; i += 1) metas[i].setAttribute('content', color);
   }
 
+  function updateFavicon(theme) {
+    var map = theme === 'dark'
+      ? { svg: '/favicon-dark.svg', png16: '/favicon-16x16.png', png32: '/favicon-32x32.png' }
+      : { svg: '/favicon-light.svg', png16: '/favicon-light-16x16.png', png32: '/favicon-light-32x32.png' };
+    var svg = document.getElementById('favicon-svg');
+    var png16 = document.getElementById('favicon-16');
+    var png32 = document.getElementById('favicon-32');
+    if (svg) svg.setAttribute('href', map.svg);
+    if (png16) png16.setAttribute('href', map.png16);
+    if (png32) png32.setAttribute('href', map.png32);
+  }
+
+  function syncSchemeInputs(scheme) {
+    for (var i = 0; i < schemeInputs.length; i += 1) {
+      schemeInputs[i].checked = schemeInputs[i].value === scheme;
+    }
+  }
+
   function updateUI(theme) {
     updateMetaTheme(theme);
-    if (!toggle) return;
-    var isDark = theme === 'dark';
-    toggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-    if (icon) {
-      var base = toggle.getAttribute('data-icon-base') || '';
-      var symbol = isDark ? toggle.getAttribute('data-icon-light') : toggle.getAttribute('data-icon-dark');
-      if (symbol) icon.setAttribute('href', base + symbol);
-    }
+    updateFavicon(theme);
+  }
+
+  function updateSyntaxLinks(scheme) {
+    var light = document.getElementById('syntax-light');
+    var dark = document.getElementById('syntax-dark');
+    if (light) light.setAttribute('href', '/syntax/' + scheme + '-light.css');
+    if (dark) dark.setAttribute('href', '/syntax/' + scheme + '-dark.css');
   }
 
   function updateCodeTheme(theme) {
-    var light = document.getElementById('giallo-light');
-    var dark = document.getElementById('giallo-dark');
+    var light = document.getElementById('syntax-light');
+    var dark = document.getElementById('syntax-dark');
     if (light) light.media = theme === 'light' ? 'all' : 'not all';
     if (dark) dark.media = theme === 'dark' ? 'all' : 'not all';
-  }
-
-  function setTheme(theme, persist) {
-    root.setAttribute('data-theme', theme);
-    updateUI(theme);
-    updateCodeTheme(theme);
-    if (persist) {
-      try {
-        localStorage.setItem('theme', theme);
-      } catch (error) {}
-    }
   }
 
   function prefersReducedMotion() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
-  function toggleTheme() {
-    var next = currentTheme() === 'dark' ? 'light' : 'dark';
-    if (!prefersReducedMotion()) {
+  function setScheme(scheme, persist) {
+    if (schemes.indexOf(scheme) === -1) scheme = 'paper';
+    var theme = themeForScheme(scheme);
+    if (persist && !prefersReducedMotion()) {
       if (transitionTimer) window.clearTimeout(transitionTimer);
       document.body.classList.add('theme-transition');
       transitionTimer = window.setTimeout(function () {
@@ -79,42 +91,51 @@
         transitionTimer = null;
       }, 300);
     }
-    setTheme(next, true);
+    root.setAttribute('data-scheme', scheme);
+    root.setAttribute('data-theme', theme);
+    syncSchemeInputs(scheme);
+    updateSyntaxLinks(scheme);
+    updateUI(theme);
+    updateCodeTheme(theme);
+    if (persist) {
+      try {
+        localStorage.setItem('scheme', scheme);
+      } catch (error) {}
+    }
   }
 
-  if (toggle) {
-    toggle.addEventListener('click', toggleTheme);
-    var initialTheme = currentTheme();
-    updateUI(initialTheme);
-    if (storedTheme() || root.getAttribute('data-theme')) updateCodeTheme(initialTheme);
+  var initialScheme = currentScheme();
+  setScheme(initialScheme, false);
 
-    if (window.matchMedia) {
-      var media = window.matchMedia('(prefers-color-scheme: dark)');
-      var onSystemChange = function () {
-        if (!storedTheme()) updateUI(systemTheme());
-      };
-      if (media.addEventListener) media.addEventListener('change', onSystemChange);
-      else if (media.addListener) media.addListener(onSystemChange);
-    }
+  for (var i = 0; i < schemeInputs.length; i += 1) {
+    schemeInputs[i].addEventListener('change', function (event) {
+      if (event.target.checked) setScheme(event.target.value, true);
+    });
+  }
 
-    window.addEventListener('storage', function (event) {
-      if (event.key !== 'theme') return;
-      var stored = storedTheme();
-      if (stored) {
-        root.setAttribute('data-theme', stored);
-        updateUI(stored);
-      } else {
-        root.removeAttribute('data-theme');
-        updateUI(systemTheme());
+  window.addEventListener('storage', function (event) {
+    if (event.key !== 'scheme') return;
+    setScheme(schemes.indexOf(event.newValue) !== -1 ? event.newValue : 'paper', false);
+  });
+
+  if (themeMenu) {
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && themeMenu.open) {
+        themeMenu.open = false;
+        var summary = themeMenu.querySelector('summary');
+        if (summary) summary.focus();
       }
+    });
+    document.addEventListener('click', function (event) {
+      if (themeMenu.open && !themeMenu.contains(event.target)) themeMenu.open = false;
     });
   }
 
   function makeScrollableCodeFocusable() {
     var blocks = document.querySelectorAll('.post-content pre');
-    for (var i = 0; i < blocks.length; i += 1) {
-      var block = blocks[i];
-      if (block.scrollWidth > block.clientWidth) {
+    for (var k = 0; k < blocks.length; k += 1) {
+      var block = blocks[k];
+      if (block.scrollWidth > block.clientWidth + 1 || block.scrollHeight > block.clientHeight + 2) {
         block.setAttribute('tabindex', '0');
         block.setAttribute('role', 'group');
         block.setAttribute('aria-label', 'Scrollable code sample');

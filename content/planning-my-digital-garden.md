@@ -7,7 +7,7 @@ taxonomies:
     - "digital-garden"
     - "meta"
 extra:
-  category: "garden"
+  category: "Digital Garden"
 ---
 
 ## Preface

@@ -1,0 +1,11 @@
+/* TEAM */
+Name: Ryan Harris
+Site: https://ryanharris.dev
+Contact: ryan@ryanharris.dev
+GitHub: https://github.com/ryancharris
+LinkedIn: https://www.linkedin.com/in/ryancharris/
+
+/* SITE */
+Standards: HTML5, CSS3
+Language: English
+Components: Zola, JetBrains Mono, suCSS

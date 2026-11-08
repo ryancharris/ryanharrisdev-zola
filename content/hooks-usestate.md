@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 One of the first hooks you'll probably encounter is useState, which replaces the setState() function used to update state in class components. The big difference here, however, is that useState allows function components to have multiple state values as opposed to one monolithic object. The snippet below illustrates this idea (don't worry about the syntax as we'll be covering that below):

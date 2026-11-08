@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 ## #TIL
@@ -32,7 +32,7 @@ In the snippet above, we've defined our own custom hook, useDate (more about the
 
 Note that we're also using a useDebugValue hook within useDate, which takes a single value and then displays it in the [React DevTools](https://github.com/facebook/react-devtools). In the screenshot below, you can see how the snippet above would look in your browser.
 
-{{ img(path="assets/images/hooks-usedebugvalue/01-debug-value-before-after.png", alt="useDebugValue output in React DevTools") }}
+{{ img(path="assets/images/hooks-usedebugvalue/01-debug-value-before-after.png", alt="useDebugValue output in React DevTools", caption="useDebugValue output in React DevTools.") }}
 
 ## Formatting useDebugValue
 
@@ -44,7 +44,7 @@ uuseDebugValue (date, (date) => date.toDateString().toUpperCase());
 
 The hook works the same way it does without the second argument, however, it's output now looks like this:
 
-{{ img(path="assets/images/hooks-usedebugvalue/02-upper-case.png", alt="Formatted useDebugValue output in React DevTools") }}
+{{ img(path="assets/images/hooks-usedebugvalue/02-upper-case.png", alt="Formatted useDebugValue output in React DevTools", caption="Formatted useDebugValue output.") }}
 
 ## Notes about the formatting function
 

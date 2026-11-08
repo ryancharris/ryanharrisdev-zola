@@ -4,7 +4,6 @@ template: "about.html"
 date: "2020-08-11"
 updated: "2026-11-07"
 description: "About Ryan Harris, a software engineer working on distributed systems and internal tooling at dbt Labs."
-include_in_feeds: false
 extra:
   hidden: true
   og_type: "website"
@@ -16,4 +15,6 @@ My career started in Philly, bouncing through Revzilla, Guru, and Fauna, where I
 
 This blog is basically my thinking out loud in public — code, tools, whatever problem has taken over my brain that week. No editorial calendar, no content strategy, just whatever I find interesting.
 
-You can find me on [GitHub](https://github.com/ryancharris) and [LinkedIn](https://www.linkedin.com/in/ryancharris/), or email [ryan@ryanharris.dev](mailto:ryan@ryanharris.dev).
+<address>
+  You can find me on <a href="https://github.com/ryancharris" rel="me">GitHub</a> and <a href="https://www.linkedin.com/in/ryancharris/" rel="me">LinkedIn</a>, or email <a href="mailto:ryan@ryanharris.dev">ryan@ryanharris.dev</a>.
+</address>

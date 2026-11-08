@@ -19,7 +19,9 @@ My career started in Philly, bouncing through Revzilla, Guru, and Fauna, where I
 
 This blog is basically my thinking out loud in public — code, tools, whatever problem has taken over my brain that week. No editorial calendar, no content strategy, just whatever I find interesting.
 
-You can find me on [GitHub](https://github.com/ryancharris) and [LinkedIn](https://www.linkedin.com/in/ryancharris/), or email [ryan@ryanharris.dev](mailto:ryan@ryanharris.dev).
+<address>
+  You can find me on [GitHub](https://github.com/ryancharris) and [LinkedIn](https://www.linkedin.com/in/ryancharris/), or email [ryan@ryanharris.dev](mailto:ryan@ryanharris.dev).
+</address>
 
 ---
 
@@ -29,7 +31,7 @@ URL: https://ryanharris.dev/web3-wallet-strategy/
 Published: 2021-12-01
 Description: Create a web3 wallet strategy to keep your crypto assets safe.
 Tags: crypto
-Category: web3
+Category: Web3
 
 And like that it happened: I got rekt. Over $3000 in ETH gone in an instant (not to mention the SUSHI, AVAX and JOE).
 
@@ -103,7 +105,7 @@ URL: https://ryanharris.dev/takeaways-from-shape-up/
 Published: 2020-08-17
 Description: My thoughts on 'Take Shape' by Ryan Singer.
 Tags: books, product
-Category: books
+Category: Books
 
 Recently, I've been having discussions with my team about our product process. They have often centered on how to move quickly while shipping useful, well thought out and thoroughly tested features.
 
@@ -179,7 +181,7 @@ URL: https://ryanharris.dev/planning-my-digital-garden/
 Published: 2020-08-11
 Description: Thoughts about redesigning my website and turning it into a digital garden.
 Tags: digital-garden, meta
-Category: garden
+Category: Digital Garden
 
 ## Preface
 
@@ -233,7 +235,7 @@ URL: https://ryanharris.dev/hooks-usedebugvalue/
 Published: 2020-08-10
 Description: useDebugValue is a hook aimed at helping developers troubleshoot the React applications they're building.
 Tags: hooks
-Category: react
+Category: React
 
 ## #TIL
 
@@ -249,16 +251,15 @@ Though it doesn't effect your application logic in anyway, this hook can negativ
 
 First things first, let's see what useDebugValue looks like in action:
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksusedebugvalue-ccnju" target="_blank" rel="noopener noreferrer">hooks/useDebugValue on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useDebugValue on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusedebugvalue-ccnju)
 
 In the snippet above, we've defined our own custom hook, useDate (more about these in an upcoming article). Currently, the hook fires once on App's initial render -- due to the empty dependency array -- and displays it on the page.
 
 Note that we're also using a useDebugValue hook within useDate, which takes a single value and then displays it in the [React DevTools](https://github.com/facebook/react-devtools). In the screenshot below, you can see how the snippet above would look in your browser.
 
 _[Image: useDebugValue output in React DevTools]_
+
+_useDebugValue output in React DevTools._
 
 ## Formatting useDebugValue
 
@@ -271,6 +272,8 @@ uuseDebugValue (date, (date) => date.toDateString().toUpperCase());
 The hook works the same way it does without the second argument, however, it's output now looks like this:
 
 _[Image: Formatted useDebugValue output in React DevTools]_
+
+_Formatted useDebugValue output._
 
 ## Notes about the formatting function
 
@@ -294,7 +297,7 @@ URL: https://ryanharris.dev/mastering-emacs/
 Published: 2020-08-09
 Description: Raw notes from a 'Mastering emacs' bookclub I participated in.
 Tags: emacs
-Category: general
+Category: Emacs
 
 I just started going through ['Mastering emacs'](https://www.masteringemacs.org/) by Mickey Petersen with a new Egghead book club cohort organized by [Ian Jones](https://www.ianjones.us).
 
@@ -520,7 +523,7 @@ URL: https://ryanharris.dev/twitch-with-discord-audio/
 Published: 2020-08-08
 Description: Check out the setup I used to patch Discord audio into my Twitch livestream.
 Tags: discord, twitch
-Category: streaming
+Category: Streaming
 
 While I usually stream on [Twitch](https://twitch.tv/ryan_c_harris), I have recently been doing streams in [Reactadelphia's](https://www.meetup.com/Reactadelphia/) Discord [server](https://discord.gg/rTnVTp4). The idea of interacting with viewers via voice chat was quite appealing; however, the downside is that it lacks the visibility of Twitch -- folks not in your Discord server can't join in on the fun.
 
@@ -545,17 +548,25 @@ Since I want to split Spotify and Discord audio up, I can't simply use iShowU to
 
 _[Image: macOS Sound preferences showing a Multi-Output Device]_
 
+_macOS Multi-Output Device._
+
 2. In the aforementioned app, select the headphones (USB PnP Audio Device). All desktop audio now plays in the headphones.
 
 _[Image: Audio MIDI Setup showing headphones selected as the output]_
+
+_Headphones selected as output._
 
 3. Change the Discord audio preference to output to iShowU Audio Capture. You will no longer hear Discord audio in your headphones.
 
 _[Image: Discord audio output set to iShowU Audio Capture]_
 
+_Discord output set to iShowU Audio Capture._
+
 4. In Streamlabs OBS, add your microphone and the iShowU audio as inputs (see below)
 
 _[Image: Streamlabs OBS audio inputs showing the microphone and iShowU capture]_
+
+_Streamlabs OBS audio inputs._
 
 Now, you'll only receive the two audio signals you want in Streamlabs (mic and desktop) while still being able to listen to copyrighted music on Spotify without risking its transmission.
 
@@ -567,7 +578,7 @@ URL: https://ryanharris.dev/hooks-usereducer/
 Published: 2020-05-18
 Description: useReducer provides an alternate way to store component state beyond useState. It is especially useful for storing complex data structures and/or related values.
 Tags: hooks
-Category: react
+Category: React
 
 ## An update on state
 
@@ -596,7 +607,7 @@ The useReducer hook takes up to three arguments:
 
 3. **Initialization function** -- This argument is optional and is useful for...
 
-> ...calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action. ~ [[React docs](https://reactjs.org/docs/hooks-reference.html#lazy-initialization)]
+> ...calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action. ~ [React docs: lazy initialization](https://reactjs.org/docs/hooks-reference.html#lazy-initialization)
 
 ## Difference from useState
 
@@ -637,10 +648,7 @@ _Note:_ If you haven't used it in the past, this is pretty much how [Redux](http
 
 In the sandbox below, I've built a form for scheduling an appointment. Though there are multiple inputs with different types, all of the values are related to one another as they are in the same form.
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksusereducer-5rntg" target="_blank" rel="noopener noreferrer">hooks/useReducer on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useReducer on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusereducer-5rntg)
 
 Instead of storing each input value in its own useState hook, we can store and manage all of the values in our form using a single useReducer. In this case, its state is an object with many keys, each representing a different value we want to store. Personally, this reminds me a bit of this.state in class components before we had hooks.
 
@@ -737,7 +745,7 @@ As my friend Josef Aidt pointed out while reviewing an early draft of this artic
 Two ways we could avoid this are:
 
 - Adding a debounce to each input, so that we do not trigger a state update on each keypress.
-- Storing our input values in refs instead of useReducer as changing the value of a ref does not cause our component to re-render (see my <a href="/hooks-useref/">useRef</a> article for more on this).
+- Storing our input values in refs instead of useReducer as changing the value of a ref does not cause our component to re-render (see my [useRef](https://ryanharris.dev/hooks-useref/) article for more on this).
 
 Now, go forth and be performant!
 
@@ -749,11 +757,11 @@ URL: https://ryanharris.dev/hooks-usecallback/
 Published: 2020-04-21
 Description: useCallback is similar to useMemo but returns a memoized function, not a memoized value.
 Tags: hooks
-Category: react
+Category: React
 
 ## Before you proceed...
 
-If you haven't read my <a href="/hooks-usememo/">useMemo</a> article yet, I **highly suggest you go back and do so** now! In that article, we covered important concepts like [memoization](https://en.wikipedia.org/wiki/Memoization), which we will continue discussing below.
+If you haven't read my [useMemo](https://ryanharris.dev/hooks-usememo/) article yet, I **highly suggest you go back and do so** now! In that article, we covered important concepts like [memoization](https://en.wikipedia.org/wiki/Memoization), which we will continue discussing below.
 
 Since useMemo and useCallback are similar (with one key difference), it will be important to understand how useMemo works before proceeding.
 
@@ -783,12 +791,9 @@ useCallback is useful because you can assign a memoized function to a variable a
 
 It also makes our lives easier because we do not need to duplicate useMemo logic in multiple places. We also don't need to import/export anything. Instead, we can just pass the memoized function as a prop and allow another component to consume it.
 
-In the sandbox below, I've taken the code from our <a href="/hooks-usememo/">useMemo</a> example and refactored it to use useCallback:
+In the sandbox below, I've taken the code from our [useMemo](https://ryanharris.dev/hooks-usememo/) example and refactored it to use useCallback:
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksusecallback-89w2p" target="_blank" rel="noopener noreferrer">hooks/useCallback on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useCallback on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusecallback-89w2p)
 
 Like with useMemo, our useCallback hook is returning a memoized value. However, in this case, it is a memoized version of the anonymous function passed to it, **not** the function's return value.
 
@@ -810,9 +815,9 @@ URL: https://ryanharris.dev/hooks-usememo/
 Published: 2020-03-24
 Description: useMemo allows you to avoid recomputing expensive values by leveraging memoization under the hood.
 Tags: hooks
-Category: react
+Category: React
 
-Up until this point in <a href="/hooks-revisited/">the series</a>, I have been generally familiar with the hooks we've covered and have used them before at work. It wasn't until I recently started working in a new codebase that I came across [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo). Not understanding how it worked or how to debug it was a large part of why I chose to write this series in the first place.
+Up until this point in [the series](https://ryanharris.dev/hooks-revisited/), I have been generally familiar with the hooks we've covered and have used them before at work. It wasn't until I recently started working in a new codebase that I came across [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo). Not understanding how it worked or how to debug it was a large part of why I chose to write this series in the first place.
 
 ## What is "memoization"?
 
@@ -847,7 +852,7 @@ Here's an example of how it looks directly from the React docs:
 const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 ```
 
-If you have read my articles on <a href="/hooks-useeffect/">useEffect</a> and <a href="/hooks-uselayouteffect/">useLayoutEffect</a>, you'll probably recognize this function signature. Just like those hooks, useMemo executes the logic inside the function passed to it **only** when one of the values in the dependency array changes. If no array is passed, useMemo will re-calculate its return value on **every** render.
+If you have read my articles on [useEffect](https://ryanharris.dev/hooks-useeffect/) and [useLayoutEffect](https://ryanharris.dev/hooks-uselayouteffect/), you'll probably recognize this function signature. Just like those hooks, useMemo executes the logic inside the function passed to it **only** when one of the values in the dependency array changes. If no array is passed, useMemo will re-calculate its return value on **every** render.
 
 The difference here is that useMemo is not intended to cause side effects -- those should be handled in the appropriately named useEffect or useLayoutEffect hooks. useMemo simply calculates and returns a value based on the function and dependency array passed as arguments and helps handle expensive computations that may cause performance issues.
 
@@ -857,7 +862,7 @@ According to the React docs, useMemo is meant to be a **performance optimization
 
 One thing to note, however, is that you can't really guarantee that useMemo will return a cached value when expected. Read the following sentence carefully:
 
-> In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. [[React docs](https://reactjs.org/docs/hooks-reference.html#usememo)]
+> In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. [React docs: useMemo](https://reactjs.org/docs/hooks-reference.html#usememo)
 
 To keep things performant and properly manage memory, React may get rid of a cached value it's not actively using in order to save room for other operations. In some cases, that will cause useMemo to recalculate its return value even though it had been previously in our cache.
 
@@ -865,12 +870,9 @@ To keep things performant and properly manage memory, React may get rid of a cac
 
 In the example below, I've created a demo to better illustrate how useMemo works. For our purposes, I have stubbed out some functions in order to make the example work properly; however, pay attention to the comments as they will provide further context.
 
-_Note: If you're unfamiliar with <a href="/hooks-useeffect/">useEffect</a> or <a href="/hooks-usestate/">useState</a>, take a moment and check out the previous articles in this series before continuing. Otherwise, these should look pretty familiar to you._
+_Note: If you're unfamiliar with [useEffect](https://ryanharris.dev/hooks-useeffect/) or [useState](https://ryanharris.dev/hooks-usestate/), take a moment and check out the previous articles in this series before continuing. Otherwise, these should look pretty familiar to you._
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksusememo-kfgvu" target="_blank" rel="noopener noreferrer">hooks/useMemo on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useMemo on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusememo-kfgvu)
 
 Here, our App component does three things:
 
@@ -946,15 +948,17 @@ URL: https://ryanharris.dev/hooks-usecontext/
 Published: 2020-03-16
 Description: useContext provides an easy way to provide data from parent to child without having to 'prop drill'.
 Tags: hooks
-Category: react
+Category: React
 
 ## Putting things in Context
 
-[Context](https://reactjs.org/docs/context.html) is one of my favorite React APIs and has a wide variety of uses cases. I've previously written about <a href="/redoing-search/">redoing a search UI using refs and Context</a>, as well as <a href="/hooks-useref/">how to use the useRef hook</a>. This time around, we're going to cover the useContext hook, which is now the way we use Context in function components.
+[Context](https://reactjs.org/docs/context.html) is one of my favorite React APIs and has a wide variety of uses cases. I've previously written about [redoing a search UI using refs and Context](https://ryanharris.dev/redoing-search/), as well as [how to use the useRef hook](https://ryanharris.dev/hooks-useref/). This time around, we're going to cover the useContext hook, which is now the way we use Context in function components.
 
 I love the Context API because it **allows you to compartmentalize aspects of your app's data within a sub-tree of components**. Essentially, your child components can access data via the value prop provided by the Context.Provider. You can think of this like a store that's specifically scoped to this tree. The components wrapped by the Provider can choose whether or not they want to consume the data (i.e. Consumers) at all, which means you can avoid [prop drilling](https://kentcdodds.com/blog/prop-drilling). Here's a rough illustration:
 
 _[Image: With and without Context illustrations]_
+
+_With and without Context._
 
 In [class components](https://codesandbox.io/s/hooksusecontext-class-wdiii), we used a combination of Context.Provider and Context.Consumer tags to set up the relationship described above. However, in function components, the Context.Consumer syntax has been [replaced with the useContext hook](https://codesandbox.io/s/hooksusecontext-hooks-8ss8k).
 
@@ -1017,16 +1021,13 @@ Notice that even though we're using the useContext hook, the way we define our c
 
 ## In practice
 
-In the sandbox below, I have built out a component tree that represents a self-contained search widget using the SearchInput component we built in <a href="/hooks-useref/">an earlier article covering the useRef hook</a>.
+In the sandbox below, I have built out a component tree that represents a self-contained search widget using the SearchInput component we built in [an earlier article covering the useRef hook](https://ryanharris.dev/hooks-useref/).
 
 For the purposes of this demonstration, we are mimicking an API call by loading data about breweries in Philadelphia from results.json directly into our Search component and displaying them as ResultCard in the SearchResults component. Then, whenever the text value in SearchInput changes, we filter our results to breweries who have names containing a string matching the input text.
 
 Try it out for yourself below:
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksusecontext-in-practice-shd17" target="_blank" rel="noopener noreferrer">hooks/useContext (In Practice) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useContext (In Practice) on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusecontext-in-practice-shd17)
 
 In Search, we have created a SearchContext by using React.createContext(). By doing this, we will be able to pass down context values to SearchResults and SearchInput without having to prop drill through our SearchWidget component. While we would only be passing props through one additional component in this example, think about how effective this strategy would be for components nested even further!
 
@@ -1068,11 +1069,11 @@ URL: https://ryanharris.dev/hooks-useref/
 Published: 2020-03-13
 Description: useRef can be used to directly interact with the browser's DOM or store and update values without causing re-renders like useState.
 Tags: hooks
-Category: react
+Category: React
 
 ## What are refs?
 
-If you read <a href="/hooks-uselayouteffect/">my last article</a>, about the differences between useEffect and useLayoutEffect, you may remember seeing some code snippets that looked like this:
+If you read [my last article](https://ryanharris.dev/hooks-uselayouteffect/), about the differences between useEffect and useLayoutEffect, you may remember seeing some code snippets that looked like this:
 
 ```javascript
 useEffect(() => {
@@ -1094,15 +1095,15 @@ In these examples, we're directly accessing the DOM in order to select and manip
 
 While the React docs cite a few examples where using refs would be appropriate, including managing focus, triggering animations, and working with third party libraries, they also warn against overusing them.
 
-> Avoid using refs for anything that can be done declaratively. [[React docs]](https://reactjs.org/docs/refs-and-the-dom.html#when-to-use-refs)
+> Avoid using refs for anything that can be done declaratively. [React docs: when to use refs](https://reactjs.org/docs/refs-and-the-dom.html#when-to-use-refs)
 
-For a practical example of how to use refs in your React app, [checkout my previous article about rebuilding a search UI](/redoing-search/) using refs and React Context. We'll also cover the ins and outs of Context in the next article in this series.
+For a practical example of how to use refs in your React app, [checkout my previous article about rebuilding a search UI](https://ryanharris.dev/redoing-search/) using refs and React Context. We'll also cover the ins and outs of Context in the next article in this series.
 
 In the next section, we'll look more closely at the useRef hook and its syntax.
 
 ## Anatomy of useRef
 
-> ...useRef is like a “box” that can hold a mutable value... [[React docs]](https://reactjs.org/docs/hooks-reference.html#useref)
+> ...useRef is like a “box” that can hold a mutable value... [React docs: useRef](https://reactjs.org/docs/hooks-reference.html#useref)
 
 The useRef hook only takes one argument: its initial value. This can be any valid JavaScript value or JSX element. Here are a few examples:
 
@@ -1187,10 +1188,7 @@ In the sections below, we'll walk through two examples that better illustrate ho
 
 For this example, I have built a small SearchInput component that uses the useRef hook in order to refer to the input element rendered by our component:
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/serene-sunset-z80cl" target="_blank" rel="noopener noreferrer">hooks/useRef (DOM) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useRef (DOM) on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/serene-sunset-z80cl)
 
 In this specific case, our SearchInput component takes an autoFocus prop, which determines whether or not we want the input to be focused automatically on mount. In order to do this, we need to use a web API (i.e. .focus()) and thus need to be able to directly refer to the HTML element on the page.
 
@@ -1213,7 +1211,7 @@ console.log(inputRef.current);
 
 With this wired up, we can now autofocus the input on mount, as well as add some styling to make our SearchInput component look more cohesive even though it is made up of multiple elements "under the hood". In order to handle the autofocus behavior, we need to use the useLayoutEffect hook to focus the input prior to the DOM painting.
 
-_Note: For more info on when to use useLayoutEffect vs. useEffect, <a href="/hooks-uselayouteffect/">check out my previous article in this series</a>._
+_Note: For more info on when to use useLayoutEffect vs. useEffect, [check out my previous article in this series](https://ryanharris.dev/hooks-uselayouteffect/)._
 
 ```javascript
 useLayoutEffect(() => {
@@ -1230,7 +1228,7 @@ By calling inputRef.current.focus(), we are setting the input inside our compone
 const focusCn = focused ? "SearchInput focused" : "SearchInput";
 ```
 
-Finally, I have also added an event listener using <a href="/hooks-useeffect/">a useEffect hook</a> in order to update our focus state based on mouse clicks both inside and outside of our component. Essentially, when the user clicks inside SearchInput, we call .focus() and update our focused state to true. Alternatively, when the user clicks outside the component, we call .blur() and set focused to false.
+Finally, I have also added an event listener using [a useEffect hook](https://ryanharris.dev/hooks-useeffect/) in order to update our focus state based on mouse clicks both inside and outside of our component. Essentially, when the user clicks inside SearchInput, we call .focus() and update our focused state to true. Alternatively, when the user clicks outside the component, we call .blur() and set focused to false.
 
 ```javascript
 useEffect(() => {
@@ -1257,10 +1255,7 @@ While accessing DOM elements is a React anti-pattern (as discussed above), this 
 
 In this example, I want to illustrate the subtle difference between using useState and useRef to store values.
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/fancy-hooks-cxw57" target="_blank" rel="noopener noreferrer">hooks/useRef (Data) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useRef (Data) on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/fancy-hooks-cxw57)
 
 Here, we have two sections that have buttons, which allow us to increment/decrement our refValue or stateValue, respectively. When the page initally loads, each section is assigned a random hex value as its background-color. From then on, you will see the colors change whenever our App component re-renders.
 
@@ -1276,13 +1271,13 @@ URL: https://ryanharris.dev/hooks-uselayouteffect/
 Published: 2020-03-02
 Description: useLayoutEffect works exactly the same way useEffect does except it fires prior to the DOM's initial paint.
 Tags: hooks
-Category: react
+Category: React
 
-Last time, we learned about the <a href="/hooks-useeffect/">useEffect hook</a>, how it works and when to use it. If you have not read that article yet, I **strongly suggest you go back and do so before proceeding any further**. Much of what we will discuss below will be about the similarities and differences between useEffect and useLayoutEffect, which may not make much sense without having a good grip on the former.
+Last time, we learned about the [useEffect hook](https://ryanharris.dev/hooks-useeffect/), how it works and when to use it. If you have not read that article yet, I **strongly suggest you go back and do so before proceeding any further**. Much of what we will discuss below will be about the similarities and differences between useEffect and useLayoutEffect, which may not make much sense without having a good grip on the former.
 
 ## useLayoutEffect and useEffect
 
-> The signature is identical to useEffect, but it fires synchronously after all DOM mutations. [[React docs]](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
+> The signature is identical to useEffect, but it fires synchronously after all DOM mutations. [React docs: useLayoutEffect](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
 
 While the underlying implementation and execution of these hooks does differ, you may notice that the code snippets below look quite similar. That's because these two hooks have the same function signature!
 
@@ -1324,7 +1319,7 @@ As we saw above, these two hooks are quite similar in terms of their syntax and 
 
 The useEffect hook fires **after render** so as not to block the DOM from painting and effecting your application's performance. Due to this behavior, the React documentation advises that when writing new effects you start with useEffect and only reach for useLayoutEffect when absolutely necessary.
 
-> ...we recommend starting with useEffect first and only trying useLayoutEffect if that causes a problem... [[React docs]](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
+> ...we recommend starting with useEffect first and only trying useLayoutEffect if that causes a problem... [React docs: useLayoutEffect](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
 
 Unlike useEffect, useLayoutEffect fires after all DOM mutations but **before the DOM paints**. While this is the **only** difference between these two hooks, it is an important distinction because of when their effects are performed.
 
@@ -1371,17 +1366,11 @@ As I am sure you've noticed by now, the effect function passed to both hooks are
 
 To start, let's look at the sandbox using useEffect. You should see the purple circle appear in the top left-hand corner of the screen before it is quickly repositioned and moved to the center of the screen. This happens because **useEffect runs after render**, so the effect isn't executed till after the DOM paints, which is what causes the unwanted flash of content.
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksuselayouteffect-useeffect-vgkbd" target="_blank" rel="noopener noreferrer">hooks/useLayoutEffect (useEffect) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useLayoutEffect (useEffect) on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksuselayouteffect-useeffect-vgkbd)
 
 Now, let's look at the useLayoutEffect hook. If you refresh the page, you should always see the purple circle in the center of the screen and no longer see the circle get quickly repositioned. This is because **useLayoutEffect runs before the DOM paints**, so the circle has already been positioned correctly before we see the first visual representation of our page. In this example, it would be more appropriate to use useLayoutEffect because we would not want our users to see what looks like a visual bug.
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksuselayouteffect-uselayouteffect-jxvzg" target="_blank" rel="noopener noreferrer">hooks/useLayoutEffect (useLayoutEffect) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useLayoutEffect (useLayoutEffect) on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksuselayouteffect-uselayouteffect-jxvzg)
 
 ## Next steps
 
@@ -1395,11 +1384,11 @@ URL: https://ryanharris.dev/hooks-useeffect/
 Published: 2020-02-26
 Description: useEffect is one of the most commonly used hooks and is used for things like fetching data, setting up event listeners and manipulating the DOM.
 Tags: hooks
-Category: react
+Category: React
 
-In <a href="/hooks-usestate/">my last article</a>, we learned about one of the most commonly used hooks, useState. This time around, we are going to look at another commonly used hook: useEffect:
+In [my last article](https://ryanharris.dev/hooks-usestate/), we learned about one of the most commonly used hooks, useState. This time around, we are going to look at another commonly used hook: useEffect:
 
-> By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our "effect"), and call it later after performing DOM updates. [[React docs]](https://reactjs.org/docs/hooks-effect.html)
+> By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our "effect"), and call it later after performing DOM updates. [React docs: useEffect](https://reactjs.org/docs/hooks-effect.html)
 
 ## What are effects?
 
@@ -1450,7 +1439,7 @@ The optional second argument in this example is what's known as the "dependency 
 
 ## What is the dependency array?
 
-> By default, effects run after every completed render, but you can choose to fire them only when certain values have changed. [[React docs]](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)
+> By default, effects run after every completed render, but you can choose to fire them only when certain values have changed. [React docs: skipping effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)
 
 As I mentioned above, the dependency array is an optional secondary argument passed to the useEffect hook. Its purpose is to allow you to more easily control the execution of your effects based upon the values within you component. In class components, we would most likely need to use the componentDidUpdate lifecycle method to achieve the same results, which would've looked something like this:
 
@@ -1495,22 +1484,19 @@ One thing to note here is that while you can also use if statements within your 
 
 ## In practice
 
-In the sandbox below, I've create a small application that leverages useEffect in numerous ways in order to serve us information about the latest weather on Mars. Elon Musk, eat your heart out!
+In the sandbox below, I've created a small application that leverages useEffect in numerous ways in order to serve us information about the latest weather on Mars. Elon Musk, eat your heart out!
 
-For simplicity's sake, I've created two components: App and WeatherDisplay The former handles fetching our data from the Nasa API and our application logic, whereas the latter simply displays the data we've passed down to it as props. Because of that, all of our useEffect hooks live inside of App
+For simplicity's sake, I've created two components: App and WeatherDisplay. The former handles fetching our data from the Nasa API and our application logic, whereas the latter simply displays the data we've passed down to it as props. Because of that, all of our useEffect hooks live inside of App.
 
 As you will notice, we actually have **three** useEffect hooks inside of our component, which may seem a bit strange, but is the whole idea of hooks! This allows us to compartmentalize our component logic and more easily reason about the effects they trigger. In this example, our three hooks are doing the following:
 
-- Hook #1 sets the title of our document **on every render** using the value of our aystate
-- Hook #2 fetchs our API data **only on the first render** as we don't want to make be making continually API calls as the component updates
-- Hook #3 parses the proper data object based on the value of ay\*_any time the value of ayor ata_ change
+- Hook #1 sets the title of our document **on every render** using the value of our state
+- Hook #2 fetches our API data **only on the first render** as we don't want to make continual API calls as the component updates
+- Hook #3 parses the proper data object based on the value of the array any time the value of the array or data changes
 
-Each of these hooks is using a diffrent variation of the optional dependency array we discussed earlier. Look at the code a bit more closely -- do you know why each array looks the way it does?
+Each of these hooks is using a different variation of the optional dependency array we discussed earlier. Look at the code a bit more closely -- do you know why each array looks the way it does?
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksuseeffect-gkejk" target="_blank" rel="noopener noreferrer">hooks/useEffect on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useEffect on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksuseeffect-gkejk)
 
 Don't worry if you're still a bit confused because learning to "think in hooks" can take some time. The best way to get more comfortable with them is to use them, so feel free to fork the sandbox above and play around with the code. As a good place to start, try removing the dependency array from Hook #2 completely. What happens?
 
@@ -1530,7 +1516,7 @@ URL: https://ryanharris.dev/hooks-usestate/
 Published: 2020-02-17
 Description: As the name suggests, the useState hook is used for storing component state.
 Tags: hooks
-Category: react
+Category: React
 
 One of the first hooks you'll probably encounter is useState, which replaces the setState() function used to update state in class components. The big difference here, however, is that useState allows function components to have multiple state values as opposed to one monolithic object. The snippet below illustrates this idea (don't worry about the syntax as we'll be covering that below):
 
@@ -1589,10 +1575,7 @@ The first instance is a function component using three useState hooks to manage 
 
 As you can see, both components do the same things: keep track of how many of each item a user wants and increment/decrement that value based on button presses.
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/hooksusestate-o64ve" target="_blank" rel="noopener noreferrer">hooks/useState on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: hooks/useState on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusestate-o64ve)
 
 Take a look at the code and see which one you prefer. While hooks may still be new to you, can you see any benefits from using them?
 
@@ -1604,11 +1587,11 @@ URL: https://ryanharris.dev/hooks-revisited/
 Published: 2020-02-16
 Description: This series is a holistic look at React's hooks API and how they each work.
 Tags: hooks
-Category: react
+Category: React
 
-> Hooks are functions that let you “hook into” React state and lifecycle features from function components [[React docs]](https://reactjs.org/docs/hooks-overview.html#but-what-is-a-hook)
+> Hooks are functions that let you “hook into” React state and lifecycle features from function components [React docs: what is a hook](https://reactjs.org/docs/hooks-overview.html#but-what-is-a-hook)
 
-Introduced in <a href="https://github.com/facebook/react/blob/master/CHANGELOG.md#1680-february-6-2019" target="_blank" rel="noopener noreferrer">React v16.8</a>, the hooks API represents a change in how developers compose their components. Intended to compartmentalize blocks of functionality, they make reusing code across your application easier. They also mark a shift away from using `class` components and the use of lifecycle methods.
+Introduced in [React v16.8](https://github.com/facebook/react/blob/master/CHANGELOG.md#1680-february-6-2019), the hooks API represents a change in how developers compose their components. Intended to compartmentalize blocks of functionality, they make reusing code across your application easier. They also mark a shift away from using `class` components and the use of lifecycle methods.
 
 When hooks were first introduced at [React Conf 2018](https://www.youtube.com/playlist?list=PLPxbbTqCLbGE5AihOSExAa4wUM-P42EIJ), the React team explained the motivations behind them. Essentially, they wanted to solve the many problems all at once:
 
@@ -1618,15 +1601,7 @@ When hooks were first introduced at [React Conf 2018](https://www.youtube.com/pl
 
 For a **much** more detailed explanation about the origin of hooks, make sure to check out the team's full talk featuring [Dan Abramov](https://overreacted.io/), [Sophie Alpert](https://sophiebits.com/) and [Ryan Florence](https://reacttraining.com/).
 
-<iframe loading="lazy"
-  width="560"
-  height="315"
-  title="React Conf 2018: Introducing Hooks"
-  src="https://www.youtube.com/embed/dpw9EHDh2bM"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-></iframe>
+[Embedded video: React Conf 2018: Introducing Hooks](https://www.youtube.com/embed/dpw9EHDh2bM)
 
 ## Goals
 
@@ -1638,15 +1613,15 @@ To do that, I am writing an article about each standard React hook. Each piece i
 
 ## Table of Contents
 
-1. <a href="/hooks-usestate/">useState</a>
-2. <a href="/hooks-useeffect/">useEffect</a>
-3. <a href="/hooks-uselayouteffect/">useLayoutEffect</a>
-4. <a href="/hooks-useref/">useRef</a>
-5. <a href="/hooks-usecontext/">useContext</a>
-6. <a href="/hooks-usememo/">useMemo</a>
-7. <a href="/hooks-usecallback/">useCallback</a>
-8. <a href="/hooks-usereducer/">useReducer</a>
-9. <a href="/hooks-usedebugvalue/">useDebugValue</a>
+1. [useState](https://ryanharris.dev/hooks-usestate/)
+2. [useEffect](https://ryanharris.dev/hooks-useeffect/)
+3. [useLayoutEffect](https://ryanharris.dev/hooks-uselayouteffect/)
+4. [useRef](https://ryanharris.dev/hooks-useref/)
+5. [useContext](https://ryanharris.dev/hooks-usecontext/)
+6. [useMemo](https://ryanharris.dev/hooks-usememo/)
+7. [useCallback](https://ryanharris.dev/hooks-usecallback/)
+8. [useReducer](https://ryanharris.dev/hooks-usereducer/)
+9. [useDebugValue](https://ryanharris.dev/hooks-usedebugvalue/)
 10. useImperativeHandle
 11. Custom hooks
 
@@ -1658,45 +1633,39 @@ URL: https://ryanharris.dev/configure-eslint-and-prettier/
 Published: 2020-02-09
 Description: Learn how to use ESLint and Prettier to enforce code conventions and formatting.
 Tags: eslint, prettier
-Category: javascript
+Category: JavaScript
 
 Let's face it. Development is hard.
 
-While developers have a multitude of concerns when building software, some of them simply aren't worth worrying about. In my mind, the enforcement of coding style and convention fall squarely within this category. As <a href="https://www.warner.codes/" target="_blank" rel="noopener noreferrer">Ryan Warner</a> informed me, this is called <a href="https://en.wikipedia.org/wiki/Law_of_triviality" target="_blank" rel="noopener noreferrer">bike-shedding</a>:
+While developers have a multitude of concerns when building software, some of them simply aren't worth worrying about. In my mind, the enforcement of coding style and convention fall squarely within this category. As [Ryan Warner](https://www.warner.codes/) informed me, this is called [bike-shedding](https://en.wikipedia.org/wiki/Law_of_triviality):
 
 > ...an observation about the human tendency to devote a great deal of time to unimportant details while crucial matters go unattended.
 
-Luckily, tools like <a href="https://eslint.org/" target="_blank" rel="noopener noreferrer">ESLint</a> and <a href="https://prettier.io/" target="_blank" rel="noopener noreferrer">Prettier</a> make it easier for developers to enforce their team's chosen coding standards. While having a bit of overlapping functionality, they're both aimed at improving different parts of the developer experience. However, configuring them to work together in harmony can be less that straightforward.
+Luckily, tools like [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) make it easier for developers to enforce their team's chosen coding standards. While having a bit of overlapping functionality, they're both aimed at improving different parts of the developer experience. However, configuring them to work together in harmony can be less that straightforward.
 
 ## ESLint
 
-ESLint helps your team write consistent code in terms of style and syntax by enforcing the rules you define in your project's `my-repo/.eslintrc` configuration file. <a href="https://eslint.org/docs/rules/" target="_blank" rel="noopener noreferrer">For each rule</a>, you can choose to throw an error, log out a warning or ignore it altogether. Optionally, you can also have ESLint fix these violations based on your preferred configuration.
+ESLint helps your team write consistent code in terms of style and syntax by enforcing the rules you define in your project's `my-repo/.eslintrc` configuration file. [For each rule](https://eslint.org/docs/rules/), you can choose to throw an error, log out a warning or ignore it altogether. Optionally, you can also have ESLint fix these violations based on your preferred configuration.
 
-You can use ESLint in one of two ways: as <a href="https://eslint.org/docs/user-guide/" target="_blank" rel="noopener noreferrer">a CLI</a> or <a href="https://github.com/Microsoft/vscode-eslint" target="_blank" rel="noopener noreferrer">editor extension</a>.
+You can use ESLint in one of two ways: as [a CLI](https://eslint.org/docs/user-guide/) or [editor extension](https://github.com/Microsoft/vscode-eslint).
 
 You can use ESLint in a number of ways:
 
 <ol>
   <li>
-    <a href="https://eslint.org/docs/user-guide/" target="_blank" rel="noopener noreferrer">
-      via the CLI
-    </a>
+    [via the CLI](https://eslint.org/docs/user-guide/)
   </li>
   <li>
-    <a href="https://github.com/Microsoft/vscode-eslint" target="_blank" rel="noopener noreferrer">
-      by installing an editor extension
-    </a>
+    [by installing an editor extension](https://github.com/Microsoft/vscode-eslint)
   </li>
   <li>
-    <a href="https://github.com/webpack/diagnostics-webpack-plugin" target="_blank" rel="noopener noreferrer">
-      using ESLint with a build tool
-    </a>
+    [using ESLint with a build tool](https://github.com/webpack/diagnostics-webpack-plugin)
   </li>
 </ol>
 
 The CLI comes in handy because you can lint (and fix) specific files and directories, use it in your pre-commit hooks, or integrate it into your CI/CD pipeline. Extensions, on the other hand, make your life easier when actually writing code by highlighting code blocks that break your preferred rules. In some cases, they can even suggest or fix violations on their own.
 
-ESLint also allows you to extend rule sets, which are distributed as npm packages, from other developers and organizations. Extending a configuration like the one <a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="noopener noreferrer">Airbnb's engineeering team</a> uses or <a href="https://github.com/standard/standard" target="_blank" rel="noopener noreferrer">StandardJS</a> is an easy way to get started with ESLint. Over time, if there are rules your team does not like, you can always override them to create a custom configuration.
+ESLint also allows you to extend rule sets, which are distributed as npm packages, from other developers and organizations. Extending a configuration like the one [Airbnb's engineeering team](https://www.npmjs.com/package/eslint-config-airbnb) uses or [StandardJS](https://github.com/standard/standard) is an easy way to get started with ESLint. Over time, if there are rules your team does not like, you can always override them to create a custom configuration.
 
 ## Prettier
 
@@ -1720,13 +1689,13 @@ Prettier allows you to automate your team's code formatting. This is a huge win 
 }
 ```
 
-Prettier also provides two similar tools to ESLint: <a href="https://prettier.io/docs/en/cli.html" target="_blank" rel="noopener noreferrer">a CLI</a> and <a href="https://github.com/prettier/prettier-vscode" target="_blank" rel="noopener noreferrer">editor extension</a>.
+Prettier also provides two similar tools to ESLint: [a CLI](https://prettier.io/docs/en/cli.html) and [editor extension](https://github.com/prettier/prettier-vscode).
 
 With the CLI, you can programmatically format files and/or directories within your repo. This saves a massive amount of time, especially when transitioning a project over to a new rule set.
 
 The editor extension can be configured to auto-format the file you're working on when you save it. This ensures all of your commits are going to be properly formatted.
 
-If you're using <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code</a>, you can add the following snippet to your user settings and let the robots do all the work! 🤖 If you're on a Mac, you can open your user settings with the `Cmd + ,` hotkey.
+If you're using [VS Code](https://code.visualstudio.com/), you can add the following snippet to your user settings and let the robots do all the work! 🤖 If you're on a Mac, you can open your user settings with the `Cmd + ,` hotkey.
 
 ```json
 {
@@ -1742,11 +1711,11 @@ If you're using <a href="https://code.visualstudio.com/" target="_blank" rel="no
 
 When using ESLint and Prettier together, there are a couple packages you'll want to install in order to help them work well together.
 
-1. <a href="https://www.npmjs.com/package/eslint-config-prettier" target="_blank" rel="noopener noreferrer">eslint-config-prettier</a> - This disables ESLint's formatting rules and defers that concern to Prettier.
+1. [eslint-config-prettier](https://www.npmjs.com/package/eslint-config-prettier) - This disables ESLint's formatting rules and defers that concern to Prettier.
 
-2. <a href="https://www.npmjs.com/package/eslint-plugin-prettier" target="_blank" rel="noopener noreferrer">eslint-plugin-prettier</a> - Using this plugin allows ESLint to check for violations of Prettier rules and throw errors as part of its linting process.
+2. [eslint-plugin-prettier](https://www.npmjs.com/package/eslint-plugin-prettier) - Using this plugin allows ESLint to check for violations of Prettier rules and throw errors as part of its linting process.
 
-3. <a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="noopener noreferrer">eslint-config-airbnb</a> - Extending this configuration allows you to use Airbnb's preferred coding style and standards.
+3. [eslint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb) - Extending this configuration allows you to use Airbnb's preferred coding style and standards.
 
 With these three packages installed, your `.eslintrc` would look something like this:
 
@@ -1775,7 +1744,7 @@ URL: https://ryanharris.dev/managing-ssh-keys-for-github/
 Published: 2020-01-19
 Description: If you use more than one GitHub account on the same machine, configuring multiple SSH keys will make authenticating with different repos much easier.
 Tags: git, github
-Category: oss
+Category: Open Source
 
 During the onboarding process for my new job at Fauna, I was tasked with setting up my local development environment. However, since Fauna devs use work-specific GitHub accounts, a new challenge presented itself during the process: managing SSH keys and identities for multiple accounts.
 
@@ -1820,6 +1789,8 @@ Enter file in which to save the key (/Users/ryan/.ssh/id_rsa): id_rsa_work
 Next, we'll need to log into both GitHub accounts and add the new SSH key. Go into account settings and open the SSH and GPG keys sections. Then, add a new SSH key:
 
 _[Image: GitHub's SSH key interface]_
+
+_GitHub SSH key interface._
 
 In the textfield below, we need to enter the public key we generated above. You can do this in a couple ways:
 
@@ -1936,11 +1907,11 @@ URL: https://ryanharris.dev/obs-scenes/
 Published: 2019-12-11
 Description: Once you're up and running with OBS, it's helpful to begin organizing your inputs and assets into separate scenes.
 Tags: obs
-Category: streaming
+Category: Streaming
 
 ## What are Scenes?
 
-[Like I’ve said in the past](/going-live-with-obs/), I like to think of OBS as a TV switcher because it allows you control Scenes as if they’re camera shots. But what exactly is a Scene?
+[Like I’ve said in the past](https://ryanharris.dev/going-live-with-obs/), I like to think of OBS as a TV switcher because it allows you control Scenes as if they’re camera shots. But what exactly is a Scene?
 
 Scenes are OBS canvases comprised of one (or more) visual elements, all of which can be resized, repositioned or affected with filters. While it’s not necessary to have multiple Scenes in order to start streaming, doing so can certainly help add production value.
 
@@ -1949,6 +1920,8 @@ Before we continue, let’s take a step back and talk a little more about what m
 Below is a screenshot of the primary Scene from [Chris Biscardi’s Twitch stream](https://www.twitch.tv/chrisbiscardi). While you can see there is only one canvas, the Scene is, in fact, made up of multiple elements. Can you identify them all?
 
 _[Image: Chris Biscardi's Twitch stream showing a code editor and webcam overlay]_
+
+_Chris Biscardi's stream: code editor, webcam, chat, and stream info._
 
 This example illustrates how much you can do within a given Scene really well. From what I can tell, Chris has at least five elements in this Scene:
 
@@ -1974,6 +1947,8 @@ This was the simplest to set up. Currently, it directly captures the camera on m
 
 _[Image: OBS scene containing a full-screen webcam capture]_
 
+_A full-screen webcam capture as an OBS scene._
+
 I use this primarily when interacting with users in the chat or when there’s a discussion that doesn’t require looking directly at code. In the future, I will swap out the webcam in favor of a DSLR in order to improve the visual quality of this Scene.
 
 ### 2. Desktop
@@ -1981,6 +1956,8 @@ I use this primarily when interacting with users in the chat or when there’s a
 In my case, this Scene is a direct capture of my MacBook Pro screen, which like the previous Scene, takes up 100% of the canvas. Once I hook up the [new monitor I bought over Black Friday](https://www.amazon.com/LG-32GK650F-B-Monitor-FreeSync-Technology/dp/B07FLGR2PN), I’ll be able to choose which display I want to capture.
 
 _[Image: OBS scene containing a full-screen desktop capture]_
+
+_A full-screen desktop capture as an OBS scene._
 
 This will come in handy when working with sensitive information because I can simply move those windows to the non-capture display and hide it from viewers. This is a great strategy if you’re working with API keys, environment variables, etc.
 
@@ -1993,6 +1970,8 @@ While I prefer the former, I will most likely end up cropping my stream output w
 Up until now, all of my Scenes have only had one visual element within them, look alive cause this one has two!
 
 _[Image: OBS scene combining a desktop capture with a webcam overlay]_
+
+_Desktop capture with a webcam overlay._
 
 Essentially, this Scene combines the two previous ones. Taking advantage of OBS’ resizing/repositioning capabilities, I shrank the input from my Webcam and positioned it in the bottom right hand corner of my screen (on top of the Desktop) to achieve a picture-in-picture effect.
 
@@ -2016,6 +1995,8 @@ It’s a pretty common effect used in TV, especially news, to inform the viewer 
 
 _[Image: Example of a lower-third graphic in a stream layout]_
 
+_Lower-third graphic composited over gameplay._
+
 Again, while this isn’t necessary, it could add a little production value that helps my stream stand out. With the help of a designer, this could also be a good opportunity for visual branding too. (If you know of any, send ‘em my way!)
 
 ### 3. Hardware for scene switching
@@ -2038,7 +2019,7 @@ URL: https://ryanharris.dev/going-live-with-obs/
 Published: 2019-11-20
 Description: I just started live streaming. I’ve done it exactly twice. I wasn’t sure what to expect before I started and, at times, didn’t even know where to start.
 Tags: obs
-Category: streaming
+Category: Streaming
 
 I just started live streaming. I’ve done it exactly twice.
 
@@ -2070,6 +2051,8 @@ After downloading and installing the app, open the OBS preferences and go to the
 
 _[Image: OBS stream key menu]_
 
+_OBS stream key settings._
+
 And voila! You’re done.
 
 No, really. If you wanted to, you could just push the “Start Streaming” button and do just that. I wouldn’t recommend it… but you could.
@@ -2089,9 +2072,13 @@ Currently, I have my inputs set up in multiple Scenes (which I’ll be writing a
 
 _[Image: OBS scene and source panels]_
 
+_Scene and source panels._
+
 Configuring OBS to capture my screen was relatively straightforward. Just click the plus sign and choose Display Capture:
 
 _[Image: OBS add Display Capture]_
+
+_Display Capture source._
 
 You should now see an Inception like view of your desktop within the OBS broadcast window. In here, you can manipulate all your video imports and do things like:
 
@@ -2103,13 +2090,19 @@ To add my webcam (labeled FaceTime HD), I had to add a Video Capture device from
 
 _[Image: OBS add Video Capture Device]_
 
+_Video Capture Device source._
+
 On the next screen, choose your input device from the dropdown.
 
 _[Image: OBS select Video Capture Device input]_
 
+_Selecting the video input._
+
 Now, you should see yourself in the broadcast window. Resize and reposition the webcam input to your liking. Currently, I have my webcam feed as a picture-in-picture in the bottom right hand corner of my screen. It looks like this:
 
 _[Image: My current OBS scene and source layout]_
+
+_Current scene and source layout._
 
 ## 3. Configure audio
 
@@ -2118,6 +2111,8 @@ Since I’m streaming on a Mac, this is definitely the hardest part. From what I
 The first thing we’ll do is plug in our USB microphone (I use a Blue Yeti) and set OBS to capture its audio:
 
 _[Image: Yeti microphone audio input in OBS]_
+
+_Yeti microphone input._
 
 While connecting devices like my mic can be pretty simple, [macOS makes it very difficult](https://lofi-gaming.org.uk/blog/2016/09/17/capture-mac-desktop-audio-obs/) to capture desktop audio.
 
@@ -2128,6 +2123,8 @@ You should now see an additional device labeled iShowU Audio Capture. Set this a
 Back in OBS, we’ll also need to add this as an audio input just like we did with the mic. Once you do, test it’s hooked up correctly by playing some music and checking the VU meter in OBS’ audio panel.
 
 _[Image: Yeti microphone and iShowU Audio inputs in OBS]_
+
+_Microphone and iShowU Audio inputs._
 
 ## 4. Press the Stream button!
 
@@ -2145,7 +2142,7 @@ URL: https://ryanharris.dev/redoing-search/
 Published: 2019-10-27
 Description: See how I built a new search UI with React context and refs.
 Tags: ui
-Category: react
+Category: React
 
 Recently, the product team at my company discovered the majority of our users were not utilizing filters when using our search interface.
 
@@ -2177,17 +2174,23 @@ While there is nothing wrong with this approach, it can be unwieldy when dealing
 
 _[Image: Search UI component tree without Context]_
 
+_Search UI without Context._
+
 In order to use the Context API, you need to create a Context.Provider that takes a value prop representing all the data you want to inject into the child components that need it.
 
 Before the advent of [Hooks](https://blog.logrocket.com/frustrations-with-react-hooks/), you would do this by using an associated Context.Consumer, but in the post-Hooks world, we can leverage the useContext Hook to subscribe a component to the closest Provider above it in the component tree.
 
 _[Image: Search UI component tree with Context]_
 
+_Search UI with Context._
+
 In this case, Context provides a way to keep track of which menu should be open in our parent component, and then passes that value down to its children who, in turn, conditionally render the appropriate dropdown.
 
 The key here is that our Context also passes down a setter function. This is important because it allows the components consuming our context value to then update the state in our parent component, which causes the tree to re-render with the new menu now visible.
 
 _[Image: Menu value with getter and setter]_
+
+_Menu value with getter and setter._
 
 By using the pattern described above, we can similarly manage the focus state of the various inputs in the search bar and filter menus.
 
@@ -2315,7 +2318,7 @@ URL: https://ryanharris.dev/react-vs-vue/
 Published: 2019-06-27
 Description: Learn how to get started with Vue from the perspective of a React developer.
 Tags: vue
-Category: react
+Category: React
 
 For frontend developers, JavaScript frameworks have become increasingly important due to how fundamentally they change the way we approach building our applications. While not everyone uses them professional, or at all, the development community sure loves to talk about them. Unfortunately, these discussions often devolve into a diatribe about Framework X being better than Framework Y, or Framework Z not being “real JavaScript.”
 
@@ -2349,10 +2352,7 @@ _Side note: My local transit authority did not have a solid API, so I ultimately
 
 In the end, the application ended up looking like this:
 
-<div class="embed-callout">
-  <span class="embed-callout-label">Interactive demo</span>
-  <a href="https://codesandbox.io/s/brew-bus-r8xkp" target="_blank" rel="noopener noreferrer">Brew Bus on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
-</div>
+[Interactive demo: Brew Bus on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/brew-bus-r8xkp)
 
 ## Approach
 
@@ -2668,7 +2668,7 @@ URL: https://ryanharris.dev/three-steps-to-open-source/
 Published: 2019-03-09
 Description: Contributing to open-source projects during my career transition taught me a lot about being a developer. Here's how you can get started with OSS.
 Tags: open-source, career
-Category: oss
+Category: Open Source
 
 Before becoming a developer, I spent a decade working in film and television, so when I first started transitioning into tech, I spent a lot of time networking, going to Meetups and having coffee with other developers. I was primarily interested in **finding out what I needed to know to become employable and how I could go about learning those skills**. I heard a few answers consistently: do online tutorials, build your portfolio and contribute to open source projects.
 
@@ -2744,7 +2744,7 @@ URL: https://ryanharris.dev/what-the-heck-is-jsx/
 Published: 2018-12-08
 Description: JSX is a syntax extension for JavaScript and is widely used in frontend frameworks like React.
 Tags: react, jsx
-Category: react
+Category: React
 
 As developers, we use a variety of tools and open source packages to make our jobs easier. Some of them are so widely used throughout the community that they seem native to JavaScript. Though they're not, they **can fundamentally change how you write code on a daily basis**.
 

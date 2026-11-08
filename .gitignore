@@ -4,3 +4,5 @@ static/processed_images/
 static/giallo-light.css
 static/giallo-dark.css
 .wrangler/
+static/md/
+static/syntax/

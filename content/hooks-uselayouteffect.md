@@ -6,14 +6,14 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 Last time, we learned about the <a href="/hooks-useeffect/">useEffect hook</a>, how it works and when to use it. If you have not read that article yet, I **strongly suggest you go back and do so before proceeding any further**. Much of what we will discuss below will be about the similarities and differences between useEffect and useLayoutEffect, which may not make much sense without having a good grip on the former.
 
 ## useLayoutEffect and useEffect
 
-> The signature is identical to useEffect, but it fires synchronously after all DOM mutations. [[React docs]](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
+> The signature is identical to useEffect, but it fires synchronously after all DOM mutations. [React docs: useLayoutEffect](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
 
 While the underlying implementation and execution of these hooks does differ, you may notice that the code snippets below look quite similar. That's because these two hooks have the same function signature!
 
@@ -55,7 +55,7 @@ As we saw above, these two hooks are quite similar in terms of their syntax and 
 
 The useEffect hook fires **after render** so as not to block the DOM from painting and effecting your application's performance. Due to this behavior, the React documentation advises that when writing new effects you start with useEffect and only reach for useLayoutEffect when absolutely necessary.
 
-> ...we recommend starting with useEffect first and only trying useLayoutEffect if that causes a problem... [[React docs]](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
+> ...we recommend starting with useEffect first and only trying useLayoutEffect if that causes a problem... [React docs: useLayoutEffect](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
 
 Unlike useEffect, useLayoutEffect fires after all DOM mutations but **before the DOM paints**. While this is the **only** difference between these two hooks, it is an important distinction because of when their effects are performed.
 

@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 ## Putting things in Context
@@ -15,7 +15,7 @@ extra:
 
 I love the Context API because it **allows you to compartmentalize aspects of your app's data within a sub-tree of components**. Essentially, your child components can access data via the value prop provided by the Context.Provider. You can think of this like a store that's specifically scoped to this tree. The components wrapped by the Provider can choose whether or not they want to consume the data (i.e. Consumers) at all, which means you can avoid [prop drilling](https://kentcdodds.com/blog/prop-drilling). Here's a rough illustration:
 
-{{ img(path="assets/images/hooks-usecontext/01-context-drawings.png", alt="With and without Context illustrations") }}
+{{ img(path="assets/images/hooks-usecontext/01-context-drawings.png", alt="With and without Context illustrations", caption="With and without Context.") }}
 
 In [class components](https://codesandbox.io/s/hooksusecontext-class-wdiii), we used a combination of Context.Provider and Context.Consumer tags to set up the relationship described above. However, in function components, the Context.Consumer syntax has been [replaced with the useContext hook](https://codesandbox.io/s/hooksusecontext-hooks-8ss8k).
 

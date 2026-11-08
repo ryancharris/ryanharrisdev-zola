@@ -7,7 +7,7 @@ taxonomies:
     - "eslint"
     - "prettier"
 extra:
-  category: "javascript"
+  category: "JavaScript"
 ---
 
 Let's face it. Development is hard.

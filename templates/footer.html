@@ -1,16 +1,16 @@
 <hr>
 
-<div class="footer-row">
-  <p>&copy; {{ now() | date(format="%Y") }} {{ config.title }}</p>
+<div class="footer-row h-card">
+  <p>&copy; {{ now() | date(format="%Y") }} <a class="p-name u-url" href="/about/" rel="author">{{ config.extra.author | default(value=config.author) }}</a></p>
 
   <nav class="footer-icons" aria-label="Contact and social links">
-    <a href="mailto:{{ config.extra.email }}" aria-label="Email ryan harris">
+    <a class="u-email" href="mailto:{{ config.extra.email }}" aria-label="Email ryan harris">
       {{ load_data(path="static/icons/email.svg") | safe }}
     </a>
-    <a href="{{ config.extra.github | safe }}" aria-label="GitHub profile (opens in a new tab)" target="_blank" rel="me noopener noreferrer">
+    <a class="u-url" href="{{ config.extra.github | safe }}" aria-label="GitHub profile (opens in a new tab)" target="_blank" rel="me noopener noreferrer">
       {{ load_data(path="static/icons/github.svg") | safe }}
     </a>
-    <a href="{{ config.extra.linkedin | safe }}" aria-label="LinkedIn profile (opens in a new tab)" target="_blank" rel="me noopener noreferrer">
+    <a class="u-url" href="{{ config.extra.linkedin | safe }}" aria-label="LinkedIn profile (opens in a new tab)" target="_blank" rel="me noopener noreferrer">
       {{ load_data(path="static/icons/linkedin.svg") | safe }}
     </a>
     <a href="{{ get_url(path='atom.xml', trailing_slash=false) | replace(from=config.base_url, to='') | safe }}" aria-label="Atom feed">

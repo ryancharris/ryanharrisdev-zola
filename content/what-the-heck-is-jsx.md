@@ -7,7 +7,7 @@ taxonomies:
     - "react"
     - "jsx"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 As developers, we use a variety of tools and open source packages to make our jobs easier. Some of them are so widely used throughout the community that they seem native to JavaScript. Though they're not, they **can fundamentally change how you write code on a daily basis**.

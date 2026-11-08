@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "ui"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 Recently, the product team at my company discovered the majority of our users were not utilizing filters when using our search interface.
@@ -37,19 +37,19 @@ The official Context API was added to React in v16.3 and is intended to avoid wh
 
 While there is nothing wrong with this approach, it can be unwieldy when dealing with complex component hierarchies, especially if some components don’t care about the data and are simply passing it on.
 
-{{ img(path="assets/images/redoing-search/01-without-context.png", alt="Search UI component tree without Context") }}
+{{ img(path="assets/images/redoing-search/01-without-context.png", alt="Search UI component tree without Context", caption="Search UI without Context.") }}
 
 In order to use the Context API, you need to create a Context.Provider that takes a value prop representing all the data you want to inject into the child components that need it.
 
 Before the advent of [Hooks](https://blog.logrocket.com/frustrations-with-react-hooks/), you would do this by using an associated Context.Consumer, but in the post-Hooks world, we can leverage the useContext Hook to subscribe a component to the closest Provider above it in the component tree.
 
-{{ img(path="assets/images/redoing-search/02-with-context.png", alt="Search UI component tree with Context") }}
+{{ img(path="assets/images/redoing-search/02-with-context.png", alt="Search UI component tree with Context", caption="Search UI with Context.") }}
 
 In this case, Context provides a way to keep track of which menu should be open in our parent component, and then passes that value down to its children who, in turn, conditionally render the appropriate dropdown.
 
 The key here is that our Context also passes down a setter function. This is important because it allows the components consuming our context value to then update the state in our parent component, which causes the tree to re-render with the new menu now visible.
 
-{{ img(path="assets/images/redoing-search/03-menu-value.png", alt="Menu value with getter and setter") }}
+{{ img(path="assets/images/redoing-search/03-menu-value.png", alt="Menu value with getter and setter", caption="Menu value with getter and setter.") }}
 
 By using the pattern described above, we can similarly manage the focus state of the various inputs in the search bar and filter menus.
 

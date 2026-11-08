@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "emacs"
 extra:
-  category: "general"
+  category: "Emacs"
 ---
 
 I just started going through ['Mastering emacs'](https://www.masteringemacs.org/) by Mickey Petersen with a new Egghead book club cohort organized by [Ian Jones](https://www.ianjones.us).

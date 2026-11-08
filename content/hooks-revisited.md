@@ -6,10 +6,10 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
-> Hooks are functions that let you “hook into” React state and lifecycle features from function components [[React docs]](https://reactjs.org/docs/hooks-overview.html#but-what-is-a-hook)
+> Hooks are functions that let you “hook into” React state and lifecycle features from function components [React docs: what is a hook](https://reactjs.org/docs/hooks-overview.html#but-what-is-a-hook)
 
 Introduced in <a href="https://github.com/facebook/react/blob/master/CHANGELOG.md#1680-february-6-2019" target="_blank" rel="noopener noreferrer">React v16.8</a>, the hooks API represents a change in how developers compose their components. Intended to compartmentalize blocks of functionality, they make reusing code across your application easier. They also mark a shift away from using `class` components and the use of lifecycle methods.
 
@@ -26,7 +26,6 @@ For a **much** more detailed explanation about the origin of hooks, make sure to
   height="315"
   title="React Conf 2018: Introducing Hooks"
   src="https://www.youtube.com/embed/dpw9EHDh2bM"
-  frameborder="0"
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
   allowfullscreen
 ></iframe>

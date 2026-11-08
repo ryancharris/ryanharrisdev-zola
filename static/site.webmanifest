@@ -1,15 +1,23 @@
 {
+  "id": "/",
   "name": "ryan harris",
   "short_name": "ryan harris",
   "description": "writing about code, tools, and things i'm figuring out",
+  "lang": "en-US",
+  "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "minimal-ui",
-  "background_color": "#1E1E2E",
-  "theme_color": "#1E1E2E",
+  "background_color": "#1C1814",
+  "theme_color": "#1C1814",
+  "categories": ["blog", "technology"],
   "icons": [
+    { "src": "/favicon-16x16.png", "sizes": "16x16", "type": "image/png" },
     { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/icon-64.png", "sizes": "64x64", "type": "image/png" },
     { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
     { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }

@@ -1,24 +1,38 @@
+{%- if term -%}
+  {%- set feed_title = "Posts tagged “" ~ term.name ~ "”" -%}
+  {%- set feed_description = "Posts tagged " ~ term.name ~ " on " ~ config.title ~ "." -%}
+  {%- set feed_link = term.permalink -%}
+{%- else -%}
+  {%- set feed_title = config.title -%}
+  {%- set feed_description = config.description -%}
+  {%- set feed_link = config.base_url ~ "/" -%}
+{%- endif -%}
+{%- set about_url = config.base_url ~ "/about/" -%}
+{%- set icon_url = config.base_url ~ "/favicon-32x32.png" -%}
+{%- set logo_url = config.base_url ~ "/apple-touch-icon.png" -%}
+
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ lang }}">
-  {% set latest = pages[0] %}
-  <title>{{ config.title }}</title>
-  <subtitle>{{ config.description }}</subtitle>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ config.extra.locale | default(value=lang) }}">
+  <title>{{ feed_title }}</title>
+  <subtitle>{{ feed_description }}</subtitle>
   <link rel="self" type="application/atom+xml" href="{{ feed_url | safe }}"/>
-  <link rel="alternate" type="text/html" href="{{ config.base_url | safe }}/"/>
+  <link rel="alternate" type="text/html" href="{{ feed_link | safe }}"/>
   <generator uri="https://www.getzola.org/">Zola</generator>
-  {% if latest.updated %}
-  <updated>{{ latest.updated | date(format="%+") }}</updated>
-  {% else %}
-  <updated>{{ latest.date | date(format="%+") }}</updated>
-  {% endif %}
+  <icon>{{ icon_url | safe }}</icon>
+  <logo>{{ logo_url | safe }}</logo>
+  <rights>© {{ now() | date(format="%Y") }} {{ config.author }}</rights>
+  <updated>{{ now() | date(format="%+") }}</updated>
   <id>{{ feed_url | safe }}</id>
   <author>
-    <name>{{ config.author | default(value=config.title) }}</name>
+    <name>{{ config.author }}</name>
+    <uri>{{ about_url | safe }}</uri>
   </author>
-
+  {% if term %}<category term="{{ term.name }}"/>{% endif %}
 
   {% for page in pages %}
-  <entry xml:lang="{{ page.lang | default(value=lang) }}">
+    {% if page.extra.hidden is defined and page.extra.hidden %}{% continue %}{% endif %}
+    {% if page.include_in_feeds is defined and not page.include_in_feeds %}{% continue %}{% endif %}
+  <entry xml:lang="{{ config.extra.locale | default(value=page.lang) }}">
     <title>{{ page.title }}</title>
     <published>{{ page.date | date(format="%+") }}</published>
     {% if page.updated %}
@@ -27,8 +41,13 @@
     <updated>{{ page.date | date(format="%+") }}</updated>
     {% endif %}
     <author>
-      <name>{{ config.author | default(value=config.title) }}</name>
+      <name>{{ config.author }}</name>
+      <uri>{{ about_url | safe }}</uri>
     </author>
+    {% if page.taxonomies.tags is defined %}
+    {% for tag in page.taxonomies.tags %}<category term="{{ tag }}"/>{% endfor %}
+    {% endif %}
+    {% if page.extra.category is defined %}<category term="{{ page.extra.category }}"/>{% endif %}
     <link rel="alternate" type="text/html" href="{{ page.permalink | safe }}"/>
     <id>{{ page.permalink | safe }}</id>
     <summary>{{ page.description | default(value="") }}</summary>

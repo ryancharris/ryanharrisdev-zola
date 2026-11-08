@@ -1,0 +1,56 @@
+{%- set site_lang = config.extra.locale | default(value=lang) -%}
+{%- set home_url = config.base_url ~ "/" -%}
+{%- set about_url = config.base_url ~ "/about/" -%}
+{%- set website_id = config.base_url ~ "/#website" -%}
+{%- set blog_id = config.base_url ~ "/#blog" -%}
+{%- set person_id = config.base_url ~ "/#person" -%}
+{
+  "@type": "WebSite",
+  "@id": {{ website_id | json_encode | replace(from="<", to="\u003c") | safe }},
+  "url": {{ home_url | json_encode | replace(from="<", to="\u003c") | safe }},
+  "name": {{ config.title | json_encode | replace(from="<", to="\u003c") | safe }},
+  "alternateName": "Ryan Harris",
+  "description": {{ config.description | json_encode | replace(from="<", to="\u003c") | safe }},
+  "inLanguage": {{ site_lang | json_encode | replace(from="<", to="\u003c") | safe }},
+  "publisher": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+  "copyrightHolder": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+  "copyrightYear": {{ now() | date(format="%Y") }}
+},
+{
+  "@type": "Blog",
+  "@id": {{ blog_id | json_encode | replace(from="<", to="\u003c") | safe }},
+  "url": {{ home_url | json_encode | replace(from="<", to="\u003c") | safe }},
+  "name": {{ config.title | json_encode | replace(from="<", to="\u003c") | safe }},
+  "description": {{ config.description | json_encode | replace(from="<", to="\u003c") | safe }},
+  "inLanguage": {{ site_lang | json_encode | replace(from="<", to="\u003c") | safe }},
+  "publisher": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+  "isPartOf": { "@id": {{ website_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+  "copyrightHolder": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+  "copyrightYear": {{ now() | date(format="%Y") }}
+},
+{
+  "@type": "Person",
+  "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }},
+  "name": {{ config.extra.author | default(value=config.author) | json_encode | replace(from="<", to="\u003c") | safe }},
+  "url": {{ about_url | json_encode | replace(from="<", to="\u003c") | safe }},
+  "email": {{ config.extra.email | json_encode | replace(from="<", to="\u003c") | safe }},
+  "jobTitle": "Software Engineer",
+  "description": "Software engineer working on distributed systems and internal tooling at dbt Labs.",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "dbt Labs",
+    "url": "https://www.getdbt.com"
+  },
+  "knowsAbout": [
+    "React",
+    "Vue",
+    "TypeScript",
+    "distributed systems",
+    "developer tooling",
+    "live streaming"
+  ],
+  "sameAs": [
+    {{ config.extra.github | json_encode | replace(from="<", to="\u003c") | safe }},
+    {{ config.extra.linkedin | json_encode | replace(from="<", to="\u003c") | safe }}
+  ]
+}

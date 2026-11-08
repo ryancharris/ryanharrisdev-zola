@@ -2,11 +2,35 @@
 
 > writing about code, tools, and things i'm figuring out
 
-Ryan Harris is a software engineer who writes about code, tools, and the things he is figuring out. This is a static, server-rendered blog with stable URLs and an Atom feed.
+Ryan Harris is a software engineer who writes about code, tools, and the things he is figuring out. This is a static, server-rendered blog with stable URLs, Atom/RSS/JSON feeds, a sitemap, and per-page Markdown.
+Last updated: 2021-12-01
 
 ## About
 
 - [about](https://ryanharris.dev/about/): About Ryan Harris, a software engineer working on distributed systems and internal tooling at dbt Labs.
+
+## Topics
+
+- [books](https://ryanharris.dev/tags/books/): 1 post
+- [career](https://ryanharris.dev/tags/career/): 1 post
+- [crypto](https://ryanharris.dev/tags/crypto/): 1 post
+- [digital-garden](https://ryanharris.dev/tags/digital-garden/): 1 post
+- [discord](https://ryanharris.dev/tags/discord/): 1 post
+- [emacs](https://ryanharris.dev/tags/emacs/): 1 post
+- [eslint](https://ryanharris.dev/tags/eslint/): 1 post
+- [git](https://ryanharris.dev/tags/git/): 1 post
+- [github](https://ryanharris.dev/tags/github/): 1 post
+- [hooks](https://ryanharris.dev/tags/hooks/): 10 posts
+- [jsx](https://ryanharris.dev/tags/jsx/): 1 post
+- [meta](https://ryanharris.dev/tags/meta/): 1 post
+- [obs](https://ryanharris.dev/tags/obs/): 2 posts
+- [open-source](https://ryanharris.dev/tags/open-source/): 1 post
+- [prettier](https://ryanharris.dev/tags/prettier/): 1 post
+- [product](https://ryanharris.dev/tags/product/): 1 post
+- [react](https://ryanharris.dev/tags/react/): 1 post
+- [twitch](https://ryanharris.dev/tags/twitch/): 1 post
+- [ui](https://ryanharris.dev/tags/ui/): 1 post
+- [vue](https://ryanharris.dev/tags/vue/): 1 post
 
 ## Writing
 
@@ -37,13 +61,24 @@ Ryan Harris is a software engineer who writes about code, tools, and the things 
 ## Feeds
 
 - [Atom feed](https://ryanharris.dev/atom.xml)
+- [RSS feed](https://ryanharris.dev/rss.xml)
+- [JSON Feed](https://ryanharris.dev/feed.json)
 
 ## Contact
 
-- Email: ryan@ryanharris.dev
-- GitHub: https://github.com/ryancharris
-- LinkedIn: https://www.linkedin.com/in/ryancharris/
+- [Email](mailto:ryan@ryanharris.dev)
+- [GitHub](https://github.com/ryancharris)
+- [LinkedIn](https://www.linkedin.com/in/ryancharris/)
 
-## Full text
+## Machine-readable
 
+- [Sitemap](https://ryanharris.dev/sitemap.xml)
+- [llms.txt](https://ryanharris.dev/llms.txt)
 - [llms-full.txt](https://ryanharris.dev/llms-full.txt)
+- [Markdown index](https://ryanharris.dev/md/index.md)
+- [About (Markdown)](https://ryanharris.dev/md/about/index.md)
+- [Tags (Markdown)](https://ryanharris.dev/md/tags/index.md)
+- [security.txt](https://ryanharris.dev/.well-known/security.txt)
+- [humans.txt](https://ryanharris.dev/humans.txt)
+
+Each HTML page also advertises its Markdown representation with `<link rel="alternate" type="text/markdown">`.

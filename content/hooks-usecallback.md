@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 ## Before you proceed...

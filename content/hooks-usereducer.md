@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 ## An update on state
@@ -36,7 +36,7 @@ The useReducer hook takes up to three arguments:
 
 3. **Initialization function** -- This argument is optional and is useful for...
 
-> ...calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action. ~ [[React docs](https://reactjs.org/docs/hooks-reference.html#lazy-initialization)]
+> ...calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action. ~ [React docs: lazy initialization](https://reactjs.org/docs/hooks-reference.html#lazy-initialization)
 
 ## Difference from useState
 

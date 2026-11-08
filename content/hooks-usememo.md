@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 Up until this point in <a href="/hooks-revisited/">the series</a>, I have been generally familiar with the hooks we've covered and have used them before at work. It wasn't until I recently started working in a new codebase that I came across [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo). Not understanding how it worked or how to debug it was a large part of why I chose to write this series in the first place.
@@ -54,7 +54,7 @@ According to the React docs, useMemo is meant to be a **performance optimization
 
 One thing to note, however, is that you can't really guarantee that useMemo will return a cached value when expected. Read the following sentence carefully:
 
-> In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. [[React docs](https://reactjs.org/docs/hooks-reference.html#usememo)]
+> In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. [React docs: useMemo](https://reactjs.org/docs/hooks-reference.html#usememo)
 
 To keep things performant and properly manage memory, React may get rid of a cached value it's not actively using in order to save room for other operations. In some cases, that will cause useMemo to recalculate its return value even though it had been previously in our cache.
 

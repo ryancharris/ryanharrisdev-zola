@@ -10,17 +10,17 @@ theme = "anemone"
 
 # Generate Atom feed, sitemap and robots.txt
 generate_feeds = true
-feed_filenames = ["atom.xml"]
+feed_filenames = ["atom.xml", "rss.xml", "feed.json"]
 generate_sitemap = true
 generate_robots_txt = true
 
 # Tags are used on posts and rendered at /tags/.
 taxonomies = [
-  { name = "tags" },
+  { name = "tags", feed = true },
 ]
 
 # These SVGs are inlined into the footer with load_data; do not copy them.
-ignored_static = ["icons/email.svg", "icons/linkedin.svg", "icons/github.svg", "icons/rss.svg"]
+ignored_static = ["icons/email.svg", "icons/linkedin.svg", "icons/github.svg", "icons/rss.svg", "giallo-light.css", "giallo-dark.css"]
 
 [link_checker]
 # External sites often block automated checks; treat those as warnings.
@@ -39,6 +39,7 @@ style = "class"
 error_on_missing_language = true
 
 [extra]
+locale = "en-US"
 favicon = "favicon.svg"
 apple_touch_icon = "apple-touch-icon.png"
 author = "Ryan Harris"

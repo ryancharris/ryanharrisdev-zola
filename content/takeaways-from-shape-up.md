@@ -7,7 +7,7 @@ taxonomies:
     - "books"
     - "product"
 extra:
-  category: "books"
+  category: "Books"
 ---
 
 Recently, I've been having discussions with my team about our product process. They have often centered on how to move quickly while shipping useful, well thought out and thoroughly tested features.

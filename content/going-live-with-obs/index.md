@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "obs"
 extra:
-  category: "streaming"
+  category: "Streaming"
 ---
 
 I just started live streaming. I’ve done it exactly twice.
@@ -37,7 +37,7 @@ OBS.app/Contents/MacOS/OBS
 
 After downloading and installing the app, open the OBS preferences and go to the Stream tab. Here, choose your streaming service and enter your stream key, which you can find in your Mixer (or Twitch) account settings.
 
-{{ img(path="assets/images/going-live-with-obs/01-stream-key-menu.png", alt="OBS stream key menu") }}
+{{ img(path="assets/images/going-live-with-obs/01-stream-key-menu.png", alt="OBS stream key menu", caption="OBS stream key settings.") }}
 
 And voila! You’re done.
 
@@ -56,11 +56,11 @@ As you saw above, I’m not working with much equipment, so I only capture two v
 
 Currently, I have my inputs set up in multiple Scenes (which I’ll be writing about in the future), but you can clearly see the two items above in the Source panel for my first scene.
 
-{{ img(path="assets/images/going-live-with-obs/02-scenes-and-sources.png", alt="OBS scene and source panels") }}
+{{ img(path="assets/images/going-live-with-obs/02-scenes-and-sources.png", alt="OBS scene and source panels", caption="Scene and source panels.") }}
 
 Configuring OBS to capture my screen was relatively straightforward. Just click the plus sign and choose Display Capture:
 
-{{ img(path="assets/images/going-live-with-obs/03-display-capture.png", alt="OBS add Display Capture") }}
+{{ img(path="assets/images/going-live-with-obs/03-display-capture.png", alt="OBS add Display Capture", caption="Display Capture source.") }}
 
 You should now see an Inception like view of your desktop within the OBS broadcast window. In here, you can manipulate all your video imports and do things like:
 
@@ -70,15 +70,15 @@ You should now see an Inception like view of your desktop within the OBS broadca
 
 To add my webcam (labeled FaceTime HD), I had to add a Video Capture device from the same menu. When prompted, choose to create a new capture device and give it an appropriate name:
 
-{{ img(path="assets/images/going-live-with-obs/04-video-capture-device.png", alt="OBS add Video Capture Device") }}
+{{ img(path="assets/images/going-live-with-obs/04-video-capture-device.png", alt="OBS add Video Capture Device", caption="Video Capture Device source.") }}
 
 On the next screen, choose your input device from the dropdown.
 
-{{ img(path="assets/images/going-live-with-obs/05-video-device-dropdown.png", alt="OBS select Video Capture Device input") }}
+{{ img(path="assets/images/going-live-with-obs/05-video-device-dropdown.png", alt="OBS select Video Capture Device input", caption="Selecting the video input.") }}
 
 Now, you should see yourself in the broadcast window. Resize and reposition the webcam input to your liking. Currently, I have my webcam feed as a picture-in-picture in the bottom right hand corner of my screen. It looks like this:
 
-{{ img(path="assets/images/going-live-with-obs/06-my-current-setup.png", alt="My current OBS scene and source layout") }}
+{{ img(path="assets/images/going-live-with-obs/06-my-current-setup.png", alt="My current OBS scene and source layout", caption="Current scene and source layout.") }}
 
 ## 3. Configure audio
 
@@ -86,7 +86,7 @@ Since I’m streaming on a Mac, this is definitely the hardest part. From what I
 
 The first thing we’ll do is plug in our USB microphone (I use a Blue Yeti) and set OBS to capture its audio:
 
-{{ img(path="assets/images/going-live-with-obs/07-yeti-mic.png", alt="Yeti microphone audio input in OBS") }}
+{{ img(path="assets/images/going-live-with-obs/07-yeti-mic.png", alt="Yeti microphone audio input in OBS", caption="Yeti microphone input.") }}
 
 While connecting devices like my mic can be pretty simple, [macOS makes it very difficult](https://lofi-gaming.org.uk/blog/2016/09/17/capture-mac-desktop-audio-obs/) to capture desktop audio.
 
@@ -96,7 +96,7 @@ You should now see an additional device labeled iShowU Audio Capture. Set this a
 
 Back in OBS, we’ll also need to add this as an audio input just like we did with the mic. Once you do, test it’s hooked up correctly by playing some music and checking the VU meter in OBS’ audio panel.
 
-{{ img(path="assets/images/going-live-with-obs/08-yeti-and-ishowu-audio.png", alt="Yeti microphone and iShowU Audio inputs in OBS") }}
+{{ img(path="assets/images/going-live-with-obs/08-yeti-and-ishowu-audio.png", alt="Yeti microphone and iShowU Audio inputs in OBS", caption="Microphone and iShowU Audio inputs.") }}
 
 ## 4. Press the Stream button!
 

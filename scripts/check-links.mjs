@@ -57,6 +57,9 @@ const missingDimensions = [];
 const missingLoading = [];
 const duplicateIds = [];
 const invalidJsonLd = [];
+const missingLanguageClass = [];
+const brokenMarkdown = [];
+const brokenMachineLinks = [];
 let linkCount = 0;
 
 for (const file of files) {
@@ -119,6 +122,54 @@ for (const file of files) {
       invalidJsonLd.push({ page: relative, error: error.message });
     }
   }
+
+  for (const match of html.matchAll(/<pre\b([^>]*)><code\b([^>]*)>/g)) {
+    const preAttrs = match[1];
+    const codeAttrs = match[2];
+    if ((preAttrs.includes('data-lang') || codeAttrs.includes('data-lang')) && !preAttrs.includes('language-')) {
+      missingLanguageClass.push(relative);
+    }
+  }
+}
+
+function walkFiles(dir, extension) {
+  if (!fs.existsSync(dir)) return [];
+  const files = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) files.push(...walkFiles(full, extension));
+    else if (entry.name.endsWith(extension)) files.push(full);
+  }
+  return files;
+}
+
+function checkUrl(source, url) {
+  const cleaned = decode(url).split('#')[0].split('?')[0];
+  if (!cleaned || isExternal(cleaned) || cleaned.startsWith('#')) return;
+  let target;
+  if (cleaned.startsWith('/')) target = path.join(publicDir, cleaned);
+  else target = path.resolve(path.dirname(source), cleaned);
+  if (cleaned.endsWith('/')) target = path.join(target, 'index.html');
+  if (!exists(target)) brokenMarkdown.push({ source: path.relative(publicDir, source), url });
+}
+
+const mdFiles = walkFiles(path.join(publicDir, 'md'), '.md');
+for (const file of mdFiles) {
+  const text = fs.readFileSync(file, 'utf8')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`[^`]*`/g, '');
+  for (const match of text.matchAll(/\]\(([^)\s]+)\)/g)) checkUrl(file, match[1]);
+  for (const match of text.matchAll(/\b(?:href|src)="([^"]+)"/g)) checkUrl(file, match[1]);
+  for (const match of text.matchAll(/^canonical: "([^"]+)"/gm)) checkUrl(file, match[1]);
+  for (const match of text.matchAll(/^html: "([^"]+)"/gm)) checkUrl(file, match[1]);
+}
+
+for (const name of ['llms.txt', 'llms-full.txt']) {
+  const file = path.join(publicDir, name);
+  if (!fs.existsSync(file)) continue;
+  const text = fs.readFileSync(file, 'utf8');
+  const urls = [...text.matchAll(/https:\/\/ryanharris\.dev[^\s)<>"']*/g)].map((match) => match[0]);
+  for (const url of new Set(urls.map((value) => value.replace(/[.,;:]+$/, '')))) checkUrl(file, url.replace(/^https:\/\/ryanharris\.dev/, ''));
 }
 
 function report(name, items, format) {
@@ -134,8 +185,10 @@ report('Images without width/height', missingDimensions, (item) => item);
 report('Images without loading', missingLoading, (item) => item);
 report('Duplicate IDs', duplicateIds, (item) => `${item.page}: ${item.ids.join(', ')}`);
 report('Invalid JSON-LD', invalidJsonLd, (item) => `${item.page}: ${item.error}`);
+report('Code blocks without language class', missingLanguageClass, (item) => item);
+report('Broken Markdown/machine links', brokenMarkdown, (item) => `${item.source}: ${item.url}`);
 
-const failures = broken.length + missingAlt.length + missingDimensions.length + duplicateIds.length + invalidJsonLd.length;
+const failures = broken.length + missingAlt.length + missingDimensions.length + duplicateIds.length + invalidJsonLd.length + missingLanguageClass.length + brokenMarkdown.length;
 if (failures) {
   console.error(`\n${failures} validation problem(s) found.`);
   process.exit(1);

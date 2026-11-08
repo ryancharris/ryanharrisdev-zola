@@ -7,7 +7,7 @@ taxonomies:
     - "git"
     - "github"
 extra:
-  category: "oss"
+  category: "Open Source"
 ---
 
 During the onboarding process for my new job at Fauna, I was tasked with setting up my local development environment. However, since Fauna devs use work-specific GitHub accounts, a new challenge presented itself during the process: managing SSH keys and identities for multiple accounts.
@@ -52,7 +52,7 @@ Enter file in which to save the key (/Users/ryan/.ssh/id_rsa): id_rsa_work
 
 Next, we'll need to log into both GitHub accounts and add the new SSH key. Go into account settings and open the SSH and GPG keys sections. Then, add a new SSH key:
 
-{{ img(path="assets/images/managing-ssh-keys-for-github/02-add-a-key.png", alt="GitHub's SSH key interface") }}
+{{ img(path="assets/images/managing-ssh-keys-for-github/02-add-a-key.png", alt="GitHub's SSH key interface", caption="GitHub SSH key interface.") }}
 
 In the textfield below, we need to enter the public key we generated above. You can do this in a couple ways:
 

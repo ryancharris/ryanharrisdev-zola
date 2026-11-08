@@ -1,0 +1,61 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Frame-Options: DENY
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Language: en-US
+
+/404*
+  X-Robots-Tag: noindex, nofollow
+
+/atom.xml
+  Content-Type: application/atom+xml; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/rss.xml
+  Content-Type: application/rss+xml; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/feed.json
+  Content-Type: application/feed+json; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/md/*
+  Content-Type: text/markdown; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/site.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/processed_images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/syntax/*
+  Cache-Control: public, max-age=3600
+
+/giallo-light.css
+  Cache-Control: public, max-age=3600
+
+/giallo-dark.css
+  Cache-Control: public, max-age=3600

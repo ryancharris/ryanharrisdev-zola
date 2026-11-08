@@ -1,0 +1,69 @@
+{%- if term -%}
+  {% set feed_title = "Posts tagged “" ~ term.name ~ "”" %}
+  {% set feed_description = "Posts tagged " ~ term.name ~ " on " ~ config.title ~ "." %}
+{%- else -%}
+  {%- set feed_title = config.title -%}
+  {%- set feed_description = config.description -%}
+{%- endif -%}
+{%- set home_url = config.base_url ~ "/" -%}
+{%- if term -%}
+  {%- set home_page = term.permalink -%}
+{%- else -%}
+  {%- set home_page = home_url -%}
+{%- endif -%}
+{%- set author_url = config.base_url ~ "/about/" -%}
+{%- set icon_url = config.base_url ~ "/icon-512.png" -%}
+{%- set favicon_url = config.base_url ~ "/icon-64.png" -%}
+{%- set link_prefix = 'href="' ~ config.base_url ~ '/' -%}
+{%- set src_prefix = 'src="' ~ config.base_url ~ '/' -%}
+{%- set srcset_prefix = 'srcset="' ~ config.base_url ~ '/' -%}
+{%- set srcset_sep = ', ' ~ config.base_url ~ '/' -%}
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": {{ feed_title | json_encode | replace(from="<", to="\u003c") | safe }},
+  "home_page_url": {{ home_page | json_encode | replace(from="<", to="\u003c") | safe }},
+  "feed_url": {{ feed_url | json_encode | replace(from="<", to="\u003c") | safe }},
+  "description": {{ feed_description | json_encode | replace(from="<", to="\u003c") | safe }},
+  "icon": {{ icon_url | json_encode | replace(from="<", to="\u003c") | safe }},
+  "favicon": {{ favicon_url | json_encode | replace(from="<", to="\u003c") | safe }},
+  "language": {{ config.extra.locale | default(value=lang) | json_encode | replace(from="<", to="\u003c") | safe }},
+  "authors": [
+    {
+      "name": {{ config.author | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ author_url | json_encode | replace(from="<", to="\u003c") | safe }}
+    }
+  ],
+  "items": [
+    {% set_global separator = "" %}
+    {% for page in pages %}
+    {% if page.extra.hidden is defined and page.extra.hidden %}{% continue %}{% endif %}
+    {% if page.include_in_feeds is defined and not page.include_in_feeds %}{% continue %}{% endif %}
+    {% set content_html = page.content | replace(from='href="/', to=link_prefix) | replace(from='src="/', to=src_prefix) | replace(from='srcset="/', to=srcset_prefix) | replace(from=', /', to=srcset_sep) %}
+    {{ separator }}
+    {
+      "id": {{ page.permalink | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ page.permalink | json_encode | replace(from="<", to="\u003c") | safe }},
+      "title": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }},
+      "summary": {{ page.description | default(value="") | json_encode | replace(from="<", to="\u003c") | safe }},
+      "content_html": {{ content_html | json_encode | replace(from="<", to="\u003c") | safe }},
+      "date_published": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},
+      {% if page.updated %}
+      "date_modified": {{ page.updated | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},
+      {% else %}
+      "date_modified": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},
+      {% endif %}
+      "tags": {{ page.taxonomies.tags | default(value=[]) | json_encode | replace(from="<", to="\u003c") | safe }},
+      {% if page.extra.category is defined %}
+      "_section": {{ page.extra.category | json_encode | replace(from="<", to="\u003c") | safe }},
+      {% endif %}
+      "authors": [
+        {
+          "name": {{ config.author | json_encode | replace(from="<", to="\u003c") | safe }},
+          "url": {{ author_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        }
+      ]
+    }
+    {% set_global separator = "," %}
+    {% endfor %}
+  ]
+}

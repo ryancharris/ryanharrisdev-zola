@@ -79,14 +79,16 @@ main() {
 
     git submodule update --init --recursive
 
-    if command -v node >/dev/null 2>&1; then
-        node scripts/gen-llms.mjs
-    else
-        echo "node not found; using committed static/llms.txt and static/llms-full.txt." >&2
+    if ! command -v node >/dev/null 2>&1; then
+        echo "Node.js is required to generate Markdown/LLM representations." >&2
+        exit 1
     fi
+    node scripts/gen-llms.mjs
+    ZOLA_BIN="${ZOLA}" node scripts/gen-syntax-css.mjs
 
     rm -f static/giallo-light.css static/giallo-dark.css
     "${ZOLA}" build
+    node scripts/gen-machine.mjs
 }
 
 main "$@"

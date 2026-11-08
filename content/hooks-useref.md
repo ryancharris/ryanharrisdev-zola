@@ -6,7 +6,7 @@ taxonomies:
   tags:
     - "hooks"
 extra:
-  category: "react"
+  category: "React"
 ---
 
 ## What are refs?
@@ -33,7 +33,7 @@ In these examples, we're directly accessing the DOM in order to select and manip
 
 While the React docs cite a few examples where using refs would be appropriate, including managing focus, triggering animations, and working with third party libraries, they also warn against overusing them.
 
-> Avoid using refs for anything that can be done declaratively. [[React docs]](https://reactjs.org/docs/refs-and-the-dom.html#when-to-use-refs)
+> Avoid using refs for anything that can be done declaratively. [React docs: when to use refs](https://reactjs.org/docs/refs-and-the-dom.html#when-to-use-refs)
 
 For a practical example of how to use refs in your React app, [checkout my previous article about rebuilding a search UI](/redoing-search/) using refs and React Context. We'll also cover the ins and outs of Context in the next article in this series.
 
@@ -41,7 +41,7 @@ In the next section, we'll look more closely at the useRef hook and its syntax.
 
 ## Anatomy of useRef
 
-> ...useRef is like a “box” that can hold a mutable value... [[React docs]](https://reactjs.org/docs/hooks-reference.html#useref)
+> ...useRef is like a “box” that can hold a mutable value... [React docs: useRef](https://reactjs.org/docs/hooks-reference.html#useref)
 
 The useRef hook only takes one argument: its initial value. This can be any valid JavaScript value or JSX element. Here are a few examples:
 

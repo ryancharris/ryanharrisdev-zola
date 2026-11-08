@@ -1,5 +1,7 @@
 name = "ryanharrisdev-zola"
 compatibility_date = "2026-03-16"
+workers_dev = false
+preview_urls = false
 
 [build]
 command = "bash ./build.sh"

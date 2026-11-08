@@ -9,5 +9,9 @@ if [ -z "${ZOLA_BIN}" ] || [ ! -x "${ZOLA_BIN}" ]; then
     exit 1
 fi
 
+if command -v node >/dev/null 2>&1; then
+    node scripts/gen-llms.mjs
+    ZOLA_BIN="${ZOLA_BIN}" node scripts/gen-syntax-css.mjs
+fi
 rm -f static/giallo-light.css static/giallo-dark.css
 exec "${ZOLA_BIN}" serve "$@"
