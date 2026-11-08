@@ -6,3 +6,5 @@ static/giallo-dark.css
 .wrangler/
 static/md/
 static/syntax/
+
+node_modules/

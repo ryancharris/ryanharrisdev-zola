@@ -22,12 +22,26 @@ The pinned binary is cached in `.zola/` after the first `./build.sh`.
 ## Validation
 
 ```sh
-./scripts/validate.sh
+./scripts/validate.sh   # build + links + static regression tests
+npm run test:ui         # browser tests (Playwright + axe)
 ```
 
-This runs Zola's internal link checker, rebuilds the site, and checks the generated
+`validate.sh` runs Zola's link checker, rebuilds the site, and checks the generated
 HTML for broken internal links, missing image attributes, duplicate IDs, and invalid
-JSON-LD.
+JSON-LD. It also runs `scripts/site.test.mjs`, which locks in the theme contract
+(six fixed-mode schemes, no separate light/dark toggle, AA palettes, borderless
+icons, and the spacing fixes) without needing a browser.
+
+The browser suite (`scripts/test-ui.mjs`) serves `public/` and checks every scheme
+under light and dark OS preferences, menu keyboard behavior, persistence, the no-JS
+fallback, axe WCAG 2.2 AA, and horizontal overflow across every page at 1280px and
+390px.
+
+```sh
+npm install
+npx playwright install firefox
+npm run test:ui
+```
 
 ## Writing
 

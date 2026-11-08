@@ -26,6 +26,7 @@ rm -f static/giallo-light.css static/giallo-dark.css
 "${ZOLA_BIN}" build
 node scripts/gen-machine.mjs
 node scripts/check-links.mjs
+node --test scripts/site.test.mjs
 
 if command -v xmllint >/dev/null 2>&1; then
     xmllint --noout public/atom.xml public/rss.xml public/sitemap.xml
