@@ -146,17 +146,95 @@ test('scheme text, secondary text, links, and accents meet WCAG AA', () => {
   }
 });
 
-test('OS-dark fallback only applies before a scheme is chosen', () => {
-  assert.match(
-    css,
-    /@media \(prefers-color-scheme: dark\) \{\s*:root:not\(\[data-scheme\]\) \{/,
-    'missing :root:not([data-scheme]) OS fallback',
-  );
+test('theme default is consistent with or without JS', () => {
   assert.doesNotMatch(
     css,
-    /:root:not\(\[data-theme="light"\]\)\s*\{[^}]*--bg:/,
-    'a theme-based fallback would override fixed schemes on dark-OS systems',
+    /@media \(prefers-color-scheme: dark\) \{\s*:root/,
+    'an OS-dark :root fallback would make no-JS and JS-on disagree',
   );
+  assert.match(
+    baseHtml,
+    /<meta name="color-scheme" content="light">/,
+    'no-JS default must declare the light color scheme',
+  );
+  assert.doesNotMatch(baseHtml, /<link[^>]*id="syntax-light"/, 'static syntax-light link fetches the wrong file for stored schemes');
+  assert.match(baseHtml, /addLink\('syntax-active'/, 'pre-paint script must create the syntax link');
+});
+
+test('wordmark keeps its own color and fetches one icon', () => {
+  assert.match(css, /\.site-wordmark:link,\s*\.site-wordmark:visited \{[^}]*color: var\(--text\);/, 'wordmark must pin link/visited color');
+  assert.match(css, /\.site-wordmark::before \{[^}]*url\("\.\.\/favicon-light\.svg"\)/, 'wordmark icon must be a CSS background');
+  assert.match(css, /\[data-theme="dark"\] \.site-wordmark::before \{[^}]*url\("\.\.\/favicon-dark\.svg"\)/, 'dark wordmark icon override missing');
+  assert.doesNotMatch(baseHtml, /<img class="wordmark-icon/, 'dual <img> wordmark fetches both SVGs');
+  const wordmarkBlocks = (baseHtml.match(/class="site-wordmark"/g) || []).length;
+  assert.equal(wordmarkBlocks, 2, 'home + non-home wordmark branches changed');
+  assert.match(baseHtml, /<a class="site-wordmark" href="\/" rel="home" aria-label="[^"]* — home">[\s\S]*?<span>/, 'non-home wordmark must carry an accessible name');
+});
+
+test('hover states never leak the suCSS link background', () => {
+  for (const selector of ['.post-byline a', '.permalink', '.footer-row p a']) {
+    const block = css.match(new RegExp(`^\\*?\\s*${selector.replace('.', '\\.').replace(' ', '\\s+')}:hover,\\s*${selector.replace('.', '\\.').replace(' ', '\\s+')}:focus-visible \\{[^}]*\\}`, 'm'));
+    assert.ok(block, `${selector} hover rule missing`);
+    assert.match(block[0], /background: transparent;/, `${selector} hover must kill the suCSS background`);
+  }
+});
+
+test('content links intensify on hover instead of flipping to the accent', () => {
+  assert.match(css, /\.post-content a:hover,[\s\S]*?color: var\(--link-hover\);/, 'content link hover must use --link-hover');
+});
+
+test('gruvbox is anchored on authentic orange links', () => {
+  const block = cssBlock(css, '[data-scheme="gruvbox"]');
+  assert.equal(cssVar(block, 'link'), '#FE8019');
+  assert.equal(cssVar(block, 'link-hover'), '#F9AA4C');
+});
+
+test('paper syntax CSS is retinted onto the paper palette', () => {
+  const light = read('static/syntax/paper-light.css');
+  const dark = read('static/syntax/paper-dark.css');
+  assert.match(light, /\.z-keyword \{ color: #8A2E22; \}/);
+  assert.match(light, /\.z-string \{ color: #2C5A4D; \}/);
+  assert.doesNotMatch(light, /#032563|#A0111F|#023B95/, 'raw GitHub colors leaked into paper-light');
+  assert.match(dark, /\.z-keyword \{ color: #EDAA80; \}/);
+  assert.match(dark, /\.z-string \{ color: #93D2B7; \}/);
+  for (const file of ['static/syntax/rose-pine-light.css', 'static/syntax/rose-pine-dark.css']) {
+    assert.doesNotMatch(read(file), /\.z-variable \{[^}]*font-style: italic/, `${file}: rose-pine italic variables are back`);
+  }
+});
+
+test('round-4 polish rules exist', () => {
+  const checks = [
+    [/\.post-content kbd,[\s\S]*?border-bottom-width: 2px;/, 'kbd key style missing'],
+    [/\.post-content hr,[\s\S]*?border-top: 1px dashed var\(--border\);/, 'in-content hr must use the border color'],
+    [/\.post-year \{[\s\S]*?letter-spacing: 0\.08em;/, 'year label tracking must match the other micro-labels'],
+    [/\.scheme-option \{[\s\S]*?min-height: 2\.75rem;/, 'scheme options must be 44px tap targets'],
+    [/\.error-page a\.button \{[\s\S]*?border-radius: 4px;/, '404 button must use the site radius'],
+    [/\.error-page a:not\(\.button\) \{[\s\S]*?text-decoration: underline;/, '404 secondary link must be underlined'],
+    [/\[data-theme="dark"\] \.post-content img,[\s\S]*?box-shadow: 0 2px 14px/, 'dark figure frames missing'],
+    [/\.toc a\.is-active \{/, 'TOC scroll-spy active style missing'],
+    [/\.toc summary:hover,[\s\S]*?color: var\(--accent\);/, 'TOC summary hover missing'],
+    [/\.theme-trigger \.icon \.on \{[\s\S]*?fill: var\(--trigger-accent, currentColor\);/, 'trigger scheme accent missing'],
+    [/\.embed-callout-note \{/, 'callout availability note style missing'],
+    [/content: "#";\s*content: "#" \/ ""/, 'tag # prefix needs a plain fallback'],
+    [/content: "·";\s*content: "·" \/ ""/, 'post-meta separator needs a plain fallback'],
+  ];
+  for (const [pattern, message] of checks) assert.match(css, pattern, message);
+});
+
+test('TOC threshold and post-nav skip dateless pages', () => {
+  const page = read('templates/page.html');
+  assert.match(page, /page\.toc \| length >= 2/, 'TOC threshold must count short-structured posts');
+  assert.match(page, /page\.higher and page\.higher\.date/, 'post-nav must skip dateless pages (e.g. about)');
+  assert.match(page, /page\.lower and page\.lower\.date/, 'post-nav must skip dateless pages (e.g. about)');
+  const tags = read('templates/tags/single.html');
+  assert.match(tags, /date\(format="%b %-d, %Y"\)/, 'tag listing dates must include the day');
+});
+
+test('dead demos are annotated', () => {
+  for (const file of ['content/hooks-useref.md', 'content/hooks-usestate.md', 'content/redoing-search/index.md', 'content/hooks-usecontext/index.md']) {
+    const md = read(file);
+    assert.match(md, /unavailable/, `${file}: CodeSandbox availability note missing`);
+  }
 });
 
 test('syntax stylesheets exist for every scheme and mode', () => {

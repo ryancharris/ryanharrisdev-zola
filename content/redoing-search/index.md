@@ -165,6 +165,6 @@ By using Context, we easily decoupled our business logic and data fetching from 
 
 We also made our code easier for other developers to read in the future, which is never a bad thing!
 
-For the full tutorial, check out this [demo](https://codesandbox.io/s/laughing-lichterman-lxl1y).
+For the full tutorial, check out this [demo](https://codesandbox.io/s/laughing-lichterman-lxl1y) (sandbox may be unavailable).
 
 _Originally [published](https://blog.logrocket.com/redoing-search-ui-with-react-context-and-refs/) on [LogRocket](https://logrocket.com/)_

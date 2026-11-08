@@ -70,5 +70,6 @@ As you can see, both components do the same things: keep track of how many of ea
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/hooksusestate-o64ve" target="_blank" rel="noopener noreferrer">hooks/useState on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Take a look at the code and see which one you prefer. While hooks may still be new to you, can you see any benefits from using them?

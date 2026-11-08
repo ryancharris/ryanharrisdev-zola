@@ -252,6 +252,7 @@ Though it doesn't effect your application logic in anyway, this hook can negativ
 First things first, let's see what useDebugValue looks like in action:
 
 [Interactive demo: hooks/useDebugValue on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusedebugvalue-ccnju)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 In the snippet above, we've defined our own custom hook, useDate (more about these in an upcoming article). Currently, the hook fires once on App's initial render -- due to the empty dependency array -- and displays it on the page.
 
@@ -410,7 +411,7 @@ Lauro and I want to have our markdown files with a preview window next to it
 
 ### Usage notes
 
-`C-g`: Bailout command
+<kbd>C-g</kbd>: Bailout command
 
 `M-x lunar-phases`: Shows a list of the upcoming lunar cycles
 
@@ -452,7 +453,7 @@ Modifier keys
 Discovering a remembering keys
 
 - emacs is auto documented, so you want to leverage this as you learn
-- `C-h` will show a help menu
+- <kbd>C-h</kbd> will show a help menu
 
 > Tinking with emacs is every emacs hacker's favorite pastime
 
@@ -498,7 +499,7 @@ Apropos
 
 - Helpful when you're not sure exactly what command you're looking for
 - Supports RegEx
-- EX: `C-h a -word$` lists all commands ending with "word"
+- EX: <kbd>C-h a -word$</kbd> lists all commands ending with "word"
 - To sort your apropos results by relevancy
 
 ```elisp
@@ -510,10 +511,10 @@ Apropos
 > The describe system is not static.
 
 - The describe system has multiple helpful commands
-  - `M-x describe-mode` or `C-h m` — Displays documentation for any major mode (uses your current buffer)
-  - `M-x describe-function` or `C-h f` — Describes a function
-  - `M-x describe-variable` or `C-h v` — Describes a variable
-  - `M-x describe-key` or `C-h k` — Describes what a given keybinding does
+  - `M-x describe-mode` or <kbd>C-h m</kbd> — Displays documentation for any major mode (uses your current buffer)
+  - `M-x describe-function` or <kbd>C-h f</kbd> — Describes a function
+  - `M-x describe-variable` or <kbd>C-h v</kbd> — Describes a variable
+  - `M-x describe-key` or <kbd>C-h k</kbd> — Describes what a given keybinding does
 
 ---
 
@@ -649,6 +650,7 @@ _Note:_ If you haven't used it in the past, this is pretty much how [Redux](http
 In the sandbox below, I've built a form for scheduling an appointment. Though there are multiple inputs with different types, all of the values are related to one another as they are in the same form.
 
 [Interactive demo: hooks/useReducer on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusereducer-5rntg)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Instead of storing each input value in its own useState hook, we can store and manage all of the values in our form using a single useReducer. In this case, its state is an object with many keys, each representing a different value we want to store. Personally, this reminds me a bit of this.state in class components before we had hooks.
 
@@ -794,6 +796,7 @@ It also makes our lives easier because we do not need to duplicate useMemo logic
 In the sandbox below, I've taken the code from our [useMemo](https://ryanharris.dev/hooks-usememo/) example and refactored it to use useCallback:
 
 [Interactive demo: hooks/useCallback on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusecallback-89w2p)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Like with useMemo, our useCallback hook is returning a memoized value. However, in this case, it is a memoized version of the anonymous function passed to it, **not** the function's return value.
 
@@ -873,6 +876,7 @@ In the example below, I've created a demo to better illustrate how useMemo works
 _Note: If you're unfamiliar with [useEffect](https://ryanharris.dev/hooks-useeffect/) or [useState](https://ryanharris.dev/hooks-usestate/), take a moment and check out the previous articles in this series before continuing. Otherwise, these should look pretty familiar to you._
 
 [Interactive demo: hooks/useMemo on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusememo-kfgvu)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Here, our App component does three things:
 
@@ -960,7 +964,7 @@ _[Image: With and without Context illustrations]_
 
 _With and without Context._
 
-In [class components](https://codesandbox.io/s/hooksusecontext-class-wdiii), we used a combination of Context.Provider and Context.Consumer tags to set up the relationship described above. However, in function components, the Context.Consumer syntax has been [replaced with the useContext hook](https://codesandbox.io/s/hooksusecontext-hooks-8ss8k).
+In [class components](https://codesandbox.io/s/hooksusecontext-class-wdiii) (sandbox may be unavailable), we used a combination of Context.Provider and Context.Consumer tags to set up the relationship described above. However, in function components, the Context.Consumer syntax has been [replaced with the useContext hook](https://codesandbox.io/s/hooksusecontext-hooks-8ss8k) (sandbox may be unavailable).
 
 For context (no pun intended), the snippets below show these two implementations of the same Context. Despite the syntax difference, the functionality is **identical**.
 
@@ -1189,6 +1193,7 @@ In the sections below, we'll walk through two examples that better illustrate ho
 For this example, I have built a small SearchInput component that uses the useRef hook in order to refer to the input element rendered by our component:
 
 [Interactive demo: hooks/useRef (DOM) on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/serene-sunset-z80cl)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 In this specific case, our SearchInput component takes an autoFocus prop, which determines whether or not we want the input to be focused automatically on mount. In order to do this, we need to use a web API (i.e. .focus()) and thus need to be able to directly refer to the HTML element on the page.
 
@@ -1256,6 +1261,7 @@ While accessing DOM elements is a React anti-pattern (as discussed above), this 
 In this example, I want to illustrate the subtle difference between using useState and useRef to store values.
 
 [Interactive demo: hooks/useRef (Data) on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/fancy-hooks-cxw57)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Here, we have two sections that have buttons, which allow us to increment/decrement our refValue or stateValue, respectively. When the page initally loads, each section is assigned a random hex value as its background-color. From then on, you will see the colors change whenever our App component re-renders.
 
@@ -1497,6 +1503,7 @@ As you will notice, we actually have **three** useEffect hooks inside of our com
 Each of these hooks is using a different variation of the optional dependency array we discussed earlier. Look at the code a bit more closely -- do you know why each array looks the way it does?
 
 [Interactive demo: hooks/useEffect on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksuseeffect-gkejk)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Don't worry if you're still a bit confused because learning to "think in hooks" can take some time. The best way to get more comfortable with them is to use them, so feel free to fork the sandbox above and play around with the code. As a good place to start, try removing the dependency array from Hook #2 completely. What happens?
 
@@ -1576,6 +1583,7 @@ The first instance is a function component using three useState hooks to manage 
 As you can see, both components do the same things: keep track of how many of each item a user wants and increment/decrement that value based on button presses.
 
 [Interactive demo: hooks/useState on CodeSandbox ↗ (opens in a new tab)](https://codesandbox.io/s/hooksusestate-o64ve)
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Take a look at the code and see which one you prefer. While hooks may still be new to you, can you see any benefits from using them?
 
@@ -2306,7 +2314,7 @@ By using Context, we easily decoupled our business logic and data fetching from 
 
 We also made our code easier for other developers to read in the future, which is never a bad thing!
 
-For the full tutorial, check out this [demo](https://codesandbox.io/s/laughing-lichterman-lxl1y).
+For the full tutorial, check out this [demo](https://codesandbox.io/s/laughing-lichterman-lxl1y) (sandbox may be unavailable).
 
 _Originally [published](https://blog.logrocket.com/redoing-search-ui-with-react-context-and-refs/) on [LogRocket](https://logrocket.com/)_
 

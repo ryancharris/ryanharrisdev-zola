@@ -142,7 +142,7 @@
     </p>
   </header>
 
-  {% if page.toc and page.toc | length >= 3 %}
+  {% if page.toc and page.toc | length >= 2 %}
   <nav class="toc-nav" aria-label="Table of contents">
   <details class="toc">
     <summary>On this page</summary>
@@ -177,14 +177,14 @@
   </ul>
   {% endif %}
 
-  {% if page.higher or page.lower %}
+  {% if (page.higher and page.higher.date and not page.higher.extra.hidden) or (page.lower and page.lower.date and not page.lower.extra.hidden) %}
   <nav class="post-nav" aria-label="More posts">
-    {% if page.higher %}
+    {% if page.higher and page.higher.date and not page.higher.extra.hidden %}
     <a class="post-nav-prev" href="{{ page.higher.path | safe }}" rel="prev">
       <span aria-hidden="true">←</span> {{ page.higher.title }}
     </a>
     {% endif %}
-    {% if page.lower %}
+    {% if page.lower and page.lower.date and not page.lower.extra.hidden %}
     <a class="post-nav-next" href="{{ page.lower.path | safe }}" rel="next">
       {{ page.lower.title }} <span aria-hidden="true">→</span>
     </a>

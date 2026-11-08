@@ -32,11 +32,15 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#F7F3EA" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1C1814" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F7F3EA">
 
   <script>
+    // Pre-paint theme init. The default is always Paper & Ink (light); a stored
+    // scheme (fixed mode) is applied before first paint so there is no flash.
+    // Icon and syntax links are created here (not statically) so the browser
+    // fetches exactly the files the active scheme needs. Without JS the browser
+    // falls back to /favicon.ico and code renders without highlighting.
     (function () {
       document.documentElement.classList.remove('no-js');
       var modes = {
@@ -60,11 +64,29 @@
         var storedSequence = localStorage.getItem('scheme');
         if (modes[storedSequence]) scheme = storedSequence;
       } catch (error) {}
+      var theme = modes[scheme];
       document.documentElement.setAttribute('data-scheme', scheme);
-      document.documentElement.setAttribute('data-theme', modes[scheme]);
+      document.documentElement.setAttribute('data-theme', theme);
       var color = backgrounds[scheme] || '#F7F3EA';
       var metas = document.querySelectorAll('meta[name="theme-color"]');
       for (var i = 0; i < metas.length; i += 1) metas[i].setAttribute('content', color);
+      var faviconMap = theme === 'dark'
+        ? { svg: '/favicon-dark.svg', png16: '/favicon-16x16.png', png32: '/favicon-32x32.png' }
+        : { svg: '/favicon-light.svg', png16: '/favicon-light-16x16.png', png32: '/favicon-light-32x32.png' };
+      function addLink(id, attrs) {
+        var link = document.createElement('link');
+        link.id = id;
+        for (var key in attrs) link.setAttribute(key, attrs[key]);
+        document.head.appendChild(link);
+        return link;
+      }
+      addLink('favicon-svg', { rel: 'icon', type: 'image/svg+xml', href: faviconMap.svg });
+      addLink('favicon-16', { rel: 'icon', type: 'image/png', sizes: '16x16', href: faviconMap.png16 });
+      addLink('favicon-32', { rel: 'icon', type: 'image/png', sizes: '32x32', href: faviconMap.png32 });
+      addLink('syntax-active', {
+        rel: 'stylesheet',
+        href: '/syntax/' + scheme + '-' + theme + '.css'
+      });
     })();
   </script>
 
@@ -128,22 +150,6 @@
   {% elif current_path is defined and current_path == "/" %}
   <link rel="alternate" type="text/markdown" title="Markdown source" href="/md/index.md">
   {% endif %}
-  <link rel="icon" type="image/svg+xml" id="favicon-svg" href="/favicon-light.svg">
-  <link rel="icon" type="image/png" sizes="16x16" id="favicon-16" href="/favicon-light-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" id="favicon-32" href="/favicon-light-32x32.png">
-  <script>
-    (function () {
-      var theme = document.documentElement.getAttribute('data-theme')
-        || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      if (theme !== 'dark') return;
-      var svg = document.getElementById('favicon-svg');
-      var png16 = document.getElementById('favicon-16');
-      var png32 = document.getElementById('favicon-32');
-      if (svg) svg.setAttribute('href', '/favicon-dark.svg');
-      if (png16) png16.setAttribute('href', '/favicon-16x16.png');
-      if (png32) png32.setAttribute('href', '/favicon-32x32.png');
-    })();
-  </script>
   <link rel="apple-touch-icon" href="{{ get_url(path=config.extra.apple_touch_icon | default(value='apple-touch-icon.png')) | replace(from=config.base_url, to='') | safe }}">
   <link rel="manifest" href="{{ get_url(path='site.webmanifest') | replace(from=config.base_url, to='') | safe }}">
 
@@ -151,25 +157,6 @@
   <link rel="stylesheet" href="{{ get_url(path='css/reset.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
   <link rel="stylesheet" href="{{ get_url(path='css/sucss.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
   <link rel="stylesheet" href="{{ get_url(path='css/style.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
-  <link id="syntax-light" rel="stylesheet" href="/syntax/paper-light.css" media="(prefers-color-scheme: light)">
-  <link id="syntax-dark" rel="stylesheet" href="/syntax/paper-dark.css" media="(prefers-color-scheme: dark)">
-  <script>
-    (function () {
-      var scheme = document.documentElement.getAttribute('data-scheme') || 'paper';
-      var theme = document.documentElement.getAttribute('data-theme');
-      var light = document.getElementById('syntax-light');
-      var dark = document.getElementById('syntax-dark');
-      if (light) light.href = '/syntax/' + scheme + '-light.css';
-      if (dark) dark.href = '/syntax/' + scheme + '-dark.css';
-      if (theme === 'light') {
-        if (light) light.media = 'all';
-        if (dark) dark.media = 'not all';
-      } else if (theme === 'dark') {
-        if (light) light.media = 'not all';
-        if (dark) dark.media = 'all';
-      }
-    })();
-  </script>
   <link rel="stylesheet" href="{{ get_url(path='css/custom.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
 
   {% block structured_data %}{% endblock %}
@@ -182,14 +169,9 @@
   <header class="site-header">
   <nav id="nav-bar" aria-label="Primary">
     {% if current_path is defined and current_path == "/" %}
-    <a class="site-wordmark" href="/" rel="home" aria-label="{{ config.title }} — home">
-      <img class="wordmark-icon wordmark-icon-light" src="/favicon-light.svg" width="20" height="20" alt="" aria-hidden="true">
-      <img class="wordmark-icon wordmark-icon-dark" src="/favicon-dark.svg" width="20" height="20" alt="" aria-hidden="true">
-    </a>
+    <a class="site-wordmark" href="/" rel="home" aria-label="{{ config.title }} — home"></a>
     {% else %}
-    <a class="site-wordmark" href="/" rel="home">
-      <img class="wordmark-icon wordmark-icon-light" src="/favicon-light.svg" width="20" height="20" alt="" aria-hidden="true">
-      <img class="wordmark-icon wordmark-icon-dark" src="/favicon-dark.svg" width="20" height="20" alt="" aria-hidden="true">
+    <a class="site-wordmark" href="/" rel="home" aria-label="{{ config.title }} — home">
       <span>{{ config.title }}</span>
     </a>
     {% endif %}
@@ -199,17 +181,17 @@
       {% set nav_name = nav_item.name_en %}
       {% if nav_item[nav_key] is defined %}{% set nav_name = nav_item[nav_key] %}{% endif %}
       {% set is_current = current_path is defined and (current_path == nav_item.url or current_path == nav_item.url ~ "/") %}
-      {% if nav_item.url == "/" and current_path is defined and current_path != "/" and current_path != "/about/" %}{% set is_current = true %}{% endif %}
+      {% if nav_item.url == "/" and page is defined and page.date is defined and current_path is defined and current_path != "/" and current_path != "/about/" %}{% set is_current = true %}{% endif %}
       <a href="{{ nav_item.url | safe }}"{% if is_current %} aria-current="page"{% endif %}>{{ nav_name }}</a>
     {% endfor %}
 
     <details class="theme-menu" id="theme-menu">
-      <summary class="theme-trigger" aria-label="Theme settings">
+      <summary class="theme-trigger" aria-label="Theme settings" title="Color theme">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect x="3" y="3" width="8" height="8" rx="1" fill="currentColor" opacity=".95"/>
+          <rect class="on" x="3" y="3" width="8" height="8" rx="1" fill="currentColor" opacity=".95"/>
           <rect x="13" y="3" width="8" height="8" rx="1" fill="currentColor" opacity=".55"/>
           <rect x="3" y="13" width="8" height="8" rx="1" fill="currentColor" opacity=".55"/>
-          <rect x="13" y="13" width="8" height="8" rx="1" fill="currentColor" opacity=".95"/>
+          <rect class="on" x="13" y="13" width="8" height="8" rx="1" fill="currentColor" opacity=".95"/>
         </svg>
       </summary>
       <div class="theme-panel">

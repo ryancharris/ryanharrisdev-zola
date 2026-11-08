@@ -123,6 +123,7 @@ Each of these hooks is using a different variation of the optional dependency ar
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/hooksuseeffect-gkejk" target="_blank" rel="noopener noreferrer">hooks/useEffect on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Don't worry if you're still a bit confused because learning to "think in hooks" can take some time. The best way to get more comfortable with them is to use them, so feel free to fork the sandbox above and play around with the code. As a good place to start, try removing the dependency array from Hook #2 completely. What happens?
 

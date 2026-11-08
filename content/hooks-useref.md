@@ -130,6 +130,7 @@ For this example, I have built a small SearchInput component that uses the useRe
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/serene-sunset-z80cl" target="_blank" rel="noopener noreferrer">hooks/useRef (DOM) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 In this specific case, our SearchInput component takes an autoFocus prop, which determines whether or not we want the input to be focused automatically on mount. In order to do this, we need to use a web API (i.e. .focus()) and thus need to be able to directly refer to the HTML element on the page.
 
@@ -200,6 +201,7 @@ In this example, I want to illustrate the subtle difference between using useSta
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/fancy-hooks-cxw57" target="_blank" rel="noopener noreferrer">hooks/useRef (Data) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Here, we have two sections that have buttons, which allow us to increment/decrement our refValue or stateValue, respectively. When the page initally loads, each section is assigned a random hex value as its background-color. From then on, you will see the colors change whenever our App component re-renders.
 

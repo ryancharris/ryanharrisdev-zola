@@ -42,30 +42,6 @@
     color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root:not([data-scheme]) {
-        --bg: #1C1814;
-        --bg-light: #2A241D;
-        --text: #EDE4D3;
-        --text-light: #BBAE98;
-        --accent: #93D2B7;
-        --accent-light: #7DBDA2;
-        --accent-text: #1C1814;
-        --border: #756957;
-        --link: #EDAA80;
-        --link-hover: #F4C2A0;
-        --hover-bg: var(--link-hover);
-        --hover-text: #1C1814;
-        --img-opacity: 1;
-        --code-bg: #120F0C;
-        --scroll-shadow: rgba(245, 245, 255, 0.16);
-        --focus-ring: #93D2B7;
-        --selection-bg: #EDAA80;
-        --selection-text: #1C1814;
-        color-scheme: dark;
-    }
-}
-
 [data-theme="light"] {
     --bg: #F7F3EA;
     --bg-light: #EDE7DA;
@@ -143,15 +119,15 @@
     --accent-light: #D5C46A;
     --accent-text: #282828;
     --border: #7C6F64;
-    --link: #83A598;
-    --link-hover: #A3C9B8;
+    --link: #FE8019;
+    --link-hover: #F9AA4C;
     --hover-bg: var(--link-hover);
     --hover-text: #282828;
     --img-opacity: 1;
     --code-bg: #1D2021;
     --scroll-shadow: rgba(235, 219, 178, 0.18);
-    --focus-ring: #83A598;
-    --selection-bg: #83A598;
+    --focus-ring: #FE8019;
+    --selection-bg: #FE8019;
     --selection-text: #282828;
     color-scheme: dark;
 }
@@ -368,6 +344,10 @@ main:focus {
     height: 1.25rem;
 }
 
+.theme-trigger .icon .on {
+    fill: var(--trigger-accent, currentColor);
+}
+
 .theme-panel {
     position: absolute;
     top: calc(100% + 0.5rem);
@@ -389,10 +369,6 @@ main:focus {
     text-transform: uppercase;
 }
 
-.theme-panel-title + .scheme-picker {
-    margin-bottom: 1rem;
-}
-
 .scheme-picker {
     display: grid;
     grid-template-columns: 1fr;
@@ -407,7 +383,9 @@ main:focus {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    min-height: 2.75rem;
     padding: 0.35rem;
+    margin: 0;
     border: 1px solid transparent;
     border-radius: 6px;
     cursor: pointer;
@@ -468,7 +446,7 @@ main:focus {
 .scheme-option[data-theme-option="gruvbox"] {
     --swatch-bg-light: #3C3836;
     --swatch-bg-dark: #1D2021;
-    --swatch-link: #83A598;
+    --swatch-link: #FE8019;
     --swatch-accent: #B8BB26;
 }
 
@@ -555,6 +533,29 @@ h6::before {
     font-weight: 700;
     letter-spacing: -0.02em;
     text-decoration: none;
+    padding: 0.625rem 0.5rem;
+    margin: -0.625rem -0.5rem;
+}
+
+.site-wordmark::before {
+    content: "";
+    display: block;
+    flex: 0 0 24px;
+    inline-size: 24px;
+    block-size: 24px;
+    background: url("../favicon-light.svg") center / contain no-repeat;
+    image-rendering: pixelated;
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .site-wordmark::before {
+    background-image: url("../favicon-dark.svg");
+}
+
+.site-wordmark:link,
+.site-wordmark:visited {
+    color: var(--text);
+    text-decoration: none;
 }
 
 .site-wordmark:hover,
@@ -564,42 +565,6 @@ h6::before {
     text-decoration: none;
 }
 
-.site-wordmark img {
-    width: 20px;
-    height: 20px;
-    max-width: none;
-    padding: 0;
-    border: 0;
-    flex: 0 0 20px;
-    border-radius: 4px;
-    image-rendering: pixelated;
-}
-
-.wordmark-icon {
-    display: block;
-}
-
-.wordmark-icon-dark {
-    display: none;
-}
-
-[data-theme="dark"] .wordmark-icon-light {
-    display: none;
-}
-
-[data-theme="dark"] .wordmark-icon-dark {
-    display: block;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .wordmark-icon-light {
-        display: none;
-    }
-
-    :root:not([data-theme="light"]) .wordmark-icon-dark {
-        display: block;
-    }
-}
 
 .nav-actions {
     display: flex;
@@ -612,7 +577,7 @@ h6::before {
 
 .nav-actions > a {
     margin: 0;
-    padding: 0.35rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     color: var(--link);
     text-decoration: none;
     border-radius: 4px;
@@ -675,7 +640,7 @@ h6::before {
     margin: 0 0 1rem;
     color: var(--text-light);
     font-size: 0.75rem;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
@@ -749,6 +714,8 @@ h6::before {
 }
 
 .post-byline a {
+    padding: 0.45rem 0.25rem;
+    margin: -0.45rem -0.25rem;
     color: var(--text-light);
     text-decoration: none;
 }
@@ -756,10 +723,13 @@ h6::before {
 .post-byline a:hover,
 .post-byline a:focus-visible {
     color: var(--text);
+    background: transparent;
     text-decoration: underline;
 }
 
 .permalink {
+    padding: 0.45rem 0.25rem;
+    margin: -0.45rem -0.25rem;
     color: var(--text-light);
     text-decoration: none;
 }
@@ -767,6 +737,7 @@ h6::before {
 .permalink:hover,
 .permalink:focus-visible {
     color: var(--accent);
+    background: transparent;
     text-decoration: underline;
 }
 
@@ -787,6 +758,7 @@ h6::before {
 }
 
 .post-meta > * + *::before {
+    content: "·";
     content: "·" / "";
     margin-right: 0.5rem;
     color: var(--text-light);
@@ -863,7 +835,7 @@ h6::before {
 .page-content a:hover,
 .page-content a:focus-visible {
     background: transparent;
-    color: var(--accent);
+    color: var(--link-hover);
     text-decoration: underline;
     text-decoration-thickness: 2px;
 }
@@ -877,6 +849,12 @@ h6::before {
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--bg-light);
+}
+
+[data-theme="dark"] .post-content img,
+[data-theme="dark"] .page-content img {
+    border-color: color-mix(in srgb, var(--border) 70%, var(--text) 30%);
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
 }
 
 .post-content figure,
@@ -941,6 +919,24 @@ h6::before {
     font-size: 0.9em;
 }
 
+.post-content kbd,
+.page-content kbd {
+    padding: 0.05em 0.35em;
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text);
+    font-size: 0.92em;
+    font-family: inherit;
+}
+
+.post-content hr,
+.page-content hr {
+    border: 0;
+    border-top: 1px dashed var(--border);
+}
+
 .post-content blockquote {
     margin: 2rem 0;
     padding: 1rem;
@@ -977,6 +973,13 @@ h6::before {
     background: var(--bg-light);
 }
 
+.embed-callout-note {
+    width: 100%;
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.75rem;
+}
+
 .embed-callout-label {
     color: var(--accent);
     font-size: 0.75rem;
@@ -1006,6 +1009,11 @@ h6::before {
     font-weight: 700;
 }
 
+.toc summary:hover,
+.toc summary:focus-visible {
+    color: var(--accent);
+}
+
 details.toc[open] > summary + ol {
     margin-top: 0.75rem;
 }
@@ -1023,8 +1031,14 @@ details.toc[open] > summary + ol {
 
 .toc a {
     display: inline-block;
-    padding: 0.15rem 0;
+    padding: 0.3rem 0;
+    margin: -0.15rem 0;
     text-decoration: none;
+}
+
+.toc a.is-active {
+    color: var(--accent);
+    font-weight: 700;
 }
 
 .toc a:hover,
@@ -1046,7 +1060,8 @@ details.toc[open] > summary + ol {
 
 .back-to-top a {
     display: inline-block;
-    padding: 0.2rem 0;
+    padding: 0.5rem 0.25rem;
+    margin: -0.25rem -0.25rem;
     text-decoration: none;
 }
 
@@ -1070,7 +1085,15 @@ details.toc[open] > summary + ol {
 
 .error-page a:not(.button) {
     display: inline-block;
-    padding: 0.2rem 0;
+    padding: 0.5rem 0.25rem;
+    margin: -0.25rem -0.25rem;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.error-page a.button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }
 
 /* Tags ------------------------------------------------------------------ */
@@ -1101,6 +1124,7 @@ details.toc[open] > summary + ol {
 }
 
 .tag::before {
+    content: "#";
     content: "#" / "";
     margin-right: 0.1em;
 }
@@ -1170,7 +1194,8 @@ details.toc[open] > summary + ol {
 
 .post-nav a {
     max-width: 48%;
-    padding: 0.3rem 0;
+    padding: 0.625rem 0.25rem;
+    margin: -0.3rem -0.25rem;
     color: var(--link);
     text-decoration: none;
 }
@@ -1223,6 +1248,7 @@ footer > hr {
 .footer-row p a:hover,
 .footer-row p a:focus-visible {
     color: var(--accent);
+    background: transparent;
     text-decoration: underline;
 }
 
@@ -1374,25 +1400,9 @@ footer > hr {
     }
 }
 
-/* Dark blockquotes use the page background so inline links keep AA contrast. */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .post-content blockquote {
-        background: var(--bg);
-    }
-}
-
-[data-theme="dark"] .post-content blockquote {
-    background: var(--bg);
-}
-
-/* Keep link-bearing surface boxes on the page background in dark mode. */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .toc,
-    :root:not([data-theme="light"]) .embed-callout {
-        background: var(--bg);
-    }
-}
-
+/* Dark schemes use the page background on link-bearing surfaces so inline
+   links keep AA contrast. */
+[data-theme="dark"] .post-content blockquote,
 [data-theme="dark"] .toc,
 [data-theme="dark"] .embed-callout {
     background: var(--bg);
