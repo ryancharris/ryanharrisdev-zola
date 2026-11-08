@@ -289,6 +289,26 @@ try {
     await context.close();
   });
 
+  await check('h1 has no offset marker and sits on the body axis', async () => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: 'dark' });
+    const page = await context.newPage();
+    await page.addInitScript(() => localStorage.setItem('scheme', 'gruvbox'));
+    await page.goto(`${base}/`, { waitUntil: 'load' });
+    await settle(page);
+    const state = await page.evaluate(() => {
+      const heading = document.querySelector('h1');
+      const description = document.querySelector('.site-description');
+      return {
+        marker: getComputedStyle(heading, '::before').content,
+        headingLeft: Math.round(heading.getBoundingClientRect().left),
+        descriptionLeft: Math.round(description.getBoundingClientRect().left),
+      };
+    });
+    assert.equal(state.marker, 'none');
+    assert.equal(state.headingLeft, state.descriptionLeft);
+    await context.close();
+  });
+
   for (const os of ['light', 'dark']) {
     await check(`no-JS fallback follows ${os} OS with the menu hidden`, async () => {
       const context = await browser.newContext({

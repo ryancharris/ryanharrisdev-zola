@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "description": "ryanharris.dev static site and test harness",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "node --test scripts/site.test.mjs",
     "test:ui": "node scripts/test-ui.mjs",
