@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block structured_data %}
+{% set page_url = page.permalink %}
+{% set web_id = page_url ~ "#webpage" %}
+{% set article_id = page_url ~ "#article" %}
+{% set image_id = page_url ~ "#primaryimage" %}
+{% set breadcrumb_id = page_url ~ "#breadcrumb" %}
+{% set author_id = config.base_url ~ "/#person" %}
+{% set website_id = config.base_url ~ "/#website" %}
+{% set blog_id = config.base_url ~ "/#blog" %}
+{% set series_url = config.base_url ~ "/hooks-revisited/" %}
+{% set series_id = config.base_url ~ "/hooks-revisited/#series" %}
+{% set home_url = config.base_url ~ "/" %}
+{% set og_image = get_url(path='og-image.png') %}
+{% set description = page.description | default(value=config.description) %}
+{% set page_lang = config.extra.locale | default(value=page.lang) %}
+{% set copyright_year = now() | date(format="%Y") %}
+{% set page_tags = [] %}
+{% if page.taxonomies.tags is defined %}{% set page_tags = page.taxonomies.tags %}{% endif %}
+{% set in_series = "hooks" in page_tags and page.path != "/hooks-revisited/" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {% include "partials/schema-site.html" %},
+    {
+      "@type": "ImageObject",
+      "@id": {{ image_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ og_image | json_encode | replace(from="<", to="\u003c") | safe }},
+      "contentUrl": {{ og_image | json_encode | replace(from="<", to="\u003c") | safe }},
+      "width": 1200,
+      "height": 630,
+      "caption": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }}
+    },
+    {
+      "@type": "WebPage",
+      "@id": {{ web_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ page_url | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }},
+      "description": {{ description | json_encode | replace(from="<", to="\u003c") | safe }},
+      "isPartOf": { "@id": {{ website_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "mainEntity": { "@id": {{ article_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "breadcrumb": { "@id": {{ breadcrumb_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "inLanguage": {{ page_lang | json_encode | replace(from="<", to="\u003c") | safe }},
+      "primaryImageOfPage": { "@id": {{ image_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "publisher": { "@id": {{ author_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      {% if page.date %}"datePublished": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% endif %}
+      {% if page.updated %}"dateModified": {{ page.updated | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% elif page.date %}"dateModified": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% endif %}
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": {{ article_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "headline": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }},
+      "description": {{ description | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ page_url | json_encode | replace(from="<", to="\u003c") | safe }},
+      "mainEntityOfPage": { "@id": {{ web_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "image": { "@id": {{ image_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      {% if page.date %}"datePublished": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% endif %}
+      {% if page.updated %}"dateModified": {{ page.updated | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% elif page.date %}"dateModified": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% endif %}
+      "author": { "@id": {{ author_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "publisher": { "@id": {{ author_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "inLanguage": {{ page_lang | json_encode | replace(from="<", to="\u003c") | safe }},
+      "wordCount": {{ page.word_count }},
+      "timeRequired": "PT{{ page.reading_time }}M",
+      "isAccessibleForFree": true,
+      {% if page.extra.category is defined %}"articleSection": {{ page.extra.category | json_encode | replace(from="<", to="\u003c") | safe }},{% endif %}
+      "keywords": {{ page_tags | json_encode | replace(from="<", to="\u003c") | safe }},
+      "about": [
+        {% for tag in page_tags %}
+        {% set tag_url = get_taxonomy_url(kind='tags', name=tag) %}
+        {
+          "@type": "DefinedTerm",
+          "name": {{ tag | json_encode | replace(from="<", to="\u003c") | safe }},
+          "url": {{ tag_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ],
+      {% if in_series %}
+      "isPartOf": [ { "@id": {{ blog_id | json_encode | replace(from="<", to="\u003c") | safe }} }, { "@id": {{ series_id | json_encode | replace(from="<", to="\u003c") | safe }} } ],
+      {% else %}
+      "isPartOf": { "@id": {{ blog_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      {% endif %}
+      "copyrightHolder": { "@id": {{ author_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "copyrightYear": {{ copyright_year }},
+      "copyrightNotice": "© {{ copyright_year }} {{ config.author }}"
+    },
+    {% if in_series %}
+    {
+      "@type": "CreativeWorkSeries",
+      "@id": {{ series_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": "Hooks Revisited",
+      "url": {{ series_url | json_encode | replace(from="<", to="\u003c") | safe }},
+      "author": { "@id": {{ author_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "isPartOf": { "@id": {{ blog_id | json_encode | replace(from="<", to="\u003c") | safe }} }
+    },
+    {% endif %}
+    {
+      "@type": "BreadcrumbList",
+      "@id": {{ breadcrumb_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": "Breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Writing",
+          "item": {{ home_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }},
+          "item": {{ page_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="post h-entry">
+  <header class="post-header">
+    <h1 class="p-name">{{ page.title }}</h1>
+    {% if page.description %}<p class="post-description p-summary">{{ page.description }}</p>{% endif %}
+    <p class="post-meta">
+      <span class="post-byline">By <a class="p-author h-card p-name u-url" href="/about/" rel="author">{{ config.extra.author | default(value=config.author) }}</a></span>
+      <span aria-hidden="true">·</span>
+      {% if page.date %}
+      <time class="dt-published" datetime="{{ page.date }}">Published {{ page.date | date(format="%B %-d, %Y") }}</time>
+      {% endif %}
+      <span aria-hidden="true">·</span>
+      <span>{{ page.reading_time }} min read</span>
+      <span aria-hidden="true">·</span>
+      <a class="u-url permalink" href="{{ page.permalink | safe }}" aria-label="Permalink to this post">#</a>
+      {% if page.updated and page.updated != page.date %}
+      <span aria-hidden="true">·</span>
+      <span>Updated <time class="dt-updated" datetime="{{ page.updated }}">{{ page.updated | date(format="%B %-d, %Y") }}</time></span>
+      {% endif %}
+    </p>
+  </header>
+
+  {% if page.toc and page.toc | length >= 3 %}
+  <nav class="toc-nav" aria-label="Table of contents">
+  <details class="toc">
+    <summary>On this page</summary>
+    <ol>
+      {% for heading in page.toc %}
+      <li>
+        <a href="#{{ heading.id }}">{{ heading.title }}</a>
+        {% if heading.children %}
+        <ol>
+          {% for child in heading.children %}
+          <li><a href="#{{ child.id }}">{{ child.title }}</a></li>
+          {% endfor %}
+        </ol>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </details>
+  </nav>
+  {% endif %}
+
+  <div class="post-content e-content">
+    {{ page.content | safe }}
+  </div>
+
+  {% if page.taxonomies.tags is defined and page.taxonomies.tags %}
+  <ul class="post-tags" aria-label="Tags">
+    <li class="post-tags-label">Tagged</li>
+    {% for tag in page.taxonomies.tags %}
+    <li><a class="tag p-category" href="{{ get_taxonomy_url(kind='tags', name=tag) | replace(from=config.base_url, to='') | safe }}">{{ tag }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if page.higher or page.lower %}
+  <nav class="post-nav" aria-label="More posts">
+    {% if page.higher %}
+    <a class="post-nav-prev" href="{{ page.higher.path | safe }}" rel="prev">
+      <span aria-hidden="true">←</span> {{ page.higher.title }}
+    </a>
+    {% endif %}
+    {% if page.lower %}
+    <a class="post-nav-next" href="{{ page.lower.path | safe }}" rel="next">
+      {{ page.lower.title }} <span aria-hidden="true">→</span>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  <p class="back-to-top"><a href="#main">Back to top <span aria-hidden="true">↑</span></a></p>
+</article>
+{% endblock content %}

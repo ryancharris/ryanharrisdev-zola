@@ -1,10 +1,13 @@
 ---
 title: "3 Steps to Getting Started with Open Source"
 date: "2019-03-09"
-published: true
 description: "Contributing to open-source projects during my career transition taught me a lot about being a developer. Here's how you can get started with OSS."
-category: "oss"
-featured: true
+taxonomies:
+  tags:
+    - "open-source"
+    - "career"
+extra:
+  category: "Open Source"
 ---
 
 Before becoming a developer, I spent a decade working in film and television, so when I first started transitioning into tech, I spent a lot of time networking, going to Meetups and having coffee with other developers. I was primarily interested in **finding out what I needed to know to become employable and how I could go about learning those skills**. I heard a few answers consistently: do online tutorials, build your portfolio and contribute to open source projects.
@@ -17,7 +20,7 @@ You will also gain experience in the “soft-skills” of engineering like how t
 
 **Open source projects provide an opportunity for developers to learn skills that will make them more employable.** Here’s how you can get started!
 
-### How do I find an open source project?
+## How do I find an open source project?
 
 Figuring out where to start is hard. There are tons of projects out there that are currently being worked on, but how do you know which one is the right one for you? There are a few small ways you can make the search a bit easier.
 
@@ -31,7 +34,7 @@ Lastly, I suggest looking for projects that are being actively developed. The la
 2. Check out how many stars the repo has. Stars indicate community interest in the project.
 3. See how many contributors the project has. The more, the better because you’ll have plenty of people to ask for help.
 
-### How do I contribute to an open source project?
+## How do I contribute to an open source project?
 
 Now that you’ve found a project to work on, let’s talk about OSS workflows and how you get your code merged.
 
@@ -51,7 +54,7 @@ If the paragraph above confused you, don’t worry—you’re definitely not alo
 
 Once you’ve opened your pull request, project maintainers will review your code, potentially ask for changes and merge your code in. This process is a great opportunity to learn from more experienced developers, which can help build your real-world development skill set.
 
-### How do I find issues to work on?
+## How do I find issues to work on?
 
 Now that you’ve found a project and understand the general workflow, where do you find issues to work on? **The best place to look is on the project repo’s issues page.** On large projects, this page may have hundreds, if not thousands of open issues for you to choose.
 
@@ -63,7 +66,7 @@ Another great place to find things you can work on is the project’s Slack chan
 
 If you don’t have any luck finding issues in a specific repo, be on the lookout for seasonal community events like [Hacktoberfest](https://hacktoberfest.digitalocean.com/) or [24 Pull Requests](https://24pullrequests.com/). These events aggregate beginner-friendly issues from a wide variety of projects, which helps make it easier to find things to work on. Awesome!
 
-### Learning from open source
+## Learning from open source
 
 My first contribution to an open source project was [a simple documentation change for Brunch](https://github.com/brunch/brunch.github.io/pull/207), a build tool I was using at the time. Simply because I was using it, I noticed a typo in the docs and decided to fix it. It certainly wasn’t a mind-blowing enhancement, but at least the next person reading the docs would have a slightly better experience.
 

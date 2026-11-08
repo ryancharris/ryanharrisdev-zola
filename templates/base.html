@@ -1,7 +1,268 @@
-{% extends "anemone/templates/base.html" %}
+<!DOCTYPE html>
+<html lang="{{ config.extra.locale | default(value=lang) }}" class="no-js">
+<head>
+{%- set about_url = config.base_url ~ "/about/" -%}
+{%- set page_title = config.title -%}
+{%- set page_description = config.description -%}
+{%- set og_type = "website" -%}
+{%- if page -%}
+  {%- set page_title = page.title -%}
+  {%- set page_description = page.description | default(value=config.description) -%}
+  {%- if page.date -%}{%- set og_type = "article" -%}{%- endif -%}
+  {%- if page.extra.og_type is defined -%}{%- set og_type = page.extra.og_type -%}{%- endif -%}
+{%- elif term -%}
+  {%- set page_title = "Posts tagged “" ~ term.name ~ "”" -%}
+  {%- set page_description = "Posts tagged " ~ term.name ~ " on " ~ config.title ~ "." -%}
+{%- elif taxonomy -%}
+  {%- set page_title = "Tags" -%}
+  {%- set page_description = "All tags used on " ~ config.title ~ "." -%}
+{%- elif section -%}
+  {%- set page_title = section.title -%}
+  {%- set page_description = section.description | default(value=config.description) -%}
+{%- endif -%}
+{%- if current_url is not defined -%}
+  {%- set page_title = "Page not found" -%}
+  {%- set page_description = "The page you're looking for doesn't exist." -%}
+{%- endif -%}
+{%- if current_path is defined and current_path == "/" -%}
+  {%- set full_title = config.title -%}
+{%- else -%}
+  {%- set full_title = page_title ~ " | " ~ config.title -%}
+{%- endif -%}
 
-{% block extra_head %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#F7F3EA" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1C1814" media="(prefers-color-scheme: dark)">
+
+  <script>
+    (function () {
+      document.documentElement.classList.remove('no-js');
+      var modes = {
+        'paper': 'light',
+        'gruvbox': 'dark',
+        'rose-pine': 'dark',
+        'monokai': 'dark',
+        'catppuccin-mocha': 'dark',
+        'pencil-light': 'light'
+      };
+      var backgrounds = {
+        'paper': '#F7F3EA',
+        'gruvbox': '#282828',
+        'rose-pine': '#191724',
+        'monokai': '#272822',
+        'catppuccin-mocha': '#1E1E2E',
+        'pencil-light': '#F0F0F0'
+      };
+      var scheme = 'paper';
+      try {
+        var storedSequence = localStorage.getItem('scheme');
+        if (modes[storedSequence]) scheme = storedSequence;
+      } catch (error) {}
+      document.documentElement.setAttribute('data-scheme', scheme);
+      document.documentElement.setAttribute('data-theme', modes[scheme]);
+      var color = backgrounds[scheme] || '#F7F3EA';
+      var metas = document.querySelectorAll('meta[name="theme-color"]');
+      for (var i = 0; i < metas.length; i += 1) metas[i].setAttribute('content', color);
+    })();
+  </script>
+
+  <title>{{ full_title }}</title>
+  <meta name="description" content="{{ page_description }}">
+  {% if current_url is defined %}
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="{{ current_url | safe }}">
+  {% else %}
+  <meta name="robots" content="noindex">
+  {% endif %}
+  <meta name="author" content="{{ config.extra.author | default(value=config.author) }}">
+  <link rel="author" href="{{ about_url | safe }}">
+  <link rel="me" href="{{ config.extra.github | safe }}">
+  <link rel="me" href="{{ config.extra.linkedin | safe }}">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  {% if og_type == "article" and page and page.higher %}<link rel="prev" href="{{ page.higher.permalink | safe }}">{% endif %}
+  {% if og_type == "article" and page and page.lower %}<link rel="next" href="{{ page.lower.permalink | safe }}">{% endif %}
+
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:site_name" content="{{ config.title }}">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ page_description }}">
+  {% if current_url is defined %}<meta property="og:url" content="{{ current_url | safe }}">{% endif %}
+  <meta property="og:image" content="{{ get_url(path='og-image.png') | safe }}">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ryan harris — writing about code, tools, and things i'm figuring out">
+  {% if og_type == "article" %}
+  <meta property="article:author" content="{{ about_url | safe }}">
+  {% if page.extra.category is defined %}<meta property="article:section" content="{{ page.extra.category }}">{% endif %}
+  {% endif %}
+  {% if og_type == "article" and page and page.date %}<meta property="article:published_time" content="{{ page.date | date(format="%+") }}">{% endif %}
+  {% if og_type == "article" and page and page.updated %}<meta property="article:modified_time" content="{{ page.updated | date(format="%+") }}">
+  {% elif og_type == "article" and page and page.date %}<meta property="article:modified_time" content="{{ page.date | date(format="%+") }}">{% endif %}
+  {% if og_type == "article" and page and page.taxonomies.tags is defined and page.taxonomies.tags %}
+    {% for tag in page.taxonomies.tags %}<meta property="article:tag" content="{{ tag }}">{% endfor %}
+  {% endif %}
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page_title }}">
+  <meta name="twitter:description" content="{{ page_description }}">
+  <meta name="twitter:image" content="{{ get_url(path='og-image.png') | safe }}">
+  <meta name="twitter:image:alt" content="{{ page_title }}">
+
+  {% if not term %}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.title }} (Atom)" href="{{ get_url(path='atom.xml', trailing_slash=false) | replace(from=config.base_url, to='') | safe }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.title }} (RSS)" href="{{ get_url(path='rss.xml', trailing_slash=false) | replace(from=config.base_url, to='') | safe }}">
+  <link rel="alternate" type="application/feed+json" title="{{ config.title }} (JSON Feed)" href="{{ get_url(path='feed.json', trailing_slash=false) | replace(from=config.base_url, to='') | safe }}">
+  <link rel="alternate" type="text/plain" title="LLM-friendly site summary" href="{{ get_url(path='llms.txt', trailing_slash=false) | replace(from=config.base_url, to='') | safe }}">
+  <link rel="alternate" type="text/plain" title="LLM-friendly full text" href="{{ get_url(path='llms-full.txt', trailing_slash=false) | replace(from=config.base_url, to='') | safe }}">
+  {% endif %}
+  {% if page %}
+  <link rel="alternate" type="text/markdown" title="Markdown source" href="/md{{ page.path | safe }}index.md">
+  {% elif term %}
+  <link rel="alternate" type="text/markdown" title="Markdown source" href="/md/{{ taxonomy.name }}/{{ term.slug }}/index.md">
+  {% elif taxonomy %}
+  <link rel="alternate" type="text/markdown" title="Markdown source" href="/md/{{ taxonomy.name }}/index.md">
+  {% elif current_path is defined and current_path == "/" %}
+  <link rel="alternate" type="text/markdown" title="Markdown source" href="/md/index.md">
+  {% endif %}
+  <link rel="icon" type="image/svg+xml" id="favicon-svg" href="/favicon-light.svg">
+  <link rel="icon" type="image/png" sizes="16x16" id="favicon-16" href="/favicon-light-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" id="favicon-32" href="/favicon-light-32x32.png">
+  <script>
+    (function () {
+      var theme = document.documentElement.getAttribute('data-theme')
+        || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      if (theme !== 'dark') return;
+      var svg = document.getElementById('favicon-svg');
+      var png16 = document.getElementById('favicon-16');
+      var png32 = document.getElementById('favicon-32');
+      if (svg) svg.setAttribute('href', '/favicon-dark.svg');
+      if (png16) png16.setAttribute('href', '/favicon-16x16.png');
+      if (png32) png32.setAttribute('href', '/favicon-32x32.png');
+    })();
+  </script>
+  <link rel="apple-touch-icon" href="{{ get_url(path=config.extra.apple_touch_icon | default(value='apple-touch-icon.png')) | replace(from=config.base_url, to='') | safe }}">
+  <link rel="manifest" href="{{ get_url(path='site.webmanifest') | replace(from=config.base_url, to='') | safe }}">
+
+  <link rel="preload" href="{{ get_url(path='fonts/jetbrains-mono-latin.woff2') | replace(from=config.base_url, to='') | safe }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ get_url(path='css/reset.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/sucss.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/style.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
+  <link id="syntax-light" rel="stylesheet" href="/syntax/paper-light.css" media="(prefers-color-scheme: light)">
+  <link id="syntax-dark" rel="stylesheet" href="/syntax/paper-dark.css" media="(prefers-color-scheme: dark)">
+  <script>
+    (function () {
+      var scheme = document.documentElement.getAttribute('data-scheme') || 'paper';
+      var theme = document.documentElement.getAttribute('data-theme');
+      var light = document.getElementById('syntax-light');
+      var dark = document.getElementById('syntax-dark');
+      if (light) light.href = '/syntax/' + scheme + '-light.css';
+      if (dark) dark.href = '/syntax/' + scheme + '-dark.css';
+      if (theme === 'light') {
+        if (light) light.media = 'all';
+        if (dark) dark.media = 'not all';
+      } else if (theme === 'dark') {
+        if (light) light.media = 'not all';
+        if (dark) dark.media = 'all';
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="{{ get_url(path='css/custom.css', cachebust=true) | replace(from=config.base_url, to='') | safe }}">
+
+  {% block structured_data %}{% endblock %}
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  {% set nav_lang = lang | default(value=config.default_language) %}
+  <header class="site-header">
+  <nav id="nav-bar" aria-label="Primary">
+    {% if current_path is defined and current_path == "/" %}
+    <a class="site-wordmark" href="/" rel="home" aria-label="{{ config.title }} — home">
+      <img class="wordmark-icon wordmark-icon-light" src="/favicon-light.svg" width="20" height="20" alt="" aria-hidden="true">
+      <img class="wordmark-icon wordmark-icon-dark" src="/favicon-dark.svg" width="20" height="20" alt="" aria-hidden="true">
+    </a>
+    {% else %}
+    <a class="site-wordmark" href="/" rel="home">
+      <img class="wordmark-icon wordmark-icon-light" src="/favicon-light.svg" width="20" height="20" alt="" aria-hidden="true">
+      <img class="wordmark-icon wordmark-icon-dark" src="/favicon-dark.svg" width="20" height="20" alt="" aria-hidden="true">
+      <span>{{ config.title }}</span>
+    </a>
+    {% endif %}
+    <div class="nav-actions">
+    {% for nav_item in config.extra.header_nav %}
+      {% set nav_key = "name_" ~ nav_lang %}
+      {% set nav_name = nav_item.name_en %}
+      {% if nav_item[nav_key] is defined %}{% set nav_name = nav_item[nav_key] %}{% endif %}
+      {% set is_current = current_path is defined and (current_path == nav_item.url or current_path == nav_item.url ~ "/") %}
+      {% if nav_item.url == "/" and current_path is defined and current_path != "/" and current_path != "/about/" %}{% set is_current = true %}{% endif %}
+      <a href="{{ nav_item.url | safe }}"{% if is_current %} aria-current="page"{% endif %}>{{ nav_name }}</a>
+    {% endfor %}
+
+    <details class="theme-menu" id="theme-menu">
+      <summary class="theme-trigger" aria-label="Theme settings">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="8" height="8" rx="1" fill="currentColor" opacity=".95"/>
+          <rect x="13" y="3" width="8" height="8" rx="1" fill="currentColor" opacity=".55"/>
+          <rect x="3" y="13" width="8" height="8" rx="1" fill="currentColor" opacity=".55"/>
+          <rect x="13" y="13" width="8" height="8" rx="1" fill="currentColor" opacity=".95"/>
+        </svg>
+      </summary>
+      <div class="theme-panel">
+        <p class="theme-panel-title">Color theme</p>
+        <fieldset class="scheme-picker">
+          <legend class="visually-hidden">Color theme</legend>
+          <label class="scheme-option" data-theme-option="paper">
+            <input class="scheme-radio" type="radio" name="scheme" value="paper">
+            <span class="scheme-swatch" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <span class="scheme-name">Paper &amp; Ink</span>
+          </label>
+          <label class="scheme-option" data-theme-option="gruvbox">
+            <input class="scheme-radio" type="radio" name="scheme" value="gruvbox">
+            <span class="scheme-swatch" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <span class="scheme-name">Gruvbox</span>
+          </label>
+          <label class="scheme-option" data-theme-option="rose-pine">
+            <input class="scheme-radio" type="radio" name="scheme" value="rose-pine">
+            <span class="scheme-swatch" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <span class="scheme-name">Rosé Pine</span>
+          </label>
+          <label class="scheme-option" data-theme-option="monokai">
+            <input class="scheme-radio" type="radio" name="scheme" value="monokai">
+            <span class="scheme-swatch" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <span class="scheme-name">Monokai</span>
+          </label>
+          <label class="scheme-option" data-theme-option="catppuccin-mocha">
+            <input class="scheme-radio" type="radio" name="scheme" value="catppuccin-mocha">
+            <span class="scheme-swatch" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <span class="scheme-name">Catppuccin Mocha</span>
+          </label>
+          <label class="scheme-option" data-theme-option="pencil-light">
+            <input class="scheme-radio" type="radio" name="scheme" value="pencil-light">
+            <span class="scheme-swatch" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <span class="scheme-name">Pencil Light</span>
+          </label>
+        </fieldset>
+
+
+      </div>
+    </details>
+    </div>
+  </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    {% include "footer.html" %}
+  </footer>
+
+  <script src="{{ get_url(path='js/theme.js', cachebust=true) | replace(from=config.base_url, to='') | safe }}" defer></script>
+</body>
+</html>

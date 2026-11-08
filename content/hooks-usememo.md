@@ -1,16 +1,17 @@
 ---
 title: "Hooks Revisited: useMemo"
 date: "2020-03-24"
-published: true
 description: "useMemo allows you to avoid recomputing expensive values by leveraging memoization under the hood."
-category: "react"
-tags:
-  - "hooks"
+taxonomies:
+  tags:
+    - "hooks"
+extra:
+  category: "React"
 ---
 
-Up until this point in <a href="/posts/hooks-revisited">the series</a>, I have been generally familiar with the hooks we've covered and have used them before at work. It wasn't until I recently started working in a new codebase that I came across [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo). Not understanding how it worked or how to debug it was a large part of why I chose to write this series in the first place.
+Up until this point in <a href="/hooks-revisited/">the series</a>, I have been generally familiar with the hooks we've covered and have used them before at work. It wasn't until I recently started working in a new codebase that I came across [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo). Not understanding how it worked or how to debug it was a large part of why I chose to write this series in the first place.
 
-### What is "memoization"?
+## What is "memoization"?
 
 If you look at the React docs, they say that the useMemo hook "returns a memoized value". [Memoization](https://en.wikipedia.org/wiki/Memoization) was **not** a term I was familiar with when I first read that, so don't worry if you haven't heard of it either. We're in the same boat!
 
@@ -29,9 +30,8 @@ add(3, 4);
 add(1, 2);
 ```
 
-If you want to read more about memoization, checkout [this article](https://scotch.io/tutorials/understanding-memoization-in-javascript#toc-a-functional-approach) on [Scotch.io](https://scotch.io) by [Philip Obosi](https://twitter.com/worldclassdev). He takes a deeper look at memoization and how to implement your own memoized functions using plain JavaScript.
 
-### Anatomy of useMemo
+## Anatomy of useMemo
 
 As mentioned, the useMemo hook returns a "memoized value" and takes two arguments:
 
@@ -44,33 +44,30 @@ Here's an example of how it looks directly from the React docs:
 const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 ```
 
-If you have read my articles on <a href="/posts/hooks-useeffect">useEffect</a> and <a href="/posts/hooks-uselayouteffect">useLayoutEffect</a>, you'll probably recognize this function signature. Just like those hooks, seMemoexecutes the logic inside the function passed to it **only** when one of the values in the dependency array changes. If no array is passed, seMemowill re-calculate its return value on **every** render.
+If you have read my articles on <a href="/hooks-useeffect/">useEffect</a> and <a href="/hooks-uselayouteffect/">useLayoutEffect</a>, you'll probably recognize this function signature. Just like those hooks, useMemo executes the logic inside the function passed to it **only** when one of the values in the dependency array changes. If no array is passed, useMemo will re-calculate its return value on **every** render.
 
-The difference here is that seMemois not intended to cause side effects -- those should be handled in the appropriately named seEffector seLayoutEffecthooks. seMemosimply calculates and returns a value based on the function and dependency array passed as arguments and helps handle expensive computations that may cause performance issues.
+The difference here is that useMemo is not intended to cause side effects -- those should be handled in the appropriately named useEffect or useLayoutEffect hooks. useMemo simply calculates and returns a value based on the function and dependency array passed as arguments and helps handle expensive computations that may cause performance issues.
 
-### Optimization
+## Optimization
 
-According to the React docs, seMemois meant to be a **performance optimization**. They suggest you get your code to work without seMemoand implement it after the fact.
+According to the React docs, useMemo is meant to be a **performance optimization**. They suggest you get your code to work without useMemo and implement it after the fact.
 
-One thing to note, however, is that you can't really guarantee that seMemowill return a cached value when expected. Read the following sentence carefully:
+One thing to note, however, is that you can't really guarantee that useMemo will return a cached value when expected. Read the following sentence carefully:
 
-> In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. [[React docs](https://reactjs.org/docs/hooks-reference.html#usememo)]
+> In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. [React docs: useMemo](https://reactjs.org/docs/hooks-reference.html#usememo)
 
 To keep things performant and properly manage memory, React may get rid of a cached value it's not actively using in order to save room for other operations. In some cases, that will cause useMemo to recalculate its return value even though it had been previously in our cache.
 
-### In practice
+## In practice
 
 In the example below, I've created a demo to better illustrate how useMemo works. For our purposes, I have stubbed out some functions in order to make the example work properly; however, pay attention to the comments as they will provide further context.
 
-_Note: If you're unfamiliar with <a href="/posts/hooks-useeffect">useEffect</a> or <a href="/posts/hooks-usestate">useState</a>, take a moment and check out the previous articles in this series before continuing. Otherwise, these should look pretty familiar to you._
+_Note: If you're unfamiliar with <a href="/hooks-useeffect/">useEffect</a> or <a href="/hooks-usestate/">useState</a>, take a moment and check out the previous articles in this series before continuing. Otherwise, these should look pretty familiar to you._
 
-<iframe
-  src="https://codesandbox.io/embed/hooksusememo-kfgvu?expanddevtools=1&fontsize=14&hidenavigation=1&theme=dark&view=editor"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-  title="hooks/useMemo"
-  allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
-  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-></iframe>
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusememo-kfgvu" target="_blank" rel="noopener noreferrer">hooks/useMemo on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
 
 Here, our App component does three things:
 

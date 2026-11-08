@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# AI usage policy for this site: search and reference are welcome; model training is not.
+Content-Signal: search=yes,ai-train=no,use=reference
+
+Sitemap: {{ config.base_url }}/sitemap.xml

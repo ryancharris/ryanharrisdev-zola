@@ -1,0 +1,19 @@
+{
+  "name": "ryanharrisdev-zola",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ryanharris.dev static site and test harness",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test scripts/site.test.mjs",
+    "test:ui": "node scripts/test-ui.mjs",
+    "test:all": "npm run test && npm run test:ui"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "playwright": "^1.65.0"
+  }
+}

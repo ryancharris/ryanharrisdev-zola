@@ -1,16 +1,17 @@
 ---
 title: "Hooks Revisited: useDebugValue"
 date: "2020-08-10"
-published: true
 description: "useDebugValue is a hook aimed at helping developers troubleshoot the React applications they're building."
-category: "react"
-tags:
-  - "hooks"
+taxonomies:
+  tags:
+    - "hooks"
+extra:
+  category: "React"
 ---
 
-### #TIL
+## #TIL
 
-I'll be honest: before working on this series, I had never heard of seDebugValue(or seen it in a codebase).
+I'll be honest: before working on this series, I had never heard of useDebugValue (or seen it in a codebase).
 
 Unlike the hooks we've covered thus far, useDebugValue is not intended to add functionality to your applications. Instead, as the name suggests, it is used as a debugging tool and can help developers troubleshoot issues in their custom React hooks.
 
@@ -18,36 +19,34 @@ Unlike the hooks we've covered thus far, useDebugValue is not intended to add fu
 
 Though it doesn't effect your application logic in anyway, this hook can negatively effect performance in certain cases if you're not careful (more on this later).
 
-### Anatomy of useDebugValue
+## Anatomy of useDebugValue
 
-First things first, let's see what useDebugValuelooks like in action:
+First things first, let's see what useDebugValue looks like in action:
 
-<iframe src="https://codesandbox.io/embed/hooksusedebugvalue-ccnju?fontsize=14&hidenavigation=1&theme=dark&view=editor"
-     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-     title="hooks/useDebugValue"
-     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-   ></iframe>
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusedebugvalue-ccnju" target="_blank" rel="noopener noreferrer">hooks/useDebugValue on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
 
 In the snippet above, we've defined our own custom hook, useDate (more about these in an upcoming article). Currently, the hook fires once on App's initial render -- due to the empty dependency array -- and displays it on the page.
 
 Note that we're also using a useDebugValue hook within useDate, which takes a single value and then displays it in the [React DevTools](https://github.com/facebook/react-devtools). In the screenshot below, you can see how the snippet above would look in your browser.
 
-![useDebugValue output in React DevTools](01-debug-value-before-after.png)
+{{ img(path="assets/images/hooks-usedebugvalue/01-debug-value-before-after.png", alt="useDebugValue output in React DevTools", caption="useDebugValue output in React DevTools.") }}
 
-### Formatting useDebugValue
+## Formatting useDebugValue
 
 useDebugValue also takes an optional second argument, which can be used to format the hook's display value. In this case, the function's signature would look like this:
 
 ```javascript
-useDebugValue(date, (date) => date.toDateString().toUpperCase());
+uuseDebugValue (date, (date) => date.toDateString().toUpperCase());
 ```
 
 The hook works the same way it does without the second argument, however, it's output now looks like this:
 
-![Formatted useDebugValue output in React DevTools](02-upper-case.png)
+{{ img(path="assets/images/hooks-usedebugvalue/02-upper-case.png", alt="Formatted useDebugValue output in React DevTools", caption="Formatted useDebugValue output.") }}
 
-### Notes about the formatting function
+## Notes about the formatting function
 
 As I mentioned in the intro, while this hook does not effect how your application works, it can effect performance if the logic within the formatter function is expensive.
 
@@ -55,7 +54,7 @@ Luckily, the React team built in a safeguard for this and, [as it says in the do
 
 Though use-cases for a complex formatter function may be few and far between, be careful about the logic you house within it so as to avoid unintended performance issues.
 
-### Real-world use case
+## Real-world use case
 
 Odds are you won't be using useDebugValue too much in your day to day work unless you're building custom hooks or an open source library.
 

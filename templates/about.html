@@ -1,11 +1,67 @@
 {% extends "base.html" %}
 
+{% block structured_data %}
+{% set page_url = current_url %}
+{% set web_id = page_url ~ "#webpage" %}
+{% set breadcrumb_id = page_url ~ "#breadcrumb" %}
+{% set person_id = config.base_url ~ "/#person" %}
+{% set website_id = config.base_url ~ "/#website" %}
+{% set blog_id = config.base_url ~ "/#blog" %}
+{% set copyright_year = now() | date(format="%Y") %}
+{% set home_url = config.base_url ~ "/" %}
+{% set page_lang = config.extra.locale | default(value=page.lang) %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {% include "partials/schema-site.html" %},
+    {
+      "@type": "AboutPage",
+      "@id": {{ web_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ page_url | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }},
+      "description": {{ page.description | default(value=config.description) | json_encode | replace(from="<", to="\u003c") | safe }},
+      "isPartOf": { "@id": {{ website_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "mainEntity": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "breadcrumb": { "@id": {{ breadcrumb_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "inLanguage": {{ page_lang | json_encode | replace(from="<", to="\u003c") | safe }},
+      {% if page.date %}"datePublished": {{ page.date | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% endif %}
+      {% if page.updated %}"dateModified": {{ page.updated | date(format="%+") | json_encode | replace(from="<", to="\u003c") | safe }},{% endif %}
+      "publisher": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "copyrightHolder": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "copyrightYear": {{ copyright_year }},
+      "copyrightNotice": "© {{ copyright_year }} {{ config.author }}",
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": {{ breadcrumb_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": "Breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Writing",
+          "item": {{ home_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ page.title | json_encode | replace(from="<", to="\u003c") | safe }},
+          "item": {{ page_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
-<h1>about</h1>
-
-<p>I've been writing software for over a decade, and I still think the best part of the job is making other engineers' lives less painful. These days I do that at dbt Labs, where I work on distributed systems and internal tooling — the kind of stuff that doesn't ship features but makes the people who do ship them a lot faster.</p>
-
-<p>My career started in Philly, bouncing through Revzilla, Guru, and Fauna, where I did everything from building UIs to leading full app re-platforming efforts. Somewhere in there I made some video courses on egghead.io and gave a few conference talks, which was terrifying and fun in equal measure.</p>
-
-<p>This blog is basically my thinking out loud in public — code, tools, whatever problem has taken over my brain that week. No editorial calendar, no content strategy, just whatever I find interesting.</p>
+<article class="page">
+  <h1>{{ page.title }}</h1>
+  <div class="page-content">
+    {{ page.content | safe }}
+  </div>
+</article>
 {% endblock content %}

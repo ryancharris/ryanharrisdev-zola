@@ -1,20 +1,21 @@
 ---
 title: "Hooks Revisited: useReducer"
 date: "2020-05-18"
-published: true
 description: "useReducer provides an alternate way to store component state beyond useState. It is especially useful for storing complex data structures and/or related values."
-category: "react"
-tags:
-  - "hooks"
+taxonomies:
+  tags:
+    - "hooks"
+extra:
+  category: "React"
 ---
 
-### An update on state
+## An update on state
 
 Throughout this series, all of the code snippets and sandboxes we've created have used useState to manage our component data. However, React offers us an additional hook to use for storing data: useReducer.
 
 While useState allows us to store and set a single value, useReducer helps us work with more complex or structured data by allowing us to store and manipulate related values alongside one another.
 
-### Anatomy of useReducer
+## Anatomy of useReducer
 
 Like useState, useReducer returns an array with two values:
 
@@ -27,17 +28,17 @@ const [value, setValue] = useState(null);
 const [state, dispatch] = useReducer(reducer, initialState);
 ```
 
-The seReducerhook takes up to three arguments:
+The useReducer hook takes up to three arguments:
 
 1. **Reducer function** -- This function describes how our state should be updated based on the action that was dispatched.
 
-2. **Initial state** -- This value defines the hook's initial state and works similiarly to how we provide the useState hook a default value when instantiating it.
+2. **Initial state** -- This value defines the hook's initial state and works similarly to how we provide the useState hook a default value when instantiating it.
 
 3. **Initialization function** -- This argument is optional and is useful for...
 
-> ...calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action. ~ [[React docs](https://reactjs.org/docs/hooks-reference.html#lazy-initialization)]
+> ...calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action. ~ [React docs: lazy initialization](https://reactjs.org/docs/hooks-reference.html#lazy-initialization)
 
-### Difference from useState
+## Difference from useState
 
 To best illustrate the difference in how useReducer and useState update their state values, respectively, let's take a look at them side by side. The snippet below shows the code you'd need to use to instantiate and update a state value using both hooks:
 
@@ -72,17 +73,14 @@ Secondly, while useState's setter function updates its value directly, useReduce
 
 _Note:_ If you haven't used it in the past, this is pretty much how [Redux](https://redux.js.org/) works.
 
-### In practice
+## In practice
 
 In the sandbox below, I've built a form for scheduling an appointment. Though there are multiple inputs with different types, all of the values are related to one another as they are in the same form.
 
-<iframe
-  src="https://codesandbox.io/embed/hooksusereducer-5rntg?fontsize=14&hidenavigation=1&theme=dark"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-  title="hooks/useReducer"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-></iframe>
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusereducer-5rntg" target="_blank" rel="noopener noreferrer">hooks/useReducer on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
 
 Instead of storing each input value in its own useState hook, we can store and manage all of the values in our form using a single useReducer. In this case, its state is an object with many keys, each representing a different value we want to store. Personally, this reminds me a bit of this.state in class components before we had hooks.
 
@@ -172,13 +170,13 @@ return {
 
 Finally, since our useReducer hook's state has now been updated, the component will re-render and the inputs all display their updated value from formState.
 
-### Notes about performance
+## Notes about performance
 
-As my friend [Josef Aidt](https://josefaidt.dev/) pointed out while reviewing an early draft of this article, our use case for useReducer in the sandbox above has certain performance implications. Since each input's onChange function fires each time an input's value changes, we are actually causing our component to re-render on each key press. This is alright for demonstration purposes, but is something to be aware of when building production apps.
+As my friend Josef Aidt pointed out while reviewing an early draft of this article, our use case for useReducer in the sandbox above has certain performance implications. Since each input's onChange function fires each time an input's value changes, we are actually causing our component to re-render on each key press. This is alright for demonstration purposes, but is something to be aware of when building production apps.
 
 Two ways we could avoid this are:
 
 - Adding a debounce to each input, so that we do not trigger a state update on each keypress.
-- Storing our input values in refs instead of useReducer as changing the value of a ref does not cause our component to re-render (see my <a href="/posts/hooks-useref">useRef</a> article for more on this).
+- Storing our input values in refs instead of useReducer as changing the value of a ref does not cause our component to re-render (see my <a href="/hooks-useref/">useRef</a> article for more on this).
 
 Now, go forth and be performant!

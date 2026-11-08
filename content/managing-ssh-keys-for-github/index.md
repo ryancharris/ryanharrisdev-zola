@@ -1,17 +1,18 @@
 ---
 title: "Managing SSH keys and identities for GitHub"
 date: "2020-01-19"
-published: true
 description: "If you use more than one GitHub account on the same machine, configuring multiple SSH keys will make authenticating with different repos much easier."
-category: "oss"
-tags:
-  - "git"
-  - "github"
+taxonomies:
+  tags:
+    - "git"
+    - "github"
+extra:
+  category: "Open Source"
 ---
 
-During the onboarding process for my new job at [Fauna](https://www.fauna.com), I was tasked with setting up my local development environment. However, since Fauna devs use work-specific GitHub accounts, a new challenge presented itself during the process: managing SSH keys and identities for multiple accounts.
+During the onboarding process for my new job at Fauna, I was tasked with setting up my local development environment. However, since Fauna devs use work-specific GitHub accounts, a new challenge presented itself during the process: managing SSH keys and identities for multiple accounts.
 
-### Multiple accounts and keys
+## Multiple accounts and keys
 
 In the past, I have always used my personal account for all my projects, both personal and professional. Since our security policy does not allow for that, I needed to configure my system to work with both my personal and work accounts by doing the following:
 
@@ -21,7 +22,7 @@ In the past, I have always used my personal account for all my projects, both pe
 
 What follows is a quick primer on how to set all this up and avoid doing it manually 🙌.
 
-### Generating a SSH key
+## Generating a SSH key
 
 To get started, we will need to generate SSH keys for each of the GitHub accounts we will be working with. In my case, there will be two: a work account and a personal account.
 
@@ -51,14 +52,14 @@ Enter file in which to save the key (/Users/ryan/.ssh/id_rsa): id_rsa_work
 
 Next, we'll need to log into both GitHub accounts and add the new SSH key. Go into account settings and open the SSH and GPG keys sections. Then, add a new SSH key:
 
-![GitHub's SSH key interface](02-add-a-key.png)
+{{ img(path="assets/images/managing-ssh-keys-for-github/02-add-a-key.png", alt="GitHub's SSH key interface", caption="GitHub SSH key interface.") }}
 
 In the textfield below, we need to enter the public key we generated above. You can do this in a couple ways:
 
 1. Copy the key from the **.pub** file in your **/.ssh/** directory
 2. Run the following command `pbcopy < ~/.ssh/id_rsa.pub`
 
-### Managing your SSH keys
+## Managing your SSH keys
 
 With our GitHub accounts squared away, we now need to manage the keys on our local system using a CLI tool called **ssh-agent**. As described in [their own documentation](https://www.ssh.com/ssh/agent), **ssh-agent** is a "...helper program that keeps track of user's identity keys and their passphrases", which is exactly what we need!
 
@@ -74,7 +75,7 @@ ssh-add ~/.ssh/id_rsa_work
 
 To confirm they've been properly added, run `ssh-add -l`, which will list out all the identities **ssh-agent** is currently managing.
 
-### Setting up a SSH config file
+## Setting up a SSH config file
 
 With **ssh-agent** now keeping track of the keys for our work and personal accounts, we need to create a local SSH config so our system knows which key to use when pushing to or pulling from GitHub.
 
@@ -116,11 +117,11 @@ Host github.com-work
    IdentityFile ~/.ssh/id_rsa_work
 ```
 
-Now, whenever we ushor ullfrom GitHub, the proper key and identity will be used based upon this repo's remote rigin Since we cloned our repos using the altered URLs appended with our user name, they will automatically work.
+Now, whenever we push or pull from GitHub, the proper key and identity will be used based upon this repo's remote origin. Since we cloned our repos using the altered URLs appended with our username, they will automatically work.
 
-Repos you cloned prior to having two SSH identities, however, will not work right away. Instead, you simply need to update their remote riginURL to use the usernamesuffix. Then, the SSH config will know which key to associate with the request.
+Repos you cloned prior to having two SSH identities, however, will not work right away. Instead, you simply need to update their remote origin URL to use the username suffix. Then, the SSH config will know which key to associate with the request.
 
-### Updating git commiter info
+## Updating git commiter info
 
 Finally, we need to make sure that our commits are attributed to the right user since we'll be pushing to repos owned by multiple GitHub accounts. By default, the git CLI will use the information in your global config file.
 
@@ -146,7 +147,7 @@ git config user.name "Ryan at Work"
 git config user.email "ryan@fauna.com"
 ```
 
-### Done! 😅
+## Done! 😅
 
 To test that this all worked, you can either clone a repo or test the SSH connection via the terminal:
 

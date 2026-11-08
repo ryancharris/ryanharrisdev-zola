@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block structured_data %}
+{% set collection_id = current_url ~ "#webpage" %}
+{% set list_id = current_url ~ "#itemlist" %}
+{% set termset_id = current_url ~ "#termset" %}
+{% set breadcrumb_id = current_url ~ "#breadcrumb" %}
+{% set website_id = config.base_url ~ "/#website" %}
+{% set person_id = config.base_url ~ "/#person" %}
+{% set home_url = config.base_url ~ "/" %}
+{% set site_lang = config.extra.locale | default(value=lang) %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {% include "partials/schema-site.html" %},
+    {
+      "@type": "CollectionPage",
+      "@id": {{ collection_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "url": {{ current_url | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": {{ page_title | json_encode | replace(from="<", to="\u003c") | safe }},
+      "description": {{ page_description | json_encode | replace(from="<", to="\u003c") | safe }},
+      "isPartOf": { "@id": {{ website_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "mainEntity": { "@id": {{ list_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "about": { "@id": {{ termset_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "breadcrumb": { "@id": {{ breadcrumb_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "inLanguage": {{ site_lang | json_encode | replace(from="<", to="\u003c") | safe }},
+      "publisher": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} },
+      "copyrightHolder": { "@id": {{ person_id | json_encode | replace(from="<", to="\u003c") | safe }} }
+    },
+    {
+      "@type": "ItemList",
+      "@id": {{ list_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": "Tags",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": {{ terms | length }},
+      "itemListElement": [
+        {% for tag in terms %}
+        {
+          "@type": "ListItem",
+          "position": {{ loop.index }},
+          "name": {{ tag.name | json_encode | replace(from="<", to="\u003c") | safe }},
+          "url": {{ tag.permalink | json_encode | replace(from="<", to="\u003c") | safe }}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    },
+    {
+      "@type": "DefinedTermSet",
+      "@id": {{ termset_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": "Tags",
+      "url": {{ current_url | json_encode | replace(from="<", to="\u003c") | safe }},
+      "hasDefinedTerm": [
+        {% for tag in terms %}
+        {% set term_id = tag.permalink ~ "#term" %}
+        { "@id": {{ term_id | json_encode | replace(from="<", to="\u003c") | safe }} }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": {{ breadcrumb_id | json_encode | replace(from="<", to="\u003c") | safe }},
+      "name": "Breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Writing",
+          "item": {{ home_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tags",
+          "item": {{ current_url | json_encode | replace(from="<", to="\u003c") | safe }}
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="content-section" aria-labelledby="tags-title">
+  <h1 id="tags-title">Tags</h1>
+  <p class="site-description">Browse writing by topic.</p>
+
+  <ul class="tag-list">
+    {% for tag in terms %}
+    <li>
+      <a class="tag" href="{{ tag.path | safe }}">{{ tag.name }}</a>
+      <span class="tag-count">{{ tag.page_count }} {% if tag.page_count == 1 %}post{% else %}posts{% endif %}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock content %}
