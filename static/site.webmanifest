@@ -1,0 +1,15 @@
+{
+  "name": "ryan harris",
+  "short_name": "ryan harris",
+  "description": "writing about code, tools, and things i'm figuring out",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "background_color": "#1E1E2E",
+  "theme_color": "#1E1E2E",
+  "icons": [
+    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

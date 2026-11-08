@@ -1,16 +1,20 @@
 ---
 title: "What the heck is JSX?"
 date: "2018-12-08"
-published: true
 description: "JSX is a syntax extension for JavaScript and is widely used in frontend frameworks like React."
-category: "react"
+taxonomies:
+  tags:
+    - "react"
+    - "jsx"
+extra:
+  category: "react"
 ---
 
 As developers, we use a variety of tools and open source packages to make our jobs easier. Some of them are so widely used throughout the community that they seem native to JavaScript. Though they're not, they **can fundamentally change how you write code on a daily basis**.
 
 One of these technologies that you're already using is JSX, **a XML like syntax extension for JavaScript**. Created by the wizards at Facebook, it is intended to simplify the developer experience. As the spec says, the rationale for creating JSX was:
 
-> "…to define a concise and familiar syntax for defining tree structures with attributes." ~ [JSX Spec](https://facebook.github.io/jsx/)
+> "…to define a concise and familiar syntax for defining tree structures with attributes." ~ [JSX Spec](https://react.dev/learn/writing-markup-with-jsx)
 
 Now, you're probably saying to yourself, "Hey, Ryan, this sounds great, but **get to the code already**", so here's our first example.
 
@@ -24,7 +28,7 @@ While you don't have to use JSX when writing React ([or use React in order to tr
 
 ---
 
-### Getting started with JSX
+## Getting started with JSX
 
 The first thing to note when using JSX syntax is that **React must be in scope**. This is due to how it gets compiled. Take this component for example:
 
@@ -69,7 +73,7 @@ function Nav() {
 }
 ```
 
-### React.createElement
+## React.createElement
 
 When React creates elements, it calls this method, which takes three arguments.
 
@@ -89,7 +93,7 @@ React.createElement(Div, null, "Some content text here");
 
 The first example would generate a div with the string "Some content text here" as its child. However, the second version would throw an error (unless, of course, a custom component Div was in scope) because Div is undefined.
 
-### Props in JSX
+## Props in JSX
 
 When working in React, your components often render children and need to pass them data in order for the children to render properly. These are called props.
 
@@ -111,7 +115,7 @@ I like to think of React components as a group of friends. And what do friends d
 
 But beware! **You cannot pass if statements or for loops as props** because they are [statements, not expressions](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2).
 
-### Children in JSX
+## Children in JSX
 
 As you're building your app, you eventually start having components render children. And then those components sometimes have to render children. And so on and so forth.
 
@@ -119,7 +123,7 @@ Since **JSX is meant to make it easy for us to reason about tree-like structures
 
 There are four ways to render child elements using JSX:
 
-#### Strings
+### Strings
 
 This is the simplest example of JSX children. In the case below, React creates a h1 HTML element with one child. The child, however, is not another HTML element, just a simple string.
 
@@ -129,7 +133,7 @@ function AlertBanner() {
 }
 ```
 
-#### JSX Elements
+### JSX Elements
 
 This is probably the use case new React developers would be the most familiar with. In the component below, we're returning an HTML child (the header), which has two children of its own Nav and ProfilePic both of which are custom defined JSX elements.
 
@@ -144,7 +148,7 @@ function Header(props) {
 }
 ```
 
-#### Expressions
+### Expressions
 
 Expressions allow us to easily render elements in our UI that are the result of a JavaScript computation. A simple example of this would be basic addition.
 
@@ -163,7 +167,7 @@ function BillFooter(props) {
 }
 ```
 
-#### Functions
+### Functions
 
 With functions, we can programmatically create elements and structures, which React will then render for us. This makes it easy to create multiple instances of a component or render repeated UI elements.
 
@@ -210,7 +214,7 @@ Now, if we want to add a new page to our site, all we need to do is add a new ob
 
 ---
 
-### Use the tools!
+## Use the tools!
 
 Sure, you can write React applications without JSX, but I'm not really sure why you'd want to.
 

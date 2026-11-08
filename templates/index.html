@@ -1,18 +1,63 @@
-{% extends "anemone/templates/index.html" %}
+{% extends "base.html" %}
+
+{% block structured_data %}
+{% set site_url = config.base_url %}
+{% set person_id = site_url ~ "/#person" %}
+{% set website_id = site_url ~ "/#website" %}
+{% set home_url = site_url ~ "/" %}
+{% set about_url = site_url ~ "/about/" %}
+{% set site_lang = lang | default(value=config.default_language) %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": {{ website_id | json_encode | safe }},
+      "url": {{ home_url | json_encode | safe }},
+      "name": {{ config.title | json_encode | safe }},
+      "description": {{ config.description | json_encode | safe }},
+      "inLanguage": {{ site_lang | json_encode | safe }},
+      "author": { "@id": {{ person_id | json_encode | safe }} }
+    },
+    {
+      "@type": "Person",
+      "@id": {{ person_id | json_encode | safe }},
+      "name": {{ config.extra.author | default(value=config.author) | json_encode | safe }},
+      "url": {{ about_url | json_encode | safe }},
+      "email": {{ config.extra.email | json_encode | safe }},
+      "sameAs": [
+        {{ config.extra.github | json_encode | safe }},
+        {{ config.extra.linkedin | json_encode | safe }}
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
-<section class="content-section">
-  <h1>{{ config.title }}</h1>
+<section class="content-section" aria-labelledby="writing-title">
+  <h1 id="writing-title">{{ config.title }}</h1>
+  <p class="site-description">{{ config.description }}</p>
 
   <ul class="content-list">
+    {% set_global current_year = "" %}
     {% for page in section.pages %}
-      {% if page.extra.hidden %}{% continue %}{% endif %}
+      {% if page.extra.hidden is defined and page.extra.hidden %}{% continue %}{% endif %}
+      {% set page_year = page.date | date(format="%Y") %}
+      {% if page_year != current_year %}
+        {% set_global current_year = page_year %}
+        <li class="post-year-item"><h2 class="post-year">{{ page_year }}</h2></li>
+      {% endif %}
       <li class="post-item">
-        <div>
-          <a href="{{ page.permalink }}">{{ page.title }}</a>
-          <span class="post-date">{{ page.date | date(format="%m/%Y") }}</span>
+        <div class="post-item-heading">
+          <h3 class="post-item-title"><a href="{{ page.path | safe }}">{{ page.title }}</a></h3>
+          {% if page.date %}
+          <time class="post-date" datetime="{{ page.date }}">{{ page.date | date(format="%b") }}</time>
+          {% endif %}
         </div>
-        <p>{{ page.description }}</p>
+        {% if page.description %}<p class="post-item-description">{{ page.description }}</p>{% endif %}
       </li>
     {% endfor %}
   </ul>

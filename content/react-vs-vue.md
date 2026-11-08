@@ -1,11 +1,12 @@
 ---
 title: "5 Vue tips for React developers"
 date: "2019-06-27"
-published: true
 description: "Learn how to get started with Vue from the perspective of a React developer."
-category: "react"
-tags:
-  - "vue"
+taxonomies:
+  tags:
+    - "vue"
+extra:
+  category: "react"
 ---
 
 For frontend developers, JavaScript frameworks have become increasingly important due to how fundamentally they change the way we approach building our applications. While not everyone uses them professional, or at all, the development community sure loves to talk about them. Unfortunately, these discussions often devolve into a diatribe about Framework X being better than Framework Y, or Framework Z not being “real JavaScript.”
@@ -24,7 +25,7 @@ As a React developer at Guru, I primarily work with React. However, I have recen
 
 Before we go any further, I just want to say: this article is not intended to determine whether React or Vue is better than the other. Instead, I hope to examine both frameworks in a practical sense and see how they differ when it comes to solving common problems. Examining another framework can even inform us of how to better use our own.
 
-### Background
+## Background
 
 I recently bought a house and moved to a new neighborhood, so I no longer have access to the subway and must rely on the bus system to get to work. While having some time to read on my slightly longer commute can be nice, standing outside for a bus that never seems to come is not.
 
@@ -40,15 +41,12 @@ _Side note: My local transit authority did not have a solid API, so I ultimately
 
 In the end, the application ended up looking like this:
 
-<iframe
-  src="https://codesandbox.io/embed/brew-bus-r8xkp?fontsize=14&module=%2Fsrc%2FApp.vue"
-  title="Brew Bus"
-  allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-></iframe>
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/brew-bus-r8xkp" target="_blank" rel="noopener noreferrer">Brew Bus on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
 
-### Approach
+## Approach
 
 As we discussed earlier, React and Vue both have similar goals but differ slightly in their approach. When I say approach, I am referring to the way in which you, the developer, go about building your components.
 
@@ -107,11 +105,11 @@ export default {
 
 One is not necessarily better than the other; they’re just different. And that’s what makes them so interesting!
 
-### React vs. Vue
+## React vs. Vue
 
 Below, I’ve highlighted five tasks a developer commonly performs when building applications and created examples of how to achieve the desired outcome using either framework.
 
-#### #1 Conditional Rendering
+### #1 Conditional Rendering
 
 A common strategy developers use is called conditional rendering. Essentially, this is a fancy way of saying “if X, then Y.” This is often how we show or hide parts of our interface from the user.
 
@@ -136,7 +134,7 @@ In React, we would do this slightly differently. There are a number of ways we c
 </div>
 ```
 
-#### #2 Rendering a list
+### #2 Rendering a list
 
 Another common thing I find myself doing when building an application is iterating through a data object and creating component instances for each item in the list. For example, this would be a good way to create every Item in a ToDoList.
 
@@ -175,7 +173,7 @@ const busRoutes = buses.map((bus) => {
 return <div className="Work">{busRoutes}</div>;
 ```
 
-#### #3 Rendering Children
+### #3 Rendering Children
 
 This one probably seems straightforward, and for the most part, it is. However, coming from a React background, there was one “gotcha” when it came to working with child components.
 
@@ -196,7 +194,7 @@ export default {
 };
 ```
 
-#### #4 Rendering children
+### #4 Rendering children
 
 Injecting data into your components in Vue is similar to how it was done in React before Hooks were released. Like React’s componentDidMount, Vue has a similar lifecycle method called created, which is where you would retrieve your data from an external source and ostensibly store it in local state.
 
@@ -260,7 +258,7 @@ React.useEffect(() => {
 }, []);
 ```
 
-#### #5 Managing component state from a parent
+### #5 Managing component state from a parent
 
 Earlier we used the local state (i.e., data.isHomeScreen in **App.vue**) to determine whether the user saw the Home or Work child component. But how was this value changing? Great question!
 
@@ -340,7 +338,7 @@ function Parent() {
 
 Again, the result here is the same: a child component is manipulating the state of its parent.
 
-### In the end...
+## In the end...
 
 Building an app, even one this small, in a framework other than React was an interesting exercise for a couple reasons. Not only did I gain experience working with another framework, but I was also forced to think in a non-React way for the first time since I started using it.
 
@@ -352,4 +350,4 @@ Here are some other thoughts I had after going through this process:
 2. I think Vue would be easier for developers coming from a traditional MVC background to pick up due to its similarity to templates.
 3. I would love to try building with Vue at a larger scale in order to really get a feel for it. So far, I am loving Single-File Components!
 
-\*\* _Originally [published](https://blog.logrocket.com/5-vue-tips-for-react-developers/) on [LogRocket](https://logrocket.com/)_
+_Originally [published](https://blog.logrocket.com/5-vue-tips-for-react-developers/) on [LogRocket](https://logrocket.com/)_

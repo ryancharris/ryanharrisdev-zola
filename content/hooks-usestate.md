@@ -1,11 +1,12 @@
 ---
 title: "Hooks Revisited: useState"
 date: "2020-02-17"
-published: true
 description: "As the name suggests, the useState hook is used for storing component state."
-category: "react"
-tags:
-  - "hooks"
+taxonomies:
+  tags:
+    - "hooks"
+extra:
+  category: "react"
 ---
 
 One of the first hooks you'll probably encounter is useState, which replaces the setState() function used to update state in class components. The big difference here, however, is that useState allows function components to have multiple state values as opposed to one monolithic object. The snippet below illustrates this idea (don't worry about the syntax as we'll be covering that below):
@@ -41,7 +42,7 @@ Not too crazy, right? In this example, all of our values are numbers but the val
 - Numbers
 - `null`
 
-### Anatomy of useState
+## Anatomy of useState
 
 Let's take one of the previous examples and look at it a bit more closely.
 
@@ -57,7 +58,7 @@ The second value in the array (i.e. setApples) is a setter function that allows 
 
 While you can technically give these setter functions whatever name you want, the common convention is to prepend the value's name with set (ex. setApples).
 
-### In practice
+## In practice
 
 To better illustrate the mental model of having multiple states instead of one, I built a simplified version of an e-commerce cart.
 
@@ -65,12 +66,9 @@ The first instance is a function component using three useState hooks to manage 
 
 As you can see, both components do the same things: keep track of how many of each item a user wants and increment/decrement that value based on button presses.
 
-<iframe
-  src="https://codesandbox.io/embed/hooksusestate-o64ve?autoresize=1&fontsize=14&hidenavigation=1&theme=dark"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-  title="hooks/useState"
-  allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
-  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-></iframe>
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusestate-o64ve" target="_blank" rel="noopener noreferrer">hooks/useState on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
 
 Take a look at the code and see which one you prefer. While hooks may still be new to you, can you see any benefits from using them?

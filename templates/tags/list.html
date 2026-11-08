@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block structured_data %}
+{% set site_home = config.base_url ~ "/" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "url": {{ current_url | json_encode | safe }},
+  "name": {{ page_title | json_encode | safe }},
+  "description": {{ page_description | json_encode | safe }},
+  "isPartOf": { "@type": "WebSite", "url": {{ site_home | json_encode | safe }} }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="content-section" aria-labelledby="tags-title">
+  <h1 id="tags-title">Tags</h1>
+  <p class="site-description">Browse writing by topic.</p>
+
+  <ul class="tag-list">
+    {% for tag in terms %}
+    <li>
+      <a class="tag" href="{{ tag.path | safe }}">#{{ tag.name }}</a>
+      <span class="tag-count">{{ tag.page_count }} {% if tag.page_count == 1 %}post{% else %}posts{% endif %}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock content %}

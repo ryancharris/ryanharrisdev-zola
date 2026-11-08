@@ -1,0 +1,16 @@
+{% set large = resize_image(path=path, width=1600, height=1600, op="fit", format="webp", quality=85) %}
+{% set small = resize_image(path=path, width=800, height=800, op="fit", format="webp", quality=82) %}
+{% set small_url = small.url | replace(from=config.base_url, to='') %}
+{% set large_url = large.url | replace(from=config.base_url, to='') %}
+<figure class="post-figure">
+  <img
+    src="{{ small_url | safe }}"
+    srcset="{{ small_url | safe }} {{ small.width }}w, {{ large_url | safe }} {{ large.width }}w"
+    sizes="(max-width: 900px) 90vw, 752px"
+    width="{{ large.width }}"
+    height="{{ large.height }}"
+    alt="{{ alt }}"
+    loading="lazy"
+    decoding="async">
+  {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
+</figure>

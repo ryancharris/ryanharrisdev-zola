@@ -3,23 +3,50 @@ base_url = "https://ryanharris.dev"
 
 title = "ryan harris"
 description = "writing about code, tools, and things i'm figuring out"
+default_language = "en"
+author = "Ryan Harris"
 
 theme = "anemone"
 
-# Whether to automatically compile all Sass files in the sass directory
-compile_sass = true
+# Generate Atom feed, sitemap and robots.txt
+generate_feeds = true
+feed_filenames = ["atom.xml"]
+generate_sitemap = true
+generate_robots_txt = true
 
-# Whether to build a search index to be used later on by a JavaScript library
-build_search_index = true
+# Tags are used on posts and rendered at /tags/.
+taxonomies = [
+  { name = "tags" },
+]
+
+# These SVGs are inlined into the footer with load_data; do not copy them.
+ignored_static = ["icons/email.svg", "icons/linkedin.svg", "icons/github.svg", "icons/rss.svg"]
+
+[link_checker]
+# External sites often block automated checks; treat those as warnings.
+external_level = "warn"
 
 [markdown]
+# Add loading/decoding attributes to plain Markdown images (the img shortcode adds dimensions).
+lazy_async_image = true
+smart_punctuation = true
 
 [markdown.highlighting]
-theme = "catppuccin-mocha"
+# Class-based light/dark syntax themes; base.html switches them with the theme toggle.
+light_theme = "github-light-high-contrast"
+dark_theme = "github-dark-high-contrast"
+style = "class"
+error_on_missing_language = true
 
 [extra]
 favicon = "favicon.svg"
+apple_touch_icon = "apple-touch-icon.png"
+author = "Ryan Harris"
+email = "ryan@ryanharris.dev"
+linkedin = "https://www.linkedin.com/in/ryancharris/"
+github = "https://github.com/ryancharris"
+
 header_nav = [
   { url = "/", name_en = "writing" },
-  { url = "/about", name_en = "about" }
+  { url = "/about/", name_en = "about" },
 ]

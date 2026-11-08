@@ -1,16 +1,17 @@
 ---
 title: "Hooks Revisited: useRef"
 date: "2020-03-13"
-published: true
 description: "useRef can be used to directly interact with the browser's DOM or store and update values without causing re-renders like useState."
-category: "react"
-tags:
-  - "hooks"
+taxonomies:
+  tags:
+    - "hooks"
+extra:
+  category: "react"
 ---
 
-### What are refs?
+## What are refs?
 
-If you read <a href="/posts/hooks-uselayouteffect">my last article</a>, about the differences between useEffect and useLayoutEffect, you may remember seeing some code snippets that looked like this:
+If you read <a href="/hooks-uselayouteffect/">my last article</a>, about the differences between useEffect and useLayoutEffect, you may remember seeing some code snippets that looked like this:
 
 ```javascript
 useEffect(() => {
@@ -34,11 +35,11 @@ While the React docs cite a few examples where using refs would be appropriate, 
 
 > Avoid using refs for anything that can be done declaratively. [[React docs]](https://reactjs.org/docs/refs-and-the-dom.html#when-to-use-refs)
 
-For a practical example of how to use refs in your React app, [checkout my previous article about rebuilding a search UI](https://ryanharris.dev/2019-10-27-redoing-search/) using refs and React Context. We'll also cover the ins and outs of Context in the next article in this series.
+For a practical example of how to use refs in your React app, [checkout my previous article about rebuilding a search UI](/redoing-search/) using refs and React Context. We'll also cover the ins and outs of Context in the next article in this series.
 
 In the next section, we'll look more closely at the useRef hook and its syntax.
 
-### Anatomy of useRef
+## Anatomy of useRef
 
 > ...useRef is like a “box” that can hold a mutable value... [[React docs]](https://reactjs.org/docs/hooks-reference.html#useref)
 
@@ -115,23 +116,20 @@ function MyComponent() {
 
 Hopefully, those examples clearly illustrated how to define a ref. Just remember: refs are a "reference" to a DOM element -- it's right in the name!
 
-refs also have another less-known use case. Since a ref's value can be any JavaScript value, you can also use refs as basic data stores. Usually, you would use useState for something like that, however, there are time where you want to avoid uneccessary re-renders but cache a value. Updating values in state cause a re-render each time, whereas updating refs **do not cause the component to update**. This is a subtle, but important distinction.
+refs also have another less-known use case. Since a ref's value can be any JavaScript value, you can also use refs as basic data stores. Usually, you would use useState for something like that, however, there are time where you want to avoid unnecessary re-renders but cache a value. Updating values in state cause a re-render each time, whereas updating refs **do not cause the component to update**. This is a subtle, but important distinction.
 
-### In practice
+## In practice
 
 In the sections below, we'll walk through two examples that better illustrate how to use useRef both to access DOM elements and store values without causing our component to re-render.
 
-#### Accessing DOM elements
+### Accessing DOM elements
 
 For this example, I have built a small SearchInput component that uses the useRef hook in order to refer to the input element rendered by our component:
 
-<iframe
-  src="https://codesandbox.io/embed/serene-sunset-z80cl?fontsize=14&hidenavigation=1&theme=dark"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-  title="hooks/useRef (DOM)"
-  allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
-  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-></iframe>
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/serene-sunset-z80cl" target="_blank" rel="noopener noreferrer">hooks/useRef (DOM) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
 
 In this specific case, our SearchInput component takes an autoFocus prop, which determines whether or not we want the input to be focused automatically on mount. In order to do this, we need to use a web API (i.e. .focus()) and thus need to be able to directly refer to the HTML element on the page.
 
@@ -154,7 +152,7 @@ console.log(inputRef.current);
 
 With this wired up, we can now autofocus the input on mount, as well as add some styling to make our SearchInput component look more cohesive even though it is made up of multiple elements "under the hood". In order to handle the autofocus behavior, we need to use the useLayoutEffect hook to focus the input prior to the DOM painting.
 
-_Note: For more info on when to use useLayoutEffect vs. useEffect, <a href="/posts/hooks-uselayouteffect">check out my previous article in this series</a>._
+_Note: For more info on when to use useLayoutEffect vs. useEffect, <a href="/hooks-uselayouteffect/">check out my previous article in this series</a>._
 
 ```javascript
 useLayoutEffect(() => {
@@ -171,7 +169,7 @@ By calling inputRef.current.focus(), we are setting the input inside our compone
 const focusCn = focused ? "SearchInput focused" : "SearchInput";
 ```
 
-Finally, I have also added an event listener using <a href="/posts/hooks-useeffect">a useEffect hook</a> in order to update our focus state based on mouse clicks both inside and outside of our component. Essentially, when the user clicks inside SearchInput, we call .focus() and update our focused state to true. Alternatively, when the user clicks outside the component, we call .blur() and set focused to false.
+Finally, I have also added an event listener using <a href="/hooks-useeffect/">a useEffect hook</a> in order to update our focus state based on mouse clicks both inside and outside of our component. Essentially, when the user clicks inside SearchInput, we call .focus() and update our focused state to true. Alternatively, when the user clicks outside the component, we call .blur() and set focused to false.
 
 ```javascript
 useEffect(() => {
@@ -194,20 +192,17 @@ useEffect(() => {
 
 While accessing DOM elements is a React anti-pattern (as discussed above), this example is a valid use case for refs because our goal requires the use of .focus(), which is only available to HTML elements.
 
-#### Storing values without re-rendering
+### Storing values without re-rendering
 
 In this example, I want to illustrate the subtle difference between using useState and useRef to store values.
 
-<iframe
-  src="https://codesandbox.io/embed/fancy-hooks-cxw57?fontsize=14&hidenavigation=1&theme=dark"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-  title="hooks/useRef (Data)"
-  allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
-  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
-></iframe>
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/fancy-hooks-cxw57" target="_blank" rel="noopener noreferrer">hooks/useRef (Data) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
 
 Here, we have two sections that have buttons, which allow us to increment/decrement our refValue or stateValue, respectively. When the page initally loads, each section is assigned a random hex value as its background-color. From then on, you will see the colors change whenever our App component re-renders.
 
 Since updating state values cause a re-render, you should see the stateValue number update every time you click on of the buttons; however, if you click on the buttons for our refValue, nothing happens. This is because **updating ref values does not cause a component to re-render**. To demonstrate that the refValue is in fact changing, I have added console.log statements to the onClick handlers for both buttons.
 
-While incrementing or decrementing the refValue will not cause our UI to update with the proper numeric value, when you change the stateValue our refValue will update and its section will have a new background color. This is because our ref section is re-rendered when the state value is updated since the parent component App has to go through reconciliation to bring the virtual DOM and browser DOM into sync with one another. This can be a great strategy for avoiding uneccessary renders in your application and improving its performance!
+While incrementing or decrementing the refValue will not cause our UI to update with the proper numeric value, when you change the stateValue our refValue will update and its section will have a new background color. This is because our ref section is re-rendered when the state value is updated since the parent component App has to go through reconciliation to bring the virtual DOM and browser DOM into sync with one another. This can be a great strategy for avoiding unnecessary renders in your application and improving its performance!

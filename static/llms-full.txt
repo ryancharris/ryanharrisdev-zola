@@ -1,0 +1,2959 @@
+# ryan harris — full text
+
+> writing about code, tools, and things i'm figuring out
+
+Source: https://github.com/ryancharris
+
+---
+
+# about
+
+URL: https://ryanharris.dev/about/
+Published: 2020-08-11
+Updated: 2026-11-07
+Description: About Ryan Harris, a software engineer working on distributed systems and internal tooling at dbt Labs.
+
+I've been writing software for over a decade, and I still think the best part of the job is making other engineers' lives less painful. These days I do that at dbt Labs, where I work on distributed systems and internal tooling — the kind of stuff that doesn't ship features but makes the people who do ship them a lot faster.
+
+My career started in Philly, bouncing through Revzilla, Guru, and Fauna, where I did everything from building UIs to leading full app re-platforming efforts. Somewhere in there I made some video courses on egghead.io and gave a few conference talks, which was terrifying and fun in equal measure.
+
+This blog is basically my thinking out loud in public — code, tools, whatever problem has taken over my brain that week. No editorial calendar, no content strategy, just whatever I find interesting.
+
+You can find me on [GitHub](https://github.com/ryancharris) and [LinkedIn](https://www.linkedin.com/in/ryancharris/), or email [ryan@ryanharris.dev](mailto:ryan@ryanharris.dev).
+
+---
+
+# How to not get rekt: web3 wallet safety
+
+URL: https://ryanharris.dev/web3-wallet-strategy/
+Published: 2021-12-01
+Description: Create a web3 wallet strategy to keep your crypto assets safe.
+Tags: crypto
+Category: web3
+
+And like that it happened: I got rekt. Over $3000 in ETH gone in an instant (not to mention the SUSHI, AVAX and JOE).
+
+I had connected my crypto wallet to a malicious dApp, handed over my seed phrase and ended up having someone move all of the assets in my wallet to theirs. And there was nothing I could do about it, nobody I could call. Then, it happened again (more on this later).
+
+This type of experience is considered a rite of passage in crypto right now, which is unfortunate. These things happen largely due to a lack of understanding about how accounts and wallets work on the blockchain. Scammers take advantages of this, creating a real risk for users and a barrier to entry for those new to the space and/or without disposal income.
+
+Let my tale be a cautionary one and learn from my mistakes. I learned a lot from my "How did I get rekt?" research and jotted down my primary takeaways in the hope others could avoid a similar experience.
+
+## Don't give away your seed phrase!
+
+When you first set up your crypto wallet, a list of words (i.e. a "seed phrase") is generated. This phrase acts as your credentials for the wallet and, in turn, gives you the ability to manage your accounts. It is also used to generate the private key for your accounts.
+
+**Do not give anyone your seed phrase!**
+
+Seeing as how this is exactly what I did, I can speak from experience. When I submitted my seed phrase to the fake dApp (thinking I was connecting), I essentially gave them the keys to the car. The scammers then used it to access my account and transfer out all of my ETH.
+
+## Wallets and accounts
+
+Accounts on the blockchain each have their own unique address and are comprised of a cryptographic keypair. Software wallets like MetaMask and Rainbow allow users to interact with their blockchain accounts and authorize transactions.
+
+For each account, a private key is created that is then used to generate an associated public key. The account address is then derived from the public key and acts as an identifier for the account.
+
+Just remember accounts and addresses **are not** the same thing.
+
+## Custodial vs. non-custodial wallets
+
+Accounts are comprised of a public/private keypair, the latter of which needs to be kept secret. Who bears that responsibility is what differentiates custodial and non-custodial wallets.
+
+With a custodial wallet like Coinbase (or any other centralized exchange), that company both creates the blockchain account on your behalf _and_ manages the associated keys. While this makes things easier on you, it means you are trusting a third party to store your credentials and act as a "custodian" of your account.
+
+On the flip-side, with non-custodial wallets _you_ need to manage the public/private keys yourself. This gives you full ownership over the account but comes at the price of additional responsibility. If you lose the private key or seed phrase, **you will not be able to access your assets**. The blockchain is a decentralized network and no centralized party can recover them for you.
+
+## Hardware wallets
+
+Since the account's private key is used to sign transactions (i.e. authorizing purchases, asset transfers, etc.), keeping it safe is the name of the game.
+
+For mobile and browser wallets, the keys are stored on the software's host device. This helps with user experience because the software can easily retrieve the private key when needed to sign a transaction. However, this also adds an attack vector as the keys are being stored on an internet enabled device.
+
+Hardware wallets take a different approach and store your private key on a **completely separate device** like a USB drive. Often, they're airgapped and do not have any internet, Bluetooth or NFC connection to make them more secure. Each has an authentication mechanism (like scanning a QR code) that allows you to fetch the private key via a mobile app in order to sign transactions. Because of this extra step, an attacker would need to gain access to both your phone and hardware wallet in order to make malicious transactions.
+
+## Bonus: How I got hacked a second time
+
+One of the most widely used web3 wallets is MetaMask. Within the wallet, you can create multiple accounts each with their own unique address. While they may seem fully isolated, **they are not**.
+
+Behind the scenes, MetaMask uses **the same seed phrase and private key** to generate new public keys and address for each account it manages. At the time, I did not know this so when I moved funds from Account 1 to Account 2 in MetaMask, I didn't realize the hacker would have access to that too.
+
+As if the gas fees weren't bad enough 😅
+
+## Pro-tips
+
+1. **Use a burner**
+   When interacting with a dApp for something like minting a NFT, use a secondary wallet/account. Keep your primary assets in an account you keep separate, preferably a hardware wallet. This way, if a malicious app gains access to your wallet you don't have to worry about your main holdings.
+
+2. **Consider a contract wallet**
+   Wallets like Argent manage your assets in a smart contract, not a "normal" blockchain account. This allows for them to build additional functionality like multi-factor authentication for signing transactions via text and/or email, as well as recovery options for when you lose your seed phrase. This can be **huge** as many seed phrase-less folks can testify.
+
+## Have fun, be safe
+
+A large part of understanding web3 is learning via participation. As in, the more projects/protocols you use and interact with, the more you will understand the ecosystem and underlying concepts.
+
+This, of course, requires you to have a crypto wallet, connect to dApps, and interact with smart contracts, all of which can be somewhat risky as the space is still very new. But don't let this stop you from exploring: just make sure to take the proper precautions!
+
+After that, it'll be all about the vibes 😎
+
+---
+
+# Takeaways from 'Shape Up'
+
+URL: https://ryanharris.dev/takeaways-from-shape-up/
+Published: 2020-08-17
+Description: My thoughts on 'Take Shape' by Ryan Singer.
+Tags: books, product
+Category: books
+
+Recently, I've been having discussions with my team about our product process. They have often centered on how to move quickly while shipping useful, well thought out and thoroughly tested features.
+
+At the suggestion of a few co-workers, I recently read [Shape Up](https://basecamp.com/shapeup) by [Ryan Singer](https://twitter.com/rjs). The book is about Ryan's (great name 🙃 ) experiences building [Basecamp](https://basecamp.com/) and the product process their team developed over time.
+
+Generally, they broke their approach down into three sections:
+
+1. Shaping
+2. Betting
+3. Building
+
+## Shaping
+
+Based on my reading, I would go as far as saying this is the most important part of the process. For it is here, not during development, where we need to think about problems and solutions in broad strokes.
+
+Firstly, what pain points are our users facing? Beyond raw feedback, teams need to dig a bit further to unearth the true cause of incoming requests. **This is crucial.** We should not be reacting to requests from a singular customer without proving it's an issue for a large chunk of our user base first.
+
+> Instead of taking the request at face value, we dug deeper.
+
+Once a problem has been identified, the team needs to decide what their "appetite" (i.e. how much time they're willing to spend) to address a given problem might be. Doing this before ideating on solutions will help the team move through the rest of the process as it builds in a [time box](https://en.wikipedia.org/wiki/Timeboxing) for whatever work the team agrees to take on. Later, this time constraint will help teams prioritize tasks and make decisions as they approach the end of the Bulding phase.
+
+With the problem defined and a time-box established, the team is now prepared to think of solutions -- done in broad strokes so as not to commit to any designs, flows, etc. This is where **one of my biggest takeaways from the book comes in**: while it is important to define what work will be done over the course of a project, it is equally (if not more) important to define **what work will not be done**.
+
+## Betting
+
+Following the shaping process, folks should create pitches for the various problems/solutions the team wants to solve. These are then brought to the "betting table", where they're discussed at a high-level and given a 👍 or 👎.
+
+> We need to stay high level, but add a little more concreteness... People who read the pitch and look at the drawings without much context need to “get” the idea.
+
+While this is not a new idea, the part that really struck me about the Betting phase was that the team **does not rely on a ticket backlog** to drive their decisions. Instead, the process is setup so that important issues continue to surface through customer feedback, make their way through shaping and, ultimately, end up on the betting table. Then, leadership is able to decide what work they want to undertake by looking at project ideas side by side.
+
+This strategy helps alleviate the reactivity to customer feedback I mentioned in the section above. If a customer issue makes it to the betting table, but continues to be passed over for other work we should ask ourselves: **how important can this actually be if we keep punting on it**? Most teams would ticket these items in their backlog, but what is the point in doing that if we know we're never going to actually address all the items we put there?
+
+> All software has bugs. The question is: how severe are they? If we’re in a real crisis—data is being lost, the app is grinding to a halt, or a huge swath of customers are seeing the wrong thing—then we’ll drop everything to fix it. But crises are rare.
+
+Theoretically, I like the idea of not having a backlog since an ever-growing, massive wall of backlog items can cause teams stress. However, I do think it's important to keep track of ideas/issues related to your product -- though I will say, I do not believe a ticketing system is where these things should live.
+
+## Building
+
+At Basecamp, teams work on six-week cycles. This includes phases for design, engineering and testing (marketing announcements and documentation updates can be done afterwards) with the expectation that the team ships the new feature at the end of the cycle.
+
+> Six weeks is long enough to finish something meaningful and still short enough to see the end from the beginning.
+
+The main idea here is to empower the team to make their own decisions. Since they are doing the implementation, they are the ones best suited to adjust scope and priority throughout the process in order to make their delivery date.
+
+> We expect our teams to actively make trade-offs and question the scope instead of cramming and pushing to finish tasks. We create our own work for ourselves. We should question any new work that comes up before we accept it as necessary.
+
+**A great strategy Singer** suggests here is to carve features up into vertically deliverable slices -- i.e. finish one piece of the functionality from front to back without worrying about how it looks (for now). This has a few benefits:
+
+- Teams stay motivated as they can see the feature starting to take shape.
+- Engineers can start to uncover unforeseen issues or complications earlier on in the process.
+- As slices are finished, the remaining work can continue to be broken into deliverable chunks.
+
+As the cycle comes to an end, the team will have to decide when to stop. Since they've continued defining and re-defining the scope of the work that remains to be done, this shouldn't be too hard. Ultimately, this is more about the customer than it is about product team. If a user's experience has improved beyond its current state, then we can count that as a win because **we will never ship something perfect.**
+
+Now you may ask: what about any of the work that remains undone? That's the beauty of this process -- instead of extending the development cycle, this work goes back into the shaping project and, eventually, makes its way to the betting table. If the work is truly important to the product, we should rely on the shaping process and that the work will make its way through the betting process once again.
+
+## Final thoughts
+
+I have worked at a number of companies, all of whom had their own product process. What Singer lays out in "Shape Up" is an amalgamation of the disparate processes I've seen work best over the past few years organized into a coherent process.
+
+The big key here for me is: **the focus of our work is all about the user**. We as designers, engineers, product managers, etc. may have our own ideas or conceptions about our product, but what matters most is how our users experience it.
+
+In my mind, using Singer's process re-focuses the team on delivering value to customers and cuts out a lot of the overhead involved with maintaining large backlogs. Does every bet work out? No, but the worst that happens is the team loses six weeks instead of six months. Using this process, a team could deliver about 8 new features a year, all of which have been well-defined and de-risked as much as possible.
+
+And I'd wager a bet your customers would notice.
+
+---
+
+# Planning my digital garden
+
+URL: https://ryanharris.dev/planning-my-digital-garden/
+Published: 2020-08-11
+Description: Thoughts about redesigning my website and turning it into a digital garden.
+Tags: digital-garden, meta
+Category: garden
+
+## Preface
+
+This site has slowly been evolving over the past few years. First, it was primarily used for job searching. Then, it became a repository for my "very polished" articles, which I published with sporadic frequency.
+
+Now, I am in need of something that goes beyond a chronologically listed blog roll, something many smarter folks than me have begun calling a [digital garden](https://joelhooks.com/digital-garden).
+
+The TL;DR of this metaphor is that not all content needs to be perfectly formed. It can be nascent "seeds" that you will cultivate and refine over time. Some will bloom in full, others may wither and die.
+
+As I embark on the adventure of developing my digital green thumb, I thought it was important that I lay out my goals and expectations for this transformation (inspired by [Kurt Kemple's blog post](https://theworst.dev/redesigning-the-worst-dot-dev/)). What follows is an attempt to organize my thoughts.
+
+## Goals
+
+### 1. Code as a first class citizen
+
+It's probably not much of a surprised, but my site has code snippets strewn throughout. They're currently what I could call passable, however, they don't look so great -- especially the inline blocks. Since I will only be adding more snippets over time, I need to make these as readable and accessible as possible.
+
+[Prince Wilson's](https://prince.dev/) site is a particular inspiration in this vein. Beyond a beautiful display, Prince's code snippets also include line highlighting! This will be super useful when explaining specific aspects of my code blocks.
+
+### 2. Footnotes (or callouts)
+
+As you can see above, I add a lot of links to my posts. Whether they're reference material, inspirational or just plain cool, I'd like to improve how these look. My current thinking is I can add this information in the frontmatter of my posts and create a component that consumes and displays them.
+
+I'm of two minds here. I could do footnotes with inline annotations (a la [Jason Lengstorf](https://lengstorf.com)) or inline callouts similar to Prince and [Monica Powell](https://www.aboutmonica.com).
+
+### 3. Curation mechanism
+
+This quote from Joel struck me. Like him, I am also old enough to remember a time gone by where not every website was a chronologically ordered list of posts. Before everything was so... the same.
+
+> I'm convinced that paginated posted sorted chronologically fuckin' sucks. What makes a garden is interesting. It's personal. Things are organized and orderly, but with a touch of chaos around the edges. ~ [Joel Hooks](https://joelhooks.com/digital-garden)
+
+Many of the amazing people cited throughout this article have some sort of mechanism for highlighting specific content and/or grouping related things. Sure, you can still see an "All Articles" list, however, the homepage is structured in a way so as to call out specific things they're working on, interested in, etc. This way, it becomes less about chronology and more about cultivation.
+
+### 4. Search functionality
+
+A strange yet fulfilling part of creating content is that you often find yourself referring back to your own posts.
+
+Since the garden is meant for public consumption, including my own, there needs to be a way to easily find notes I've previously planted. This will also help in the "tending" of my garden as I can look at past content and decide whether it needs to be updated.
+
+### 5. Classified content
+
+I'm not 100% sure what I want to do here and there are a few ways to go.
+
+In the spirit of digital gardening, I would like to note somewhere in the UI whether a post is a seed, sapling or plant (if for no other reason than informing the reader how shaped the content is). I don't want it to deincentivize users from reading my posts -- more set expectations as to what they're about to read.
+
+---
+
+# Hooks Revisited: useDebugValue
+
+URL: https://ryanharris.dev/hooks-usedebugvalue/
+Published: 2020-08-10
+Description: useDebugValue is a hook aimed at helping developers troubleshoot the React applications they're building.
+Tags: hooks
+Category: react
+
+## #TIL
+
+I'll be honest: before working on this series, I had never heard of useDebugValue (or seen it in a codebase).
+
+Unlike the hooks we've covered thus far, useDebugValue is not intended to add functionality to your applications. Instead, as the name suggests, it is used as a debugging tool and can help developers troubleshoot issues in their custom React hooks.
+
+> We don’t recommend adding debug values to every custom Hook. It’s most valuable for custom Hooks that are part of shared libraries. ~ [React docs](https://reactjs.org/docs/hooks-reference.html#usedebugvalue)
+
+Though it doesn't effect your application logic in anyway, this hook can negatively effect performance in certain cases if you're not careful (more on this later).
+
+## Anatomy of useDebugValue
+
+First things first, let's see what useDebugValue looks like in action:
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusedebugvalue-ccnju" target="_blank" rel="noopener noreferrer">hooks/useDebugValue on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+In the snippet above, we've defined our own custom hook, useDate (more about these in an upcoming article). Currently, the hook fires once on App's initial render -- due to the empty dependency array -- and displays it on the page.
+
+Note that we're also using a useDebugValue hook within useDate, which takes a single value and then displays it in the [React DevTools](https://github.com/facebook/react-devtools). In the screenshot below, you can see how the snippet above would look in your browser.
+
+_[Image: useDebugValue output in React DevTools]_
+
+## Formatting useDebugValue
+
+useDebugValue also takes an optional second argument, which can be used to format the hook's display value. In this case, the function's signature would look like this:
+
+```javascript
+uuseDebugValue (date, (date) => date.toDateString().toUpperCase());
+```
+
+The hook works the same way it does without the second argument, however, it's output now looks like this:
+
+_[Image: Formatted useDebugValue output in React DevTools]_
+
+## Notes about the formatting function
+
+As I mentioned in the intro, while this hook does not effect how your application works, it can effect performance if the logic within the formatter function is expensive.
+
+Luckily, the React team built in a safeguard for this and, [as it says in the documentation](https://reactjs.org/docs/hooks-reference.html#defer-formatting-debug-values), the function will only be executed when you are inspecting your hooks within the dev tools.
+
+Though use-cases for a complex formatter function may be few and far between, be careful about the logic you house within it so as to avoid unintended performance issues.
+
+## Real-world use case
+
+Odds are you won't be using useDebugValue too much in your day to day work unless you're building custom hooks or an open source library.
+
+Since custom hooks are built using the standard hooks provided by React, useDebugValue is primarily a nice solution to help you debug the internals of your hook implementation in the React Dev Tools pane, as opposed to adding console.log() calls everywhere.
+
+---
+
+# Notes on 'Mastering emacs'
+
+URL: https://ryanharris.dev/mastering-emacs/
+Published: 2020-08-09
+Description: Raw notes from a 'Mastering emacs' bookclub I participated in.
+Tags: emacs
+Category: general
+
+I just started going through ['Mastering emacs'](https://www.masteringemacs.org/) by Mickey Petersen with a new Egghead book club cohort organized by [Ian Jones](https://www.ianjones.us).
+
+'Why emacs?' you may ask. Good question. I've been happily using VS Code for a few years and enjoy it. My interest in emacs is primarily due to one thing: org mode. Imagine Notion, iCal and Todoist (plus more I don't even know about yet) all inside your editor. That's org mode.
+
+Below are my evolving notes as we make our way through the book.
+
+## Week 1 - Ch. 1 & 2
+
+### Reading and discussion notes
+
+- GNU emacs is most common
+- emacs is "for tinkerers"
+- Built on elisp
+  - 95% elisp
+  - 5% C
+- Has had a speech interface for 20+ years (emacspeak)
+- Some terms predate modern computing terms
+  - "killing" -- cutting
+  - "yanking" -- pasting
+  - "saving to the kill ring" -- copying
+
+### Usage notes
+
+Commands are semantic:
+
+- **Spc w** -- window commands
+- **Spc b** -- buffer commands
+- **Spc f** -- file commands
+- **Spc p** -- project commands
+
+**Spc o t**
+
+- toggle integrated terminal window
+
+**Spc b b**
+
+- Show recent buffers
+
+To add Prettier formatting:
+
+- Add Prettier to `packages.el`
+
+```elisp
+(package! prettier-js)
+```
+
+- Require Prettier in `config.el`
+
+```elisp
+(require 'prettier-js)
+```
+
+- Add hooks to format on save in TypeScript and JavaScript modes
+
+```elisp
+(add-hook 'javascript-mode 'prettier-js-mode)
+(add-hook 'typescript-mode 'prettier-js-mode)
+```
+
+## Week 2 - Chapter 3
+
+### Discussion notes
+
+Everyone else is using org-roam for networked thought
+
+- We were also roped into emacs by the Jones brothers!
+- Most of us are keeping all our todos in todo.org
+- Kevin has multiple files for todos and has his config set to load them all
+
+Resources to reference:
+
+- https://www.amazon.com/How-Take-Smart-Notes-Nonfiction-ebook/dp/B06WVYW33Y
+- https://www.dschapman.com/
+- https://linuxconfig.org/vim-tutorial
+- https://vim-adventures.com/
+- https://www.orgroam.com/manual/
+- https://www.youtube.com/watch?v=rCMh7srOqvw&list=PLhXZp00uXBk4np17N39WvB80zgxlZfVwj&index=1
+- https://www.youtube.com/watch?v=FtieBc3KptU&t=1561s
+- https://tecosaur.github.io/emacs-config/config.html#rudimentary-configuration
+
+org-roam comes in when you want to connect your notes and link them
+
+- Keeps a flat file structure
+
+Time tracking in emacs with org-mode tables
+
+- You can do it manually with org-table
+- Can you Pomodoro plugin
+
+Reading was a bit dry this week
+
+- Not much that was super useful since we're all using Doom emacs
+
+Many folks have heard that `magit` is a great
+
+- Super powerful git client
+
+emacs has such a cool ecosystem and lots of great customizations
+
+- Buying in too much is dangerous cause you can never leave
+
+Lauro and I want to have our markdown files with a preview window next to it
+
+- Being worked on
+
+### Questions for the group
+
+- I'm confused about the emacs client-server concept
+
+### Usage notes
+
+`C-g`: Bailout command
+
+`M-x lunar-phases`: Shows a list of the upcoming lunar cycles
+
+`M-x info`: Pull up the emacs info manual
+
+`g d`: Global describe
+
+### Reading notes
+
+Starting emacs
+
+- You can run emacs either via the terminal or its GUI
+- Using it from the terminal is a limited experience
+
+> The emacs way is to keep it running and do all your editing in a dedicated Emacs instance.
+
+- emacs starts slow cause of the packages and features
+- Meant to be left open for long running sessions
+
+Emacs client-server
+
+1. **Persistent session** — use same session instead of spawning new instance
+2. **It works well with \$EDITOR** — what exactly does this mean?
+3. **Fast file opening** — uses `emacsclient`
+
+"Key sequence"
+
+- Keyboard or mouse actions that invoke a user command
+- Commands are functions that are accessible to the user
+
+**Keys**
+
+Modifier keys
+
+- `C -` — Control
+- `M -` — Meta (i.e. Alt)
+- `S -` — Shift
+
+Discovering a remembering keys
+
+- emacs is auto documented, so you want to leverage this as you learn
+- `C-h` will show a help menu
+
+> Tinking with emacs is every emacs hacker's favorite pastime
+
+There are two ways to change your configuration in emacs:
+
+1. Add elisp snippets to you config file
+2. Use the built-in Customize UI
+
+Customize UI
+
+- Does not support every feature in emacs
+- When making changes, you must `Save and Apply` or they will not persist to other sessions
+- Changes here get persisted in your `init.el`
+- More specific commands get you to specific settings like `M-x customize-face`
+
+Evaluating Elisp code
+
+- To evalue Elisp, you don't have to fully restart emacs
+- `M-x eval-buffer` -- evaluates your entire current buffer
+- `M-x eval-region` -- evaluates only the highlighted region
+
+The package manager
+
+- ELPA: official package manager
+- MELPA: community package manager
+- Add this config snippet to include ELPA and MELPA packages
+
+```elisp
+(setq package-archives
+'(("gnu" . "http://elpa.gnu.org/packages/")
+  ("melpa" . "http://melpa.org/packages/")))
+```
+
+Getting help
+
+- emacs is self documenting and this is a huge key into mastering it
+- Knowing where to find the answers is the important part because:
+  - **emacs knows best** -- Your customizations can make it hard to find solutions online, so the best reference is your own emacs instance
+  - **you discover more emacs** -- Learning this way helps you stumble upon new functionality you weren't aware of
+  - **helps you solve more problems** -- The key isn't knowing everything, but where to look
+
+Apropos
+
+- Helpful when you're not sure exactly what command you're looking for
+- Supports RegEx
+- EX: `C-h a -word$` lists all commands ending with "word"
+- To sort your apropos results by relevancy
+
+```elisp
+(setq apropos-sort-by-scores t)
+```
+
+- You can scope your search with commands like `apropos-documentation`, `apropos-user-option`, etc.
+
+> The describe system is not static.
+
+- The describe system has multiple helpful commands
+  - `M-x describe-mode` or `C-h m` — Displays documentation for any major mode (uses your current buffer)
+  - `M-x describe-function` or `C-h f` — Describes a function
+  - `M-x describe-variable` or `C-h v` — Describes a variable
+  - `M-x describe-key` or `C-h k` — Describes what a given keybinding does
+
+---
+
+# Add voice chat to your Twitch stream
+
+URL: https://ryanharris.dev/twitch-with-discord-audio/
+Published: 2020-08-08
+Description: Check out the setup I used to patch Discord audio into my Twitch livestream.
+Tags: discord, twitch
+Category: streaming
+
+While I usually stream on [Twitch](https://twitch.tv/ryan_c_harris), I have recently been doing streams in [Reactadelphia's](https://www.meetup.com/Reactadelphia/) Discord [server](https://discord.gg/rTnVTp4). The idea of interacting with viewers via voice chat was quite appealing; however, the downside is that it lacks the visibility of Twitch -- folks not in your Discord server can't join in on the fun.
+
+After chatting with [Kurt Kemple](https://theworst.dev) and [Trevor Blades](https://trevorblades.com) (coincidentally, using Discord's voice capabilities) during the recent [GraphQL Summit](https://summit.graphql.com/), I thought it would be nice if we could mix the visibility of one service with the immediacy of the other.
+
+The TL;DR of the solution I came up with was to pipe Discord's audio into my streaming software, along with my mic audio. Of course, my setup also had a self-imposed complication -- I wanted to listen to Spotify while streaming, but not broadcast it since I do not have the rights.
+
+It took some experimentation, but here's the general setup I landed on:
+
+## Tools
+
+- MacBook Pro (2019)
+- [Streamlabs OBS](https://streamlabs.com/) (stream software)
+- [iShowU Audio](https://support.shinywhitebox.com/hc/en-us/articles/204161459-Installing-iShowU-Audio-Capture-Mojave-and-earlier-) (desktop audio capture)
+- USB-C hub w/ headphone jack
+
+## Configuration
+
+Since I want to split Spotify and Discord audio up, I can't simply use iShowU to capture and output all my audio wholesale. To do this, I had to:
+
+1. Set the macOS Sound preferences to output to a Multi-Output Device. You can create this in the Audio MIDI Setup app.
+
+_[Image: macOS Sound preferences showing a Multi-Output Device]_
+
+2. In the aforementioned app, select the headphones (USB PnP Audio Device). All desktop audio now plays in the headphones.
+
+_[Image: Audio MIDI Setup showing headphones selected as the output]_
+
+3. Change the Discord audio preference to output to iShowU Audio Capture. You will no longer hear Discord audio in your headphones.
+
+_[Image: Discord audio output set to iShowU Audio Capture]_
+
+4. In Streamlabs OBS, add your microphone and the iShowU audio as inputs (see below)
+
+_[Image: Streamlabs OBS audio inputs showing the microphone and iShowU capture]_
+
+Now, you'll only receive the two audio signals you want in Streamlabs (mic and desktop) while still being able to listen to copyrighted music on Spotify without risking its transmission.
+
+---
+
+# Hooks Revisited: useReducer
+
+URL: https://ryanharris.dev/hooks-usereducer/
+Published: 2020-05-18
+Description: useReducer provides an alternate way to store component state beyond useState. It is especially useful for storing complex data structures and/or related values.
+Tags: hooks
+Category: react
+
+## An update on state
+
+Throughout this series, all of the code snippets and sandboxes we've created have used useState to manage our component data. However, React offers us an additional hook to use for storing data: useReducer.
+
+While useState allows us to store and set a single value, useReducer helps us work with more complex or structured data by allowing us to store and manipulate related values alongside one another.
+
+## Anatomy of useReducer
+
+Like useState, useReducer returns an array with two values:
+
+- The current state
+- A function used to update the state
+
+```javascript
+const [value, setValue] = useState(null);
+
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+The useReducer hook takes up to three arguments:
+
+1. **Reducer function** -- This function describes how our state should be updated based on the action that was dispatched.
+
+2. **Initial state** -- This value defines the hook's initial state and works similarly to how we provide the useState hook a default value when instantiating it.
+
+3. **Initialization function** -- This argument is optional and is useful for...
+
+> ...calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action. ~ [[React docs](https://reactjs.org/docs/hooks-reference.html#lazy-initialization)]
+
+## Difference from useState
+
+To best illustrate the difference in how useReducer and useState update their state values, respectively, let's take a look at them side by side. The snippet below shows the code you'd need to use to instantiate and update a state value using both hooks:
+
+```javascript
+// useState
+const [name, setName] = useState("");
+setName("Ryan");
+console.log(name); // 'Ryan'
+
+// useReducer
+const initialState = {
+  name: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "update-name":
+      return {
+        name: action.value,
+      };
+  }
+}
+
+const [state, dispatch] = useReducer(reducer, initialState);
+dispatch({ type: "update-name", value: "Ryan" });
+console.log(state.name); // 'Ryan'
+```
+
+The first difference here is that while useState is storing a string, useReducer's initial value is an object. In this case, it has a single key (i.e. name), however, we can always add more keys to the state as we build out our UI.
+
+Secondly, while useState's setter function updates its value directly, useReducer dispatches an action. The reducer function then determines what type of action was fired and, subsequently, how to update its state.
+
+_Note:_ If you haven't used it in the past, this is pretty much how [Redux](https://redux.js.org/) works.
+
+## In practice
+
+In the sandbox below, I've built a form for scheduling an appointment. Though there are multiple inputs with different types, all of the values are related to one another as they are in the same form.
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusereducer-5rntg" target="_blank" rel="noopener noreferrer">hooks/useReducer on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+Instead of storing each input value in its own useState hook, we can store and manage all of the values in our form using a single useReducer. In this case, its state is an object with many keys, each representing a different value we want to store. Personally, this reminds me a bit of this.state in class components before we had hooks.
+
+In App.js, we've defined our initial state like this:
+
+```javascript
+const blankForm = {
+  name: "",
+  email: "",
+  date: "",
+  time: "",
+  feeling: "3",
+};
+
+const [formState, dispatch] = useReducer(reducer, blankForm);
+```
+
+Each of the fields in the blankForm object represents and stores the value for an associated input in our form. Since the initial state of email is an empty string, the e-mail input will be blank on render as it reads its value from useReducer's state:
+
+```javascript
+<input
+  className="Form__input"
+  name="email"
+  type="email"
+  value={formState.email}
+/>
+```
+
+To make this work, we've also set our inputs' onChange handlers to dispatch specific actions in order to update the state. Here's what our e-mail input now looks like:
+
+```javascript
+<input
+  className="Form__input"
+  name="email"
+  type="email"
+  value={formState.email}
+  onChange={(event) => {
+    dispatch({ type: "setEmail", value: event.target.value });
+  }}
+/>
+```
+
+In the snippet above, we're specifically dispatching the setEmail action. Inside of our reducer function, the switch statement looks for the case that matches the action.type and executes its logic to update state:
+
+```javascript
+function reducer(state, action) {
+  switch (action.type) {
+    case "setName":
+      return {
+        ...state,
+        name: action.value,
+      };
+    case "setEmail":
+      return {
+        ...state,
+        email: action.value,
+      };
+    case "setDate":
+      return {
+        ...state,
+        date: action.value,
+      };
+    case "setTime":
+      return {
+        ...state,
+        time: action.value,
+      };
+    case "setFeeling":
+      return {
+        ...state,
+        feeling: action.value,
+      };
+    case "reset":
+      return blankForm;
+  }
+}
+```
+
+For example, when setEmail is called the reducer returns a new object that contains all of the current state information, except it **also** updates the email field.
+
+```javascript
+return {
+  ...state,
+  email: action.value,
+};
+```
+
+Finally, since our useReducer hook's state has now been updated, the component will re-render and the inputs all display their updated value from formState.
+
+## Notes about performance
+
+As my friend Josef Aidt pointed out while reviewing an early draft of this article, our use case for useReducer in the sandbox above has certain performance implications. Since each input's onChange function fires each time an input's value changes, we are actually causing our component to re-render on each key press. This is alright for demonstration purposes, but is something to be aware of when building production apps.
+
+Two ways we could avoid this are:
+
+- Adding a debounce to each input, so that we do not trigger a state update on each keypress.
+- Storing our input values in refs instead of useReducer as changing the value of a ref does not cause our component to re-render (see my <a href="/hooks-useref/">useRef</a> article for more on this).
+
+Now, go forth and be performant!
+
+---
+
+# Hooks Revisited: useCallback
+
+URL: https://ryanharris.dev/hooks-usecallback/
+Published: 2020-04-21
+Description: useCallback is similar to useMemo but returns a memoized function, not a memoized value.
+Tags: hooks
+Category: react
+
+## Before you proceed...
+
+If you haven't read my <a href="/hooks-usememo/">useMemo</a> article yet, I **highly suggest you go back and do so** now! In that article, we covered important concepts like [memoization](https://en.wikipedia.org/wiki/Memoization), which we will continue discussing below.
+
+Since useMemo and useCallback are similar (with one key difference), it will be important to understand how useMemo works before proceeding.
+
+## What's the difference?
+
+Both useMemo and useCallback utilize memoization to optimize performance, however, there is a subtle difference between them. While useMemo returns a memoized value resulting from the logic contained within the hook's body, useCallback returns a memoized version of the **function itself**.
+
+In the code block below, I've taken the useCallback example from the [React docs](https://reactjs.org/docs/hooks-reference.html#usecallback) and placed it next to its useMemo equivalent to better illustrate the difference:
+
+```javascript
+// memoizedFunction is a function
+const memoizedFunction = useCallback(() => {
+  doSomething(a, b);
+}, [a, b]);
+
+// memoizedFunction is the value returned from doSomething(a, b)
+const memoizedValue = useMemo(() => {
+  doSomething(a, b);
+}, [a, b]);
+```
+
+Here, useMemo and useCallback achieve the same thing: optimizing performance by returning cached values when a function has already been executed using the arguments it receives. Since they return different values, both hooks offer you a different way to leverage memoization based on your specific use-case.
+
+## In practice
+
+useCallback is useful because you can assign a memoized function to a variable and pass it around your application. This allows you to avoid re-creating the caching mechanism that memoization uses to improve performance.
+
+It also makes our lives easier because we do not need to duplicate useMemo logic in multiple places. We also don't need to import/export anything. Instead, we can just pass the memoized function as a prop and allow another component to consume it.
+
+In the sandbox below, I've taken the code from our <a href="/hooks-usememo/">useMemo</a> example and refactored it to use useCallback:
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusecallback-89w2p" target="_blank" rel="noopener noreferrer">hooks/useCallback on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+Like with useMemo, our useCallback hook is returning a memoized value. However, in this case, it is a memoized version of the anonymous function passed to it, **not** the function's return value.
+
+For demonstration purposes, we have two map components on this page (i.e. MapOne and MapTwo), which render -- you guessed it -- maps. If we assume they both plot coordinates in the same way, we can now pass createMapCoordinates to both components, allowing them to utilize the memoized function internally without having to recreate it in both places.
+
+```javascript
+const myFunction = () => {
+  doStuff();
+};
+```
+
+If you think about it, what we're doing here with useCallback isn't too much different from the snippet above since both of them create a variable and assign a function as its value. Our hook just memoizes the function so we can optimize our applications performance!
+
+---
+
+# Hooks Revisited: useMemo
+
+URL: https://ryanharris.dev/hooks-usememo/
+Published: 2020-03-24
+Description: useMemo allows you to avoid recomputing expensive values by leveraging memoization under the hood.
+Tags: hooks
+Category: react
+
+Up until this point in <a href="/hooks-revisited/">the series</a>, I have been generally familiar with the hooks we've covered and have used them before at work. It wasn't until I recently started working in a new codebase that I came across [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo). Not understanding how it worked or how to debug it was a large part of why I chose to write this series in the first place.
+
+## What is "memoization"?
+
+If you look at the React docs, they say that the useMemo hook "returns a memoized value". [Memoization](https://en.wikipedia.org/wiki/Memoization) was **not** a term I was familiar with when I first read that, so don't worry if you haven't heard of it either. We're in the same boat!
+
+Memoization is an optimization strategy that returns cached values from functions that have previously been invoked with the same arguments. In other words, instead of recalculating its return value, the function will return a cached value. This is useful when you have functions doing memory intensive operations and want to minimize how often they're invoked.
+
+Here's my mental model for how this works:
+
+```javascript
+// Value must be calculated
+add(1, 2);
+
+// Value must be calculated
+add(3, 4);
+
+// Cached value returned
+add(1, 2);
+```
+
+
+## Anatomy of useMemo
+
+As mentioned, the useMemo hook returns a "memoized value" and takes two arguments:
+
+1. A function
+2. A dependency array
+
+Here's an example of how it looks directly from the React docs:
+
+```javascript
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+```
+
+If you have read my articles on <a href="/hooks-useeffect/">useEffect</a> and <a href="/hooks-uselayouteffect/">useLayoutEffect</a>, you'll probably recognize this function signature. Just like those hooks, useMemo executes the logic inside the function passed to it **only** when one of the values in the dependency array changes. If no array is passed, useMemo will re-calculate its return value on **every** render.
+
+The difference here is that useMemo is not intended to cause side effects -- those should be handled in the appropriately named useEffect or useLayoutEffect hooks. useMemo simply calculates and returns a value based on the function and dependency array passed as arguments and helps handle expensive computations that may cause performance issues.
+
+## Optimization
+
+According to the React docs, useMemo is meant to be a **performance optimization**. They suggest you get your code to work without useMemo and implement it after the fact.
+
+One thing to note, however, is that you can't really guarantee that useMemo will return a cached value when expected. Read the following sentence carefully:
+
+> In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. [[React docs](https://reactjs.org/docs/hooks-reference.html#usememo)]
+
+To keep things performant and properly manage memory, React may get rid of a cached value it's not actively using in order to save room for other operations. In some cases, that will cause useMemo to recalculate its return value even though it had been previously in our cache.
+
+## In practice
+
+In the example below, I've created a demo to better illustrate how useMemo works. For our purposes, I have stubbed out some functions in order to make the example work properly; however, pay attention to the comments as they will provide further context.
+
+_Note: If you're unfamiliar with <a href="/hooks-useeffect/">useEffect</a> or <a href="/hooks-usestate/">useState</a>, take a moment and check out the previous articles in this series before continuing. Otherwise, these should look pretty familiar to you._
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusememo-kfgvu" target="_blank" rel="noopener noreferrer">hooks/useMemo on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+Here, our App component does three things:
+
+1. Makes a call to the NASA API in a useEffect hook and fetches a list of NASA facilities, which we store in useState
+
+```javascript
+useEffect(() => {
+  fetch("https://data.nasa.gov/resource/gvk9-iz74.json")
+    .then((res) => res.json())
+    .then((json) => {
+      setNasaLocations(json);
+    })
+    .catch((err) => console.log("Error fetching data", err));
+}, []);
+```
+
+2. Observes the input in our return and stores its value in another useState hook
+
+```javascript
+const [inputValue, setInputValue] = useState("")
+
+<input
+  name="search"
+  type="search"
+  onChange={event => setInputValue(event.currentTarget.value)}
+/>
+```
+
+3. Passes a filtered array to MapView via the coordinates prop, which represents location information for each facility
+
+```javascript
+<MapView coordinates={mapCoordinates} />
+```
+
+Technically, we could achieve these three goals without using useMemo, however, the NASA API returns to us a list of 484 facilities, which we iterate over in createMapCoordinates().
+
+This is **expensive** work, especially if the function runs frequently. On top of that, it calls another function for each item in the array (i.e. createCoordsForLocation()), which currently returns a plain JavaScript object.
+
+```javascript
+function createCoordsForLocation(lat, long) {
+  return {
+    latitude: lat,
+    longitude: long,
+  };
+}
+```
+
+But imagine that createCoordsForLocation() called a backend service for each item in the list to compute its geographic coordinates. This would make our already expensive createMapCoordinates() call that much more memory intensive. Since we need to do this to make our app function properly, we can leverage useMemo to optimize performance.
+
+Let's look at our use case:
+
+```javascript
+const mapCoordinates = useMemo(() => {
+  return createMapCoordinates(inputValue, nasaLocations);
+}, [inputValue, nasaLocations]);
+```
+
+First, look at the dependency array (i.e. [inputValue, nasaLocations]). Like useEffect, this tells useMemo only to run when either of those values change. Right now, we only make a call for nasaLocations on initial render, so its value will only change once, which triggers the hook.
+
+Our other value (i.e. inputValue), represents the value the user has entered in the input. Anytime the user adds or removes characters from the input, the inputValue will change in our useState hook and cause useMemo to run again.
+
+The trick here is that since we filter our nasaLocations list based on the inputValue, we can use useMemo to reduce computations. Since the hook will return a cached value whenever it receives inputs it has used for computation before, we will avoid re-running all the logic in createCoordsForLocation() and createMapCoordinates() if the inputValue and nasaLocations array we're passing in have already been processed.
+
+Of all the hooks we've covered thus far, useMemo is one of the harder ones to illustrate as its effect on your application is not necessarily visual, but performance based. Like the React docs say, get your application logic working **without** useMemo to confirm the proper functionality. Then, go through your component code and identify any expensive computations as these may be great candidates for useMemo!
+
+In the next article, we'll be covering useCallback, which also leverages memoization, but is subtly different from useMemo. Stay tuned to find out how!
+
+---
+
+# Hooks Revisited: useContext
+
+URL: https://ryanharris.dev/hooks-usecontext/
+Published: 2020-03-16
+Description: useContext provides an easy way to provide data from parent to child without having to 'prop drill'.
+Tags: hooks
+Category: react
+
+## Putting things in Context
+
+[Context](https://reactjs.org/docs/context.html) is one of my favorite React APIs and has a wide variety of uses cases. I've previously written about <a href="/redoing-search/">redoing a search UI using refs and Context</a>, as well as <a href="/hooks-useref/">how to use the useRef hook</a>. This time around, we're going to cover the useContext hook, which is now the way we use Context in function components.
+
+I love the Context API because it **allows you to compartmentalize aspects of your app's data within a sub-tree of components**. Essentially, your child components can access data via the value prop provided by the Context.Provider. You can think of this like a store that's specifically scoped to this tree. The components wrapped by the Provider can choose whether or not they want to consume the data (i.e. Consumers) at all, which means you can avoid [prop drilling](https://kentcdodds.com/blog/prop-drilling). Here's a rough illustration:
+
+_[Image: With and without Context illustrations]_
+
+In [class components](https://codesandbox.io/s/hooksusecontext-class-wdiii), we used a combination of Context.Provider and Context.Consumer tags to set up the relationship described above. However, in function components, the Context.Consumer syntax has been [replaced with the useContext hook](https://codesandbox.io/s/hooksusecontext-hooks-8ss8k).
+
+For context (no pun intended), the snippets below show these two implementations of the same Context. Despite the syntax difference, the functionality is **identical**.
+
+```javascript
+function NestedComponent() {
+  return <AppContext.Consumer>{(value) => <p>{value}</p>}</AppContext.Consumer>;
+}
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <AppContext.Provider value={"Hello from App 👋"}>
+          <ChildComponent>
+            <GrandChild>
+              <NestedComponent />
+            </GrandChild>
+          </ChildComponent>
+        </AppContext.Provider>
+      </div>
+    );
+  }
+}
+```
+
+## Anatomy of useContext
+
+The useContext hook takes one argument, a Context object, and provides access to the values from the nearest Context.Provider above it in the component tree. Any component consuming data from the Provider will **always** re-render any time one of the values changes.
+
+```javascript
+const AppContext = React.createContext();
+
+function NestedComponent() {
+  const appContext = useContext(AppContext);
+  return <p>{appContext}</p>;
+}
+
+function App() {
+  return (
+    <div className="App">
+      <AppContext.Provider value={"Hello from App 👋"}>
+        <ChildComponent>
+          <GrandChild>
+            <NestedComponent />
+          </GrandChild>
+        </ChildComponent>
+      </AppContext.Provider>
+    </div>
+  );
+}
+```
+
+Notice that even though we're using the useContext hook, the way we define our context and provider is exactly the same as our last example above. The provider works the same no matter which of the following consumption syntaxes you're using:
+
+1. useContext
+2. Context.Consumer
+3. [Class.contextType](https://reactjs.org/docs/context.html#classcontexttype)
+
+## In practice
+
+In the sandbox below, I have built out a component tree that represents a self-contained search widget using the SearchInput component we built in <a href="/hooks-useref/">an earlier article covering the useRef hook</a>.
+
+For the purposes of this demonstration, we are mimicking an API call by loading data about breweries in Philadelphia from results.json directly into our Search component and displaying them as ResultCard in the SearchResults component. Then, whenever the text value in SearchInput changes, we filter our results to breweries who have names containing a string matching the input text.
+
+Try it out for yourself below:
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusecontext-in-practice-shd17" target="_blank" rel="noopener noreferrer">hooks/useContext (In Practice) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+In Search, we have created a SearchContext by using React.createContext(). By doing this, we will be able to pass down context values to SearchResults and SearchInput without having to prop drill through our SearchWidget component. While we would only be passing props through one additional component in this example, think about how effective this strategy would be for components nested even further!
+
+To **provide** values to the children of Search, we are using the SearchContext.Provider to pass data via the value prop. We've constructed and are passing an object that has two values:
+
+1. results - An array of objects representing breweries
+2. setInputValue - The setter function from the useState hook in Search that we're using to store the text value from SearchInput (i.e. inputValue)
+
+With the Provider set up, any of Search's descendant components can **consume** our context values using useContext.
+
+```javascript
+const context = useContext(SearchContext);
+```
+
+In SearchInput, we use the setInputValue function passed down via our context to set the state of inputValue in Search whenever the user enters text in the input.
+
+```javascript
+function handleInputChange(event) {
+  context.setInputValue(event.currentTarget.value);
+}
+
+<input
+  onChange={handleInputChange}
+  ref={inputRef}
+  type="search"
+  className="SearchInput__input"
+/>;
+```
+
+By elevating this state to the Search component, we are able to use its value to filter our apiResults and pass down a new array (i.e. results) to the SearchResults component, which renders each item as a RResultCard.
+
+Essentially, Context allows us to more easily centralize related logic and create a good data management system for this self-contained subtree of components. Theoretically, we could repurpose this widget pretty easily by using different API data and updating a few prop names. Pretty cool!
+
+---
+
+# Hooks Revisited: useRef
+
+URL: https://ryanharris.dev/hooks-useref/
+Published: 2020-03-13
+Description: useRef can be used to directly interact with the browser's DOM or store and update values without causing re-renders like useState.
+Tags: hooks
+Category: react
+
+## What are refs?
+
+If you read <a href="/hooks-uselayouteffect/">my last article</a>, about the differences between useEffect and useLayoutEffect, you may remember seeing some code snippets that looked like this:
+
+```javascript
+useEffect(() => {
+  const greenSquare = document.querySelector(".App__square");
+  greenSquare.style.transform = "translate(-50%, -50%)";
+  greenSquare.style.left = "50%";
+  greenSquare.style.top = "50%";
+});
+
+useLayoutEffect(() => {
+  const greenSquare = document.querySelector(".App__square");
+  greenSquare.style.transform = "translate(-50%, -50%)";
+  greenSquare.style.left = "50%";
+  greenSquare.style.top = "50%";
+});
+```
+
+In these examples, we're directly accessing the DOM in order to select and manipulate an element (i.e. .App\_\_square), which is considered an [anti-pattern](https://en.wikipedia.org/wiki/Anti-pattern) in React because it manages UI state via a [virtual DOM](https://reactjs.org/docs/faq-internals.html#what-is-the-virtual-dom) and comparing it to the browser's version. Then, the framework handles the work of [reconciling](https://reactjs.org/docs/reconciliation.html) the two. However, there **are** cases where we need may need to break this rule. That's where refs come in.
+
+While the React docs cite a few examples where using refs would be appropriate, including managing focus, triggering animations, and working with third party libraries, they also warn against overusing them.
+
+> Avoid using refs for anything that can be done declaratively. [[React docs]](https://reactjs.org/docs/refs-and-the-dom.html#when-to-use-refs)
+
+For a practical example of how to use refs in your React app, [checkout my previous article about rebuilding a search UI](/redoing-search/) using refs and React Context. We'll also cover the ins and outs of Context in the next article in this series.
+
+In the next section, we'll look more closely at the useRef hook and its syntax.
+
+## Anatomy of useRef
+
+> ...useRef is like a “box” that can hold a mutable value... [[React docs]](https://reactjs.org/docs/hooks-reference.html#useref)
+
+The useRef hook only takes one argument: its initial value. This can be any valid JavaScript value or JSX element. Here are a few examples:
+
+```javascript
+// String value
+const stringRef = useRef("initial value");
+
+// Array value
+const arrayRef = useRef([1, 2, 3]);
+
+// Object value
+const objectRef = useRef({
+  firstName: "Ryan",
+  lastName: "Harris",
+});
+```
+
+Essentially, you can store any value in your ref and then access it via the ref's current field. For example, if we logged out the variables from the snippet above, we would see:
+
+```javascript
+console.log(stringRef);
+// {
+//   current: "initial value"
+// }
+
+console.log(arrayRef);
+// {
+//   current: [1, 2, 3]
+// }
+
+console.log(objectRef);
+// {
+//   current: {
+//     firstName: 'Ryan',
+//     lastName: 'Harris'
+//   }
+// }
+```
+
+As I mentioned in the intro, refs are primarily used for accessing the DOM. Below is an example of how you would define and use a ref in the context of a class component:
+
+```javascript
+class MyComponent extends React.Component {
+  constructor() {
+    super();
+    this.inputRef = React.createRef();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <input ref={this.inputRef} type="text" />
+      </div>
+    );
+  }
+}
+```
+
+To do the same exact thing using hooks, we would leverage useRef like you see in the snippet below:
+
+```javascript
+function MyComponent() {
+  const inputRef = useRef(null);
+
+  return (
+    <div className="App">
+      <input ref={inputRef} type="text" />
+    </div>
+  );
+}
+```
+
+Hopefully, those examples clearly illustrated how to define a ref. Just remember: refs are a "reference" to a DOM element -- it's right in the name!
+
+refs also have another less-known use case. Since a ref's value can be any JavaScript value, you can also use refs as basic data stores. Usually, you would use useState for something like that, however, there are time where you want to avoid unnecessary re-renders but cache a value. Updating values in state cause a re-render each time, whereas updating refs **do not cause the component to update**. This is a subtle, but important distinction.
+
+## In practice
+
+In the sections below, we'll walk through two examples that better illustrate how to use useRef both to access DOM elements and store values without causing our component to re-render.
+
+### Accessing DOM elements
+
+For this example, I have built a small SearchInput component that uses the useRef hook in order to refer to the input element rendered by our component:
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/serene-sunset-z80cl" target="_blank" rel="noopener noreferrer">hooks/useRef (DOM) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+In this specific case, our SearchInput component takes an autoFocus prop, which determines whether or not we want the input to be focused automatically on mount. In order to do this, we need to use a web API (i.e. .focus()) and thus need to be able to directly refer to the HTML element on the page.
+
+To get this to work, the first thing we need to do is create a ref and assign it to our element:
+
+```javascript
+// This instantiates our ref
+const inputRef = useRef(null);
+
+// Inside our return, we point `inputRef` at our <input /> element
+<input ref={inputRef} type="search" className="SearchInput__input" />;
+```
+
+Now, our inputRef is pointing at the search input, so if we were to log out inputRef.current, we would see our input:
+
+```javascript
+console.log(inputRef.current);
+// <input type="search" class="SearchInput__input"></input>
+```
+
+With this wired up, we can now autofocus the input on mount, as well as add some styling to make our SearchInput component look more cohesive even though it is made up of multiple elements "under the hood". In order to handle the autofocus behavior, we need to use the useLayoutEffect hook to focus the input prior to the DOM painting.
+
+_Note: For more info on when to use useLayoutEffect vs. useEffect, <a href="/hooks-uselayouteffect/">check out my previous article in this series</a>._
+
+```javascript
+useLayoutEffect(() => {
+  if (autoFocus) {
+    inputRef.current.focus();
+    setFocused(true);
+  }
+}, [autoFocus]);
+```
+
+By calling inputRef.current.focus(), we are setting the input inside our component as the active element in the document. In addition, we're also updating our focused value stored in a useState hook in order to style our component.
+
+```javascript
+const focusCn = focused ? "SearchInput focused" : "SearchInput";
+```
+
+Finally, I have also added an event listener using <a href="/hooks-useeffect/">a useEffect hook</a> in order to update our focus state based on mouse clicks both inside and outside of our component. Essentially, when the user clicks inside SearchInput, we call .focus() and update our focused state to true. Alternatively, when the user clicks outside the component, we call .blur() and set focused to false.
+
+```javascript
+useEffect(() => {
+  function handleClick(event) {
+    if (event.target === inputRef.current) {
+      inputRef.current.focus();
+      setFocused(true);
+    } else {
+      inputRef.current.blur();
+      setFocused(false);
+    }
+  }
+
+  document.addEventListener("click", handleClick);
+  return () => {
+    document.removeEventListener("click", handleClick);
+  };
+});
+```
+
+While accessing DOM elements is a React anti-pattern (as discussed above), this example is a valid use case for refs because our goal requires the use of .focus(), which is only available to HTML elements.
+
+### Storing values without re-rendering
+
+In this example, I want to illustrate the subtle difference between using useState and useRef to store values.
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/fancy-hooks-cxw57" target="_blank" rel="noopener noreferrer">hooks/useRef (Data) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+Here, we have two sections that have buttons, which allow us to increment/decrement our refValue or stateValue, respectively. When the page initally loads, each section is assigned a random hex value as its background-color. From then on, you will see the colors change whenever our App component re-renders.
+
+Since updating state values cause a re-render, you should see the stateValue number update every time you click on of the buttons; however, if you click on the buttons for our refValue, nothing happens. This is because **updating ref values does not cause a component to re-render**. To demonstrate that the refValue is in fact changing, I have added console.log statements to the onClick handlers for both buttons.
+
+While incrementing or decrementing the refValue will not cause our UI to update with the proper numeric value, when you change the stateValue our refValue will update and its section will have a new background color. This is because our ref section is re-rendered when the state value is updated since the parent component App has to go through reconciliation to bring the virtual DOM and browser DOM into sync with one another. This can be a great strategy for avoiding unnecessary renders in your application and improving its performance!
+
+---
+
+# Hooks Revisited: useLayoutEffect
+
+URL: https://ryanharris.dev/hooks-uselayouteffect/
+Published: 2020-03-02
+Description: useLayoutEffect works exactly the same way useEffect does except it fires prior to the DOM's initial paint.
+Tags: hooks
+Category: react
+
+Last time, we learned about the <a href="/hooks-useeffect/">useEffect hook</a>, how it works and when to use it. If you have not read that article yet, I **strongly suggest you go back and do so before proceeding any further**. Much of what we will discuss below will be about the similarities and differences between useEffect and useLayoutEffect, which may not make much sense without having a good grip on the former.
+
+## useLayoutEffect and useEffect
+
+> The signature is identical to useEffect, but it fires synchronously after all DOM mutations. [[React docs]](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
+
+While the underlying implementation and execution of these hooks does differ, you may notice that the code snippets below look quite similar. That's because these two hooks have the same function signature!
+
+```javascript
+useEffect(() => {
+  function getData() {
+    // Define effect logic here
+  }
+
+  const apiData = getData();
+  setData(apiData);
+}, []);
+```
+
+```javascript
+useLayoutEffect(() => {
+  function handleResize() {
+    // Define effect logic here
+  }
+
+  document.addEventListener("resize", handleResize);
+  return () => {
+    document.removeEventListener("resize", handleResize);
+  };
+}, []);
+```
+
+To quickly recap, the anatomy of these hooks are comprised of three key pieces:
+
+1. The effect
+2. A dependency array
+3. A cleanup function
+
+Since we're already pretty familiar with how these hooks are composed, let's look a bit more about what makes them different.
+
+## Difference between useLayoutEffect and useEffect
+
+As we saw above, these two hooks are quite similar in terms of their syntax and function signatures, however, the difference between them is quite subtle and has everything to do with timing.
+
+The useEffect hook fires **after render** so as not to block the DOM from painting and effecting your application's performance. Due to this behavior, the React documentation advises that when writing new effects you start with useEffect and only reach for useLayoutEffect when absolutely necessary.
+
+> ...we recommend starting with useEffect first and only trying useLayoutEffect if that causes a problem... [[React docs]](https://reactjs.org/docs/hooks-reference.html#uselayouteffect)
+
+Unlike useEffect, useLayoutEffect fires after all DOM mutations but **before the DOM paints**. While this is the **only** difference between these two hooks, it is an important distinction because of when their effects are performed.
+
+But when would you want to use one versus the other? The general rule of hand is as follows:
+
+1. Use useLayoutEffect when reading, manipulating or observing the DOM
+2. Use useEffect for all other effects that don't require interaction with the DOM
+
+If you're still a bit confused, don't worry! It can be hard to wrap your head around not only the difference between these two hooks but their specific use cases, as well. Below, we'll look at a practical example, which will help illustrate the difference a bit more clearly.
+
+## In practice
+
+In both of the examples below, we have a simple application that renders a few HTML elements, namely two divs and a main, which we can see in App.js:
+
+```javascript
+return (
+  <div className="App">
+    <main className="App__main">
+      <div className="App__square" />
+    </main>
+  </div>
+);
+```
+
+Above each App's return, you will see an effect defined with either useEffect or useLayoutEffect. The snippet below shows them side-by-side:
+
+```javascript
+useLayoutEffect(() => {
+  const greenSquare = document.querySelector(".App__square");
+  greenSquare.style.transform = "translate(-50%, -50%)";
+  greenSquare.style.left = "50%";
+  greenSquare.style.top = "50%";
+});
+
+useEffect(() => {
+  const greenSquare = document.querySelector(".App__square");
+  greenSquare.style.transform = "translate(-50%, -50%)";
+  greenSquare.style.left = "50%";
+  greenSquare.style.top = "50%";
+});
+```
+
+As I am sure you've noticed by now, the effect function passed to both hooks are **exactly the same**. Again, the big difference here is the timing of when these effects run.
+
+To start, let's look at the sandbox using useEffect. You should see the purple circle appear in the top left-hand corner of the screen before it is quickly repositioned and moved to the center of the screen. This happens because **useEffect runs after render**, so the effect isn't executed till after the DOM paints, which is what causes the unwanted flash of content.
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksuselayouteffect-useeffect-vgkbd" target="_blank" rel="noopener noreferrer">hooks/useLayoutEffect (useEffect) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+Now, let's look at the useLayoutEffect hook. If you refresh the page, you should always see the purple circle in the center of the screen and no longer see the circle get quickly repositioned. This is because **useLayoutEffect runs before the DOM paints**, so the circle has already been positioned correctly before we see the first visual representation of our page. In this example, it would be more appropriate to use useLayoutEffect because we would not want our users to see what looks like a visual bug.
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksuselayouteffect-uselayouteffect-jxvzg" target="_blank" rel="noopener noreferrer">hooks/useLayoutEffect (useLayoutEffect) on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+## Next steps
+
+In the examples above, we are using vanilla JavaScript to access and modify the document, which is considered an anti-pattern in React. A more appropriate way to do this would be to use a ref instead of accessing the DOM directly. Luckily, we'll be covering that in the next article about useRef!
+
+---
+
+# Hooks Revisited: useEffect
+
+URL: https://ryanharris.dev/hooks-useeffect/
+Published: 2020-02-26
+Description: useEffect is one of the most commonly used hooks and is used for things like fetching data, setting up event listeners and manipulating the DOM.
+Tags: hooks
+Category: react
+
+In <a href="/hooks-usestate/">my last article</a>, we learned about one of the most commonly used hooks, useState. This time around, we are going to look at another commonly used hook: useEffect:
+
+> By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our "effect"), and call it later after performing DOM updates. [[React docs]](https://reactjs.org/docs/hooks-effect.html)
+
+## What are effects?
+
+Effects, a shorthand for "side effects", represent component operations or actions that cannot be done during the render phase. Examples of this can include:
+
+- Fetching data from an API
+- Setting up data subscriptions or document event listeners
+- Manipulating the DOM
+
+We can also further classify them into two categories:
+
+1. Effects that require cleanup
+2. Effects that don't
+
+For example, if we attach an event listener to the document, we will want to remove it when the component unmounts as this will help with performance and avoid conflicting listeners. On the other hand, something like updating the document.title does not require any further work when the component unmounts.
+
+To make cleaning up effects easy, the useEffect API allows you to optionally return a function from the hook, which does the work of removing listeners, subscriptions, etc. Previously, you would've needed to leverage both the componentDidMount and componentDidUnmount lifecycle methods to achieve this whereas useEffect allows us to take care of it all at once.
+
+## Anatomy of useEffect
+
+Now that we've talked about what useEffect does, let's take a look at the syntax:
+
+```javascript
+useEffect(() => {
+  // 2. This function body is your effect
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    // 1. Optionally clean up effects inside this function
+    window.removeEventListener("resize", handleResize);
+  };
+}, []); // 3. Conditionally execute based on dependencies array
+```
+
+If this syntax looks a bit strange, don't worry. We'll break down each piece before moving on to some practical examples. Let's start with the optional cleanup function since we were just talking about it.
+
+### 1. Cleanup
+
+Inside our effect, we can optionally return a function. This function will perform any cleanup work we want to happen when this component unmounts. In our example, we are removing the event listener from the window to make sure it doesn't keep listening/firing after the component is no longer in the DOM.
+
+### 2. The effect
+
+The first argument useEffect takes is a function. This function **is your effect** and defines the work you want to do whenever the component mounts. In this case, we are simply adding an event listener to the window that executes the handleResize function on resize.
+
+### 3. Dependency array
+
+The optional second argument in this example is what's known as the "dependency array". Essentially, leveraging this array allows you to control the conditional execution of the effect based upon changing prop or state values in the component. We will talk about this more in-depth in the next section.
+
+## What is the dependency array?
+
+> By default, effects run after every completed render, but you can choose to fire them only when certain values have changed. [[React docs]](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)
+
+As I mentioned above, the dependency array is an optional secondary argument passed to the useEffect hook. Its purpose is to allow you to more easily control the execution of your effects based upon the values within you component. In class components, we would most likely need to use the componentDidUpdate lifecycle method to achieve the same results, which would've looked something like this:
+
+```javascript
+componentDidUpdate(prevProps, prevState) {
+  if (prevState.cardTypes !== this.state.cardTypes) {
+    // Your effect logic would live here
+  }
+}
+```
+
+Using the dependencies array we can do things like:
+
+- Fire the effect everytime the component renders
+
+```javascript
+useEffect(() => {
+  const cardTypes = fetchCardTypes();
+  setCardTypes(cardTypes);
+});
+```
+
+- Fire the effect only upon the first render
+
+```javascript
+useEffect(() => {
+  const cardTypes = fetchCardTypes();
+  setCardTypes(cardTypes);
+}, []);
+```
+
+- Fire the effect only when certain prop or state values have changed
+
+```javascript
+useEffect(() => {
+  const cardTypes = fetchCardTypes();
+  setCardTypes(cardTypes);
+}, [cards]);
+```
+
+One thing to note here is that while you can also use if statements within your useEffect hooks to conditionally execute logic, **you cannot wrap hooks in if statements**. Part of how React keeps effects predictable is to run them all upon render. Skipping effects like this is considered bad practice, so don't do it!
+
+## In practice
+
+In the sandbox below, I've create a small application that leverages useEffect in numerous ways in order to serve us information about the latest weather on Mars. Elon Musk, eat your heart out!
+
+For simplicity's sake, I've created two components: App and WeatherDisplay The former handles fetching our data from the Nasa API and our application logic, whereas the latter simply displays the data we've passed down to it as props. Because of that, all of our useEffect hooks live inside of App
+
+As you will notice, we actually have **three** useEffect hooks inside of our component, which may seem a bit strange, but is the whole idea of hooks! This allows us to compartmentalize our component logic and more easily reason about the effects they trigger. In this example, our three hooks are doing the following:
+
+- Hook #1 sets the title of our document **on every render** using the value of our aystate
+- Hook #2 fetchs our API data **only on the first render** as we don't want to make be making continually API calls as the component updates
+- Hook #3 parses the proper data object based on the value of ay\*_any time the value of ayor ata_ change
+
+Each of these hooks is using a diffrent variation of the optional dependency array we discussed earlier. Look at the code a bit more closely -- do you know why each array looks the way it does?
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksuseeffect-gkejk" target="_blank" rel="noopener noreferrer">hooks/useEffect on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+Don't worry if you're still a bit confused because learning to "think in hooks" can take some time. The best way to get more comfortable with them is to use them, so feel free to fork the sandbox above and play around with the code. As a good place to start, try removing the dependency array from Hook #2 completely. What happens?
+
+With an empty dependency array, the effect makes a request for our API data on mount and this **only happens once**. Previously, we would componentDidUpdate and compare the components prevProps to it's current props and use that to determine if there was work to be done. Now, with useEffect, we no longer have to do this and can just define what prop values we care about and run the effect only when one of them changes. We'll talk more about this more later in the series.
+
+If we remove the dependency array altogether, the effect runs on **every** render, which means we're making API calls every time the component re-renders. Since something simple like changing state (ex. clicking on the Today or Yesterday buttons) causes a re-render, we'd essentially fetch data everytime the user clicked one of the buttons. This is not good for application performance, nor your API bill.
+
+Ultimately, hooks are meant to compartmentalize application logic to make them easier to re-use and reason about. useEffect is no different. Like all hooks, it runs on every render by default, but unlike other hooks, provides a way to conditionally control our logic execution (i.e. the dependency array). While useEffect is often described as componentDidMount, componentDidUpdate and componentWillUnmount altogether, I would try to avoid thinking about hooks in terms of their equivalent lifecycle methods. Instead, identify the effects that need to take place in your component, determine how often your would like the effect to run and cleanup your work (if needed) when the component unmounts.
+
+Try adding useEffect to your next component. Maybe you'll get hooked.
+
+---
+
+# Hooks Revisited: useState
+
+URL: https://ryanharris.dev/hooks-usestate/
+Published: 2020-02-17
+Description: As the name suggests, the useState hook is used for storing component state.
+Tags: hooks
+Category: react
+
+One of the first hooks you'll probably encounter is useState, which replaces the setState() function used to update state in class components. The big difference here, however, is that useState allows function components to have multiple state values as opposed to one monolithic object. The snippet below illustrates this idea (don't worry about the syntax as we'll be covering that below):
+
+```javascript
+// Class component state
+class Cart extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      apples: 10,
+      oranges: 25,
+      peaches: 40,
+    };
+  }
+}
+
+// Function component using hooks
+function Cart(props) {
+  const [apples, setApples] = useState(10);
+  const [oranges, setOranges] = useState(25);
+  const [peaches, setPeaches] = useState(40);
+}
+```
+
+Not too crazy, right? In this example, all of our values are numbers but the value stored in useState can be any JavaScript type, including:
+
+- Strings
+- Booleans
+- Objects
+- Arrays
+- Numbers
+- `null`
+
+## Anatomy of useState
+
+Let's take one of the previous examples and look at it a bit more closely.
+
+```javascript
+const [apples, setApples] = useState(10);
+```
+
+First, let's look at what is happening on the right side of this expression. Here, we have the value of 10 being passed as the only argument to our useState hook. This sets its initial value to 10.
+
+On the left-hand side of the assignment, we are destructuring two values returned from useState as an array: apples and setApples. The first (i.e. apples), represents the current value of this state. In this case, the value would be 10.
+
+The second value in the array (i.e. setApples) is a setter function that allows you to update the value of apples by calling setApples(200), which would update apples to be equal to 200.
+
+While you can technically give these setter functions whatever name you want, the common convention is to prepend the value's name with set (ex. setApples).
+
+## In practice
+
+To better illustrate the mental model of having multiple states instead of one, I built a simplified version of an e-commerce cart.
+
+The first instance is a function component using three useState hooks to manage the quantity values of how many apples, oranges and peaches are in the user's cart. The second is a class component that is still using setState().
+
+As you can see, both components do the same things: keep track of how many of each item a user wants and increment/decrement that value based on button presses.
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/hooksusestate-o64ve" target="_blank" rel="noopener noreferrer">hooks/useState on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+Take a look at the code and see which one you prefer. While hooks may still be new to you, can you see any benefits from using them?
+
+---
+
+# Hooks Revisited
+
+URL: https://ryanharris.dev/hooks-revisited/
+Published: 2020-02-16
+Description: This series is a holistic look at React's hooks API and how they each work.
+Tags: hooks
+Category: react
+
+> Hooks are functions that let you “hook into” React state and lifecycle features from function components [[React docs]](https://reactjs.org/docs/hooks-overview.html#but-what-is-a-hook)
+
+Introduced in <a href="https://github.com/facebook/react/blob/master/CHANGELOG.md#1680-february-6-2019" target="_blank" rel="noopener noreferrer">React v16.8</a>, the hooks API represents a change in how developers compose their components. Intended to compartmentalize blocks of functionality, they make reusing code across your application easier. They also mark a shift away from using `class` components and the use of lifecycle methods.
+
+When hooks were first introduced at [React Conf 2018](https://www.youtube.com/playlist?list=PLPxbbTqCLbGE5AihOSExAa4wUM-P42EIJ), the React team explained the motivations behind them. Essentially, they wanted to solve the many problems all at once:
+
+1. It can be hard to re-use logic between components
+2. Complex component files are huge
+3. Understanding classes in JavaScript can be difficult to understand (for humans and compilers)
+
+For a **much** more detailed explanation about the origin of hooks, make sure to check out the team's full talk featuring [Dan Abramov](https://overreacted.io/), [Sophie Alpert](https://sophiebits.com/) and [Ryan Florence](https://reacttraining.com/).
+
+<iframe loading="lazy"
+  width="560"
+  height="315"
+  title="React Conf 2018: Introducing Hooks"
+  src="https://www.youtube.com/embed/dpw9EHDh2bM"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+## Goals
+
+When the hooks API moved out of beta, my team started using them almost immediately. However, most of the logic for the feature I was working on at the time was contained within class components still using lifecycle methods. When creating new components, I was using function components and hooks; however, the components usually weren't complex enough to leverage more than useState or useEffect.
+
+Currently, I work in a codebase that was all written after developers started shifting to hooks and I want to revisit (hence the title of this series) how they **all** work, as well as when to use them.
+
+To do that, I am writing an article about each standard React hook. Each piece is linked below and will cover the hook in depth, including code samples illustrating how it works.
+
+## Table of Contents
+
+1. <a href="/hooks-usestate/">useState</a>
+2. <a href="/hooks-useeffect/">useEffect</a>
+3. <a href="/hooks-uselayouteffect/">useLayoutEffect</a>
+4. <a href="/hooks-useref/">useRef</a>
+5. <a href="/hooks-usecontext/">useContext</a>
+6. <a href="/hooks-usememo/">useMemo</a>
+7. <a href="/hooks-usecallback/">useCallback</a>
+8. <a href="/hooks-usereducer/">useReducer</a>
+9. <a href="/hooks-usedebugvalue/">useDebugValue</a>
+10. useImperativeHandle
+11. Custom hooks
+
+---
+
+# How to configure ESLint and Prettier to work together
+
+URL: https://ryanharris.dev/configure-eslint-and-prettier/
+Published: 2020-02-09
+Description: Learn how to use ESLint and Prettier to enforce code conventions and formatting.
+Tags: eslint, prettier
+Category: javascript
+
+Let's face it. Development is hard.
+
+While developers have a multitude of concerns when building software, some of them simply aren't worth worrying about. In my mind, the enforcement of coding style and convention fall squarely within this category. As <a href="https://www.warner.codes/" target="_blank" rel="noopener noreferrer">Ryan Warner</a> informed me, this is called <a href="https://en.wikipedia.org/wiki/Law_of_triviality" target="_blank" rel="noopener noreferrer">bike-shedding</a>:
+
+> ...an observation about the human tendency to devote a great deal of time to unimportant details while crucial matters go unattended.
+
+Luckily, tools like <a href="https://eslint.org/" target="_blank" rel="noopener noreferrer">ESLint</a> and <a href="https://prettier.io/" target="_blank" rel="noopener noreferrer">Prettier</a> make it easier for developers to enforce their team's chosen coding standards. While having a bit of overlapping functionality, they're both aimed at improving different parts of the developer experience. However, configuring them to work together in harmony can be less that straightforward.
+
+## ESLint
+
+ESLint helps your team write consistent code in terms of style and syntax by enforcing the rules you define in your project's `my-repo/.eslintrc` configuration file. <a href="https://eslint.org/docs/rules/" target="_blank" rel="noopener noreferrer">For each rule</a>, you can choose to throw an error, log out a warning or ignore it altogether. Optionally, you can also have ESLint fix these violations based on your preferred configuration.
+
+You can use ESLint in one of two ways: as <a href="https://eslint.org/docs/user-guide/" target="_blank" rel="noopener noreferrer">a CLI</a> or <a href="https://github.com/Microsoft/vscode-eslint" target="_blank" rel="noopener noreferrer">editor extension</a>.
+
+You can use ESLint in a number of ways:
+
+<ol>
+  <li>
+    <a href="https://eslint.org/docs/user-guide/" target="_blank" rel="noopener noreferrer">
+      via the CLI
+    </a>
+  </li>
+  <li>
+    <a href="https://github.com/Microsoft/vscode-eslint" target="_blank" rel="noopener noreferrer">
+      by installing an editor extension
+    </a>
+  </li>
+  <li>
+    <a href="https://github.com/webpack/diagnostics-webpack-plugin" target="_blank" rel="noopener noreferrer">
+      using ESLint with a build tool
+    </a>
+  </li>
+</ol>
+
+The CLI comes in handy because you can lint (and fix) specific files and directories, use it in your pre-commit hooks, or integrate it into your CI/CD pipeline. Extensions, on the other hand, make your life easier when actually writing code by highlighting code blocks that break your preferred rules. In some cases, they can even suggest or fix violations on their own.
+
+ESLint also allows you to extend rule sets, which are distributed as npm packages, from other developers and organizations. Extending a configuration like the one <a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="noopener noreferrer">Airbnb's engineeering team</a> uses or <a href="https://github.com/standard/standard" target="_blank" rel="noopener noreferrer">StandardJS</a> is an easy way to get started with ESLint. Over time, if there are rules your team does not like, you can always override them to create a custom configuration.
+
+## Prettier
+
+Prettier allows you to automate your team's code formatting. This is a huge win because it completely eliminates formatting related comments from the review process. Like ESLint, Prettier uses a configuration file (i.e. `my-repo/.prettierrc`) to define the rules you want to enforce. Here's an example of what one would look like:
+
+```json
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid",
+  "requirePragma": true,
+  "insertPragma": true,
+  "endOfLine": "lf"
+}
+```
+
+Prettier also provides two similar tools to ESLint: <a href="https://prettier.io/docs/en/cli.html" target="_blank" rel="noopener noreferrer">a CLI</a> and <a href="https://github.com/prettier/prettier-vscode" target="_blank" rel="noopener noreferrer">editor extension</a>.
+
+With the CLI, you can programmatically format files and/or directories within your repo. This saves a massive amount of time, especially when transitioning a project over to a new rule set.
+
+The editor extension can be configured to auto-format the file you're working on when you save it. This ensures all of your commits are going to be properly formatted.
+
+If you're using <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code</a>, you can add the following snippet to your user settings and let the robots do all the work! 🤖 If you're on a Mac, you can open your user settings with the `Cmd + ,` hotkey.
+
+```json
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true
+}
+```
+
+## ESLint && Prettier
+
+When using ESLint and Prettier together, there are a couple packages you'll want to install in order to help them work well together.
+
+1. <a href="https://www.npmjs.com/package/eslint-config-prettier" target="_blank" rel="noopener noreferrer">eslint-config-prettier</a> - This disables ESLint's formatting rules and defers that concern to Prettier.
+
+2. <a href="https://www.npmjs.com/package/eslint-plugin-prettier" target="_blank" rel="noopener noreferrer">eslint-plugin-prettier</a> - Using this plugin allows ESLint to check for violations of Prettier rules and throw errors as part of its linting process.
+
+3. <a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="noopener noreferrer">eslint-config-airbnb</a> - Extending this configuration allows you to use Airbnb's preferred coding style and standards.
+
+With these three packages installed, your `.eslintrc` would look something like this:
+
+```json
+{
+  "plugins": ["prettier"],
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
+  "rules": {
+    // Allow Prettier to throw errors via ESLint
+    "prettier/prettier": "error"
+  }
+}
+```
+
+## Conclusion
+
+By taking the time to configure ESLint and Prettier, you can automate away the concerns of formatting and code convention from your day to day work. This not only helps you but your team as well because it reduces cycles in the code review process.
+
+Have a conversation with your team, agree upon a basic set of standards, and create some configuration files. Then, go forth and ship some well formmated code! 🚀
+
+---
+
+# Managing SSH keys and identities for GitHub
+
+URL: https://ryanharris.dev/managing-ssh-keys-for-github/
+Published: 2020-01-19
+Description: If you use more than one GitHub account on the same machine, configuring multiple SSH keys will make authenticating with different repos much easier.
+Tags: git, github
+Category: oss
+
+During the onboarding process for my new job at Fauna, I was tasked with setting up my local development environment. However, since Fauna devs use work-specific GitHub accounts, a new challenge presented itself during the process: managing SSH keys and identities for multiple accounts.
+
+## Multiple accounts and keys
+
+In the past, I have always used my personal account for all my projects, both personal and professional. Since our security policy does not allow for that, I needed to configure my system to work with both my personal and work accounts by doing the following:
+
+1. Create two SSH keys/identities and manage them locally using **ssh-agent**
+2. Create a SSH config to determine which credentials to use when authenticating with GitHub
+3. Update **git** config so our commiter information is accurate in each repo
+
+What follows is a quick primer on how to set all this up and avoid doing it manually 🙌.
+
+## Generating a SSH key
+
+To get started, we will need to generate SSH keys for each of the GitHub accounts we will be working with. In my case, there will be two: a work account and a personal account.
+
+First, open your terminal and run the following commands (substituting your own email address):
+
+```bash
+# Personal
+ssh-keygen -t rsa -b 4096 -C "ryan@ryanharris.dev"
+
+# Work
+ssh-keygen -t rsa -b 4096 -C "ryan@fauna.com"
+```
+
+You will be prompted each time to choose a name for the public/private key pairs this command generates. By default, the name will be **id_rsa** and **id_rsa.pub**, respectively. To make things more clear, we will use the names **id_rsa_personal** and **id_rsa_work**.
+
+```bash
+# Personal
+➜ ssh-keygen -t rsa -b 4096 -C "ryan@ryanharris.dev"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/ryan/.ssh/id_rsa): id_rsa_personal
+
+# Work
+➜ ssh-keygen -t rsa -b 4096 -C "ryan@fauna.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/ryan/.ssh/id_rsa): id_rsa_work
+```
+
+Next, we'll need to log into both GitHub accounts and add the new SSH key. Go into account settings and open the SSH and GPG keys sections. Then, add a new SSH key:
+
+_[Image: GitHub's SSH key interface]_
+
+In the textfield below, we need to enter the public key we generated above. You can do this in a couple ways:
+
+1. Copy the key from the **.pub** file in your **/.ssh/** directory
+2. Run the following command `pbcopy < ~/.ssh/id_rsa.pub`
+
+## Managing your SSH keys
+
+With our GitHub accounts squared away, we now need to manage the keys on our local system using a CLI tool called **ssh-agent**. As described in [their own documentation](https://www.ssh.com/ssh/agent), **ssh-agent** is a "...helper program that keeps track of user's identity keys and their passphrases", which is exactly what we need!
+
+Let's add each of the keys we've generated to **ssh-agent** by running the command below for both:
+
+```bash
+# Personal
+ssh-add ~/.ssh/id_rsa_personal
+
+# Work
+ssh-add ~/.ssh/id_rsa_work
+```
+
+To confirm they've been properly added, run `ssh-add -l`, which will list out all the identities **ssh-agent** is currently managing.
+
+## Setting up a SSH config file
+
+With **ssh-agent** now keeping track of the keys for our work and personal accounts, we need to create a local SSH config so our system knows which key to use when pushing to or pulling from GitHub.
+
+To do this, whenever we clone a repo, we can append a **-username** to the repo URL in order to indicate which account it's associated with. For example, if I was cloning the repo for this site, I would normally do this:
+
+```bash
+git clone git@github.com:ryancharris/ryanharris-dot-dev.git
+```
+
+However, I can also append our usernames (i.e. -personal or -work) onto the URL like so and the repo will still clone properly:
+
+```bash
+# Personal
+git clone git@github.com-personal:ryancharris/ryanharris-dot-dev.git
+
+# Work
+git clone git@github.com-work:ryancharris/ryanharris-dot-dev.git
+```
+
+Right now, this won't do much other than set the repo's remote origin to be the modified URL you entered. The real magic comes in when we create our SSH config. Let's create a blank file in **/.ssh/** by running the command below:
+
+```bash
+touch ~/.ssh/config
+```
+
+Then, we'll open the file and edit its contents to be something along these lines:
+
+```bash
+# Personal
+Host github.com-personal
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/id_rsa_personal
+
+# Work
+Host github.com-work
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/id_rsa_work
+```
+
+Now, whenever we push or pull from GitHub, the proper key and identity will be used based upon this repo's remote origin. Since we cloned our repos using the altered URLs appended with our username, they will automatically work.
+
+Repos you cloned prior to having two SSH identities, however, will not work right away. Instead, you simply need to update their remote origin URL to use the username suffix. Then, the SSH config will know which key to associate with the request.
+
+## Updating git commiter info
+
+Finally, we need to make sure that our commits are attributed to the right user since we'll be pushing to repos owned by multiple GitHub accounts. By default, the git CLI will use the information in your global config file.
+
+First, let's confirm we have a global git configuration setup:
+
+```bash
+git config --global -l
+```
+
+If you do not have any values for user.name and/or user.email, let's quickly add them:
+
+```bash
+git config --global user.name "Ryan Harris"
+git config --global user.email "ryan@ryanharris.dev"
+```
+
+When commiting code, git will populate committer info from the global config unless the repo has a local config present that overwrites it. Since we are working with two GitHub user accounts, we will want to update the committer info for any repo not associated with the account in the global config.
+
+To do this, navigate into one of these repos and update the committer information locally. Note the lack of a --global flag:
+
+```bash
+git config user.name "Ryan at Work"
+git config user.email "ryan@fauna.com"
+```
+
+## Done! 😅
+
+To test that this all worked, you can either clone a repo or test the SSH connection via the terminal:
+
+```bash
+# Personal
+ssh -T git@github.com-personal
+
+# Work
+ssh -T git@github.com-work
+```
+
+Now, you won't have to manage your keys manually when working with multiple accounts! Though this all takes a bit of configuration, it is not something you will have to do frequently. Just set it and forget it!
+
+---
+
+# How to setup your OBS scenes
+
+URL: https://ryanharris.dev/obs-scenes/
+Published: 2019-12-11
+Description: Once you're up and running with OBS, it's helpful to begin organizing your inputs and assets into separate scenes.
+Tags: obs
+Category: streaming
+
+## What are Scenes?
+
+[Like I’ve said in the past](/going-live-with-obs/), I like to think of OBS as a TV switcher because it allows you control Scenes as if they’re camera shots. But what exactly is a Scene?
+
+Scenes are OBS canvases comprised of one (or more) visual elements, all of which can be resized, repositioned or affected with filters. While it’s not necessary to have multiple Scenes in order to start streaming, doing so can certainly help add production value.
+
+Before we continue, let’s take a step back and talk a little more about what makes up a Scene by looking at a less-than-trivial example:
+
+Below is a screenshot of the primary Scene from [Chris Biscardi’s Twitch stream](https://www.twitch.tv/chrisbiscardi). While you can see there is only one canvas, the Scene is, in fact, made up of multiple elements. Can you identify them all?
+
+_[Image: Chris Biscardi's Twitch stream showing a code editor and webcam overlay]_
+
+This example illustrates how much you can do within a given Scene really well. From what I can tell, Chris has at least five elements in this Scene:
+
+1. A webcam showing Chris (wearing his trademark tanktop)
+2. Chris' desktop, so you can see what he's working on
+3. A pane with his Twitch channel's chat
+4. Another pane with Twitch events like follows, subscribes, etc.
+5. A rainbow gradient background image (unlabeled)
+
+## My current Scenes
+
+> NOTE: If you’re new to streaming, I suggest you check out [this article by Suz Hinton](https://medium.com/@suzhinton/my-twitch-live-coding-setup-b2516672fb21) before proceeding as it was where I started when configuring my own Scenes 🚀
+
+Right now my own setup is a bit more basic, but gets the job done. Currently, I have three separate Scenes configured in OBS:
+
+1. A webcam
+2. A desktop capture so viewers can see my workspace
+3. A combined view with both Scenes #1 and #2 on screen
+
+### 1. Webcam
+
+This was the simplest to set up. Currently, it directly captures the camera on my MacBook Pro and takes up 100% of the OBS broadcast canvas.
+
+_[Image: OBS scene containing a full-screen webcam capture]_
+
+I use this primarily when interacting with users in the chat or when there’s a discussion that doesn’t require looking directly at code. In the future, I will swap out the webcam in favor of a DSLR in order to improve the visual quality of this Scene.
+
+### 2. Desktop
+
+In my case, this Scene is a direct capture of my MacBook Pro screen, which like the previous Scene, takes up 100% of the canvas. Once I hook up the [new monitor I bought over Black Friday](https://www.amazon.com/LG-32GK650F-B-Monitor-FreeSync-Technology/dp/B07FLGR2PN), I’ll be able to choose which display I want to capture.
+
+_[Image: OBS scene containing a full-screen desktop capture]_
+
+This will come in handy when working with sensitive information because I can simply move those windows to the non-capture display and hide it from viewers. This is a great strategy if you’re working with API keys, environment variables, etc.
+
+Technically, you could also achieve this same effect by cropping the desktop capture element in your OBS broadcast window. In doing so, you limit what parts of your display users can see, allowing you to keep sensitive information on-screen but outside of the capture area.
+
+While I prefer the former, I will most likely end up cropping my stream output with my new monitor since I’ll be using it as my only display (with my laptop closed and off to the side).
+
+### 3. Desktop with webcam
+
+Up until now, all of my Scenes have only had one visual element within them, look alive cause this one has two!
+
+_[Image: OBS scene combining a desktop capture with a webcam overlay]_
+
+Essentially, this Scene combines the two previous ones. Taking advantage of OBS’ resizing/repositioning capabilities, I shrank the input from my Webcam and positioned it in the bottom right hand corner of my screen (on top of the Desktop) to achieve a picture-in-picture effect.
+
+I use this as my primary Scene because it allows viewers to see me and the code at the same time, which makes it easier to converse while working. E-sports gamers often use this setup too (in conjunction with a green screen) to achieve that “floating head in the corner” effect.
+
+## Improvements to Make
+
+Even though I'm still getting my streaming legs under me and building out my kit, that doesn't mean there aren't some things I can do right now to polish the visual aspect of my broadcasts.
+
+### 1. Standby scene
+
+This is another idea I found in Suz’s article. Basically, when you start your stream, there is a bit of a delay before the broadcast is "live". During that time, you may want to tweet (or drop a stream link in your favorite Discord server) before you get going.
+
+For example, I usually like to check my Mixer channel before I start in order to make the broadcast is working, however, I don’t really want viewers to see that (he’s so vain!). This Scene would allow me to check the stream and the viewer would be none the wiser.
+
+### 2. Lower third for webcam
+
+You’ve seen this before (even if you didn’t know it).
+
+It’s a pretty common effect used in TV, especially news, to inform the viewer as to who is currently speaking on camera. This would work great in my Webcam Scene for when the viewer is thinking, “Who the heck is this guy?”
+
+_[Image: Example of a lower-third graphic in a stream layout]_
+
+Again, while this isn’t necessary, it could add a little production value that helps my stream stand out. With the help of a designer, this could also be a good opportunity for visual branding too. (If you know of any, send ‘em my way!)
+
+### 3. Hardware for scene switching
+
+While OBS is like a TV switcher in software form, there are also hardware counterparts that would alongside it in order to make Scene management easier. Popular tools like [Elgato’s Stream Deck](https://www.elgato.com/en) let you (amongst many other cool things) switch Scenes on the fly without having to use the OBS interface. This makes life easier for the streamer and results in a more seamless experience for the viewer.
+
+Of course, if you’re like me and aren’t at that point yet, you can also achieve this by setting up hotkeys in OBS. Since I only have three basic Scenes right now, hotkeys will suffice, but once my setup reaches a certain point of complexity I'll need to bring in some hardware to help OBS out.
+
+## Get Going
+
+Scenes in OBS really are what you make of them. And while they can help give your stream the feeling of a higher production value, they do not replace quality content, nor do you need to make them too complicated. Hopefully, the information above is enough to get you started building out some basic Scenes, but where you take them in the long run is up to you!
+
+Happy streaming!
+
+---
+
+# Starting to livestream with OBS
+
+URL: https://ryanharris.dev/going-live-with-obs/
+Published: 2019-11-20
+Description: I just started live streaming. I’ve done it exactly twice. I wasn’t sure what to expect before I started and, at times, didn’t even know where to start.
+Tags: obs
+Category: streaming
+
+I just started live streaming. I’ve done it exactly twice.
+
+I wasn’t sure what to expect before I started and, at times, didn’t even know where to start.
+
+But now that I’m up and running on Mixer, I have found it to be an awesome experience. It gives me a great excuse to play around with new technologies and it’s been fun learning alongside the supportive streamer community.
+
+At first, I didn’t know what was required to get a streaming setup together, but I was pretty sure I didn’t have it. After some research (and chats with helpful friends), I soon realized it was possible even with my minimal setup. This played a huge part in getting me over the initial hurdle of feeling “ready” to stream. And while I don’t always feel ready today, having a good setup has at least made me feel more comfortable.
+
+Hopefully, this guide will help you feel the same!
+
+## 1. Download OBS
+
+OBS (Open Broadcaster Software) is an open source software project for live streaming. Essentially, it works like a TV switcher and allows you to control your video inputs, audio levels and output resolution (among many other things) before sending the feed to your preferred streaming service.
+
+## Stop!
+
+If you aren’t running macOS Catalina yet, I would suggest holding off on clicking that “Update” button. OBS and Catalina don’t play nice together, which has been well documented in their user forums. TL;DR to run OBS on Catalina you have to do it from the command line.
+
+For example, in my Applications folder I have to run the following command:
+
+```bash
+OBS.app/Contents/MacOS/OBS
+```
+
+[OBS (Open Broadcaster Software)](https://obsproject.com/) is an open source software project for live streaming. Essentially, it works like a TV switcher and allows you to control your video inputs, audio levels and output resolution before sending the feed to your preferred streaming service.
+
+After downloading and installing the app, open the OBS preferences and go to the Stream tab. Here, choose your streaming service and enter your stream key, which you can find in your Mixer (or Twitch) account settings.
+
+_[Image: OBS stream key menu]_
+
+And voila! You’re done.
+
+No, really. If you wanted to, you could just push the “Start Streaming” button and do just that. I wouldn’t recommend it… but you could.
+
+Before going live, lets properly set up our video and audio inputs.
+
+## 2. Setup Video Inputs
+
+Of the two input types, I would say the video setup is more straightforward than its audio counterpart.
+
+As you saw above, I’m not working with much equipment, so I only capture two visual elements right now:
+
+1. My desktop
+2. MacBook Pro webcam
+
+Currently, I have my inputs set up in multiple Scenes (which I’ll be writing about in the future), but you can clearly see the two items above in the Source panel for my first scene.
+
+_[Image: OBS scene and source panels]_
+
+Configuring OBS to capture my screen was relatively straightforward. Just click the plus sign and choose Display Capture:
+
+_[Image: OBS add Display Capture]_
+
+You should now see an Inception like view of your desktop within the OBS broadcast window. In here, you can manipulate all your video imports and do things like:
+
+1. Resize elements
+2. Reposition elements
+3. Apply video filters
+
+To add my webcam (labeled FaceTime HD), I had to add a Video Capture device from the same menu. When prompted, choose to create a new capture device and give it an appropriate name:
+
+_[Image: OBS add Video Capture Device]_
+
+On the next screen, choose your input device from the dropdown.
+
+_[Image: OBS select Video Capture Device input]_
+
+Now, you should see yourself in the broadcast window. Resize and reposition the webcam input to your liking. Currently, I have my webcam feed as a picture-in-picture in the bottom right hand corner of my screen. It looks like this:
+
+_[Image: My current OBS scene and source layout]_
+
+## 3. Configure audio
+
+Since I’m streaming on a Mac, this is definitely the hardest part. From what I’ve been told, if you have the option to stream on a PC, do that instead.
+
+The first thing we’ll do is plug in our USB microphone (I use a Blue Yeti) and set OBS to capture its audio:
+
+_[Image: Yeti microphone audio input in OBS]_
+
+While connecting devices like my mic can be pretty simple, [macOS makes it very difficult](https://lofi-gaming.org.uk/blog/2016/09/17/capture-mac-desktop-audio-obs/) to capture desktop audio.
+
+To do this, we’ll need to use another app called iShowU Audio Capture. Follow the installation steps on their website, restart your computer and then open your macOS Sound preferences.
+
+You should now see an additional device labeled iShowU Audio Capture. Set this as both your active Input and Output.
+
+Back in OBS, we’ll also need to add this as an audio input just like we did with the mic. Once you do, test it’s hooked up correctly by playing some music and checking the VU meter in OBS’ audio panel.
+
+_[Image: Yeti microphone and iShowU Audio inputs in OBS]_
+
+## 4. Press the Stream button!
+
+That’s it! You’re all set up and ready to go.
+
+Of course, there are lots of things we didn’t cover here in terms of OBS configurations and creative options. In upcoming articles, I will cover additional topics like what Scenes are and how to manage them, as well as how to add music to your stream.
+
+Now, go press that button!
+
+---
+
+# Redoing search UI with React Context and refs
+
+URL: https://ryanharris.dev/redoing-search/
+Published: 2019-10-27
+Description: See how I built a new search UI with React context and refs.
+Tags: ui
+Category: react
+
+Recently, the product team at my company discovered the majority of our users were not utilizing filters when using our search interface.
+
+After looking at our analytics, it became apparent users weren’t engaging with filters because they didn’t know they existed.
+
+To fix this problem, we decided to rebuild our UI in order to highlight this functionality.
+
+But building a new search interface came with its own set of problems. In our case, we had three main concerns:
+
+- By adding filter dropdown menus with nested inputs, we would need a way to easily manage focus.
+
+- With three filter menus, we needed a way to ensure only one menu was open at any given time.
+
+- When the user selected a filter from one of the menus, we needed to both close the menu and trigger a new search.
+
+We achieved all of our objectives by using [React’s Context API](https://blog.logrocket.com/how-and-when-to-use-reacts-new-context-api-b584e41b2704/) in conjunction with refs to create a centralized system for managing menu states and input focus.
+
+In this article, we’ll cover the following:
+
+**Context:** basic usage and strategies for injecting data anywhere in your component tree
+
+**Refs:** what they are and why our use case calls for them
+
+## Context
+
+The official Context API was added to React in v16.3 and is intended to avoid what is commonly known as prop drilling, or manually passing props down a component tree.
+
+While there is nothing wrong with this approach, it can be unwieldy when dealing with complex component hierarchies, especially if some components don’t care about the data and are simply passing it on.
+
+_[Image: Search UI component tree without Context]_
+
+In order to use the Context API, you need to create a Context.Provider that takes a value prop representing all the data you want to inject into the child components that need it.
+
+Before the advent of [Hooks](https://blog.logrocket.com/frustrations-with-react-hooks/), you would do this by using an associated Context.Consumer, but in the post-Hooks world, we can leverage the useContext Hook to subscribe a component to the closest Provider above it in the component tree.
+
+_[Image: Search UI component tree with Context]_
+
+In this case, Context provides a way to keep track of which menu should be open in our parent component, and then passes that value down to its children who, in turn, conditionally render the appropriate dropdown.
+
+The key here is that our Context also passes down a setter function. This is important because it allows the components consuming our context value to then update the state in our parent component, which causes the tree to re-render with the new menu now visible.
+
+_[Image: Menu value with getter and setter]_
+
+By using the pattern described above, we can similarly manage the focus state of the various inputs in the search bar and filter menus.
+
+## Refs
+
+While they have been part of React for a while, refs can still be somewhat confusing even for more experienced developers.
+
+Essentially, React provides a special ref attribute that can be applied to any element (JSX or HTML).
+
+Depending on what type of element you assign it to, the ref provides access to that class instance or DOM element, respectively.
+
+```javascript
+// Applying a ref directly to an HTML element
+<input
+  className="AuthorFilterMenu__filter-input"
+  ref={authorFilterInputRef}
+  placeholder="Filter by author..."
+  value={filterInputValue}
+  type="search"
+  onInput={event => {
+    setFilterInputValue(event.currentTarget.value);
+  }}
+/>
+
+// Applying a ref to a React component instance
+<AuthorFilterMenu ref={authorFilterInputRef} />
+```
+
+Though our use case requires us to go down this road, it is important to note that refs are a React antipattern because they allow direct DOM access. React does not really intend for developers to do this, so when using refs you should proceed with caution.
+
+Alternatively, React is designed to have events update the virtual DOM (a snapshot of the document object model kept in memory,) and allow the framework to update the page as needed in a process known as reconciliation.
+
+This not only makes React more performant by reducing the work done to update the page, but it also makes for a more consistent user experience.
+
+For us, we need to directly access the three inputs in our component tree in order to use the browser’s .focus() method. Since we need to change focus states for our inputs based on user interaction, it makes sense to keep this logic in our parent component, too.
+
+We’ll create three different refs in our parent component that will point to the following:
+
+1. The input in our search bar
+2. The input in our first filter menu (ex. Author)
+3. The input in our second filter menu (ex. Year)
+
+Using our Context, we can then pass these refs down to our child components. In the child component, we destructure the appropriate ref off the component’s props object and assign it directly to our HTML input:
+
+```javascript
+// Provide value in App.jsx
+<section className="App__search">
+  <SearchContext.Provider
+    value={{
+      openMenu: openMenu,
+      toggleOpenMenu: toggleOpenMenu,
+      addAuthor: addAuthor,
+      addYear: addYear,
+      selectedAuthors: selectedAuthors,
+      selectedYears: selectedYears,
+      authorFilterInputRef: authorFilterInputRef,
+      searchBarRef: searchBarRef,
+      yearFilterInputRef: yearFilterInputRef,
+    }}
+  >
+    <SearchBar />
+  </SearchContext.Provider>
+</section>;
+
+// In AuthorFilterMenu.jsx, we grab the ref from the searchContext
+function AuthorFilterMenu(props) {
+  const contextValue = React.useContext(SearchContext);
+  const { addAuthor, openMenu, selectedAuthors, authorFilterInputRef } =
+    contextValue;
+}
+
+// And then we apply it to the <input>
+return (
+  <div className={menuCn}>
+    <input
+      className="AuthorFilterMenu__filter-input"
+      ref={authorFilterInputRef}
+      placeholder="Filter by author..."
+      value={filterInputValue}
+      type="search"
+      onInput={(event) => {
+        setFilterInputValue(event.currentTarget.value);
+      }}
+    />
+    <ul className="AuthorFilterMenu__list">{createMenuItems()}</ul>
+  </div>
+);
+```
+
+Now, whenever one of the child components calls our menu state setter function to toggle a menu, we can add logic to also update which input is in focus.
+
+For example, if one of our filter menus is open and then closes, we would want to refocus the search input bar to allow the user to continue their query.
+
+One thing to note here is that function components don’t play well with refs.
+
+In order to pass a ref into a function component, you will need to use React.forwardRef, which creates a new component that receives a ref attribute and then passes it on to another component below.
+
+For a more detailed look at how to use forwardRef, check out the [official React docs](https://reactjs.org/docs/react-api.html#reactforwardref).
+
+## Conclusion
+
+While Context is a relatively new API and refs are somewhat of an antipattern, they compliment each other well in this case. By combining the two together, we are able to create a more straightforward way of managing both display and focus states within our new search interface.
+
+While we didn’t use any stores in this example, you could easily wire one up and include it in this data flow.
+
+For example, in the project I built at work, my parent component was subscribed to a store that provided a list of the items to be rendered in our dropdown menus.
+
+Once the parent received this data, it added it to our Context’s value prop and passed it down to the child components.
+
+Ultimately, the ability to centrally locate logic in this way allows for a more consistent user experience.
+
+By using Context, we easily decoupled our business logic and data fetching from the presentation and functionality of our UI components.
+
+We also made our code easier for other developers to read in the future, which is never a bad thing!
+
+For the full tutorial, check out this [demo](https://codesandbox.io/s/laughing-lichterman-lxl1y).
+
+_Originally [published](https://blog.logrocket.com/redoing-search-ui-with-react-context-and-refs/) on [LogRocket](https://logrocket.com/)_
+
+---
+
+# 5 Vue tips for React developers
+
+URL: https://ryanharris.dev/react-vs-vue/
+Published: 2019-06-27
+Description: Learn how to get started with Vue from the perspective of a React developer.
+Tags: vue
+Category: react
+
+For frontend developers, JavaScript frameworks have become increasingly important due to how fundamentally they change the way we approach building our applications. While not everyone uses them professional, or at all, the development community sure loves to talk about them. Unfortunately, these discussions often devolve into a diatribe about Framework X being better than Framework Y, or Framework Z not being “real JavaScript.”
+
+As an engineer, I have always found it strange to think of one framework as “better” than another when they’re really all flavors of the same. Essentially, these tools are all trying to solve the same problems and improve the developer experience; they just take different approaches.
+
+The intent of those building these frameworks is to empower developers to make better applications by making it easier for them to:
+
+1. Build reusable UI components
+2. Manage application state
+3. Inject data
+
+Sometimes it can feel like there is a hot new framework every other day (looking at you, Svelte), but React and Vue have been two of the most popular in recent years. Both are widely used at scale and have large, active open source communities.
+
+As a React developer at Guru, I primarily work with React. However, I have recently been working with a local Vue meetup to coordinate the use of our office space for their events. Having not built anything with Vue in a while, I decided this would be the perfect opportunity to build something cool and re-familiarize myself, with the added benefit of comparing it to React.
+
+Before we go any further, I just want to say: this article is not intended to determine whether React or Vue is better than the other. Instead, I hope to examine both frameworks in a practical sense and see how they differ when it comes to solving common problems. Examining another framework can even inform us of how to better use our own.
+
+## Background
+
+I recently bought a house and moved to a new neighborhood, so I no longer have access to the subway and must rely on the bus system to get to work. While having some time to read on my slightly longer commute can be nice, standing outside for a bus that never seems to come is not.
+
+This seemed like a problem for which I could build a solution using Vue. Even though I could easily check SEPTA’s website or Google Maps (more on this later), I wanted to create a simple app that would tell me how much time I had until the next bus so I could quickly check it and run out the door.
+
+Since there are more aspects to any given framework than can be covered in this article, we are going to focus on the difference I encountered while trying to achieve the goals of this small project:
+
+- It must have two views: one for heading to work, the other for heading home
+- It must show information for the two bus lines I use to commute
+- It must show when the next bus is arriving at each station
+
+_Side note: My local transit authority did not have a solid API, so I ultimately ended up having to rely on Google Maps. To prevent tons of API calls, I set up a timed job to hit the API and then write a JSON file to cloud storage. This JSON is the data the app uses to render._
+
+In the end, the application ended up looking like this:
+
+<div class="embed-callout">
+  <span class="embed-callout-label">Interactive demo</span>
+  <a href="https://codesandbox.io/s/brew-bus-r8xkp" target="_blank" rel="noopener noreferrer">Brew Bus on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+</div>
+
+## Approach
+
+As we discussed earlier, React and Vue both have similar goals but differ slightly in their approach. When I say approach, I am referring to the way in which you, the developer, go about building your components.
+
+Of the two frameworks, Vue takes a more template-like approach, not dissimilar from the markup and templating tools used with Model-View-Controller frameworks in other languages like Ruby, Elixir, and PHP.
+
+React, on the other hand, feels a bit more like HTML-in-JavaScript. Take a look at the two components below and see if you can figure out what’s happening.
+
+First, with React:
+
+```javascript
+function Accordion() {
+  const [isAccordionOpen, toggleAccordion] = React.useState(false);
+
+  return (
+    <div className="Accordion">
+      <h3>Accordion Header</h3>
+      <button
+        onClick={() => {
+          toggleAccordion(!isAccordionOpen);
+        }}
+      >
+        Toggle Accordion
+      </button>
+      {isAccordionOpen && <p>Accordion content lives here...</p>}
+    </div>
+  );
+}
+```
+
+Now, with Vue:
+
+```javascript
+<template>
+  <div class="accordion">
+    <button @click="toggleAccordion">Toggle Accordion</button>
+    <p v-if="isAccordionOpen">Accordion content lives here...</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Accordion",
+  data: function() {
+    return {
+      isAccordionOpen: false,
+    };
+  },
+  methods: {
+    toggleAccordion() {
+      this.isAccordionOpen = !this.isAccordionOpen;
+    },
+  },
+};
+</script>
+```
+
+One is not necessarily better than the other; they’re just different. And that’s what makes them so interesting!
+
+## React vs. Vue
+
+Below, I’ve highlighted five tasks a developer commonly performs when building applications and created examples of how to achieve the desired outcome using either framework.
+
+### #1 Conditional Rendering
+
+A common strategy developers use is called conditional rendering. Essentially, this is a fancy way of saying “if X, then Y.” This is often how we show or hide parts of our interface from the user.
+
+We can see an example of this in **App.vue** within the template tags. Two of our components (Work and Home) are being conditionally rendered using Vue’s v-bindings. In this case, the user sees Work if our local state (i.e., data.isWorkScreen) has a value of true. Otherwise, they see, Home.
+
+```javascript
+<div id="app">
+  <h1 class="app__header">{{createHeader}}</h1>
+  <Toggle @toggled="handleToggleChange"/>
+  <Work v-if="isWorkScreen"/>
+  <Home v-else/>
+</div>
+```
+
+In React, we would do this slightly differently. There are a number of ways we could replicate the behavior seen above, but the most straightforward way would be to use an inline JSX expression right inside of the render function.
+
+```javascript
+<div id="App">
+  <h1 className="App_header">My Cool App</h1>
+  <Toggle onClick={handleToggleChange} />
+  {isWorkScreen ? <Work /> : <Home />}
+</div>
+```
+
+### #2 Rendering a list
+
+Another common thing I find myself doing when building an application is iterating through a data object and creating component instances for each item in the list. For example, this would be a good way to create every Item in a ToDoList.
+
+In our case, we’re creating two instances of BusRoute in **Work.vue** and another two in **Home.vue**. In both files, we are iterating through our route information using the v-for binding in order to create each individual route component.
+
+```javascript
+<div class="Work">
+  <BusRoute
+    v-for="bus in buses"
+    :key="`BusRoute-${bus.routeNumber}`"
+    :routeNumber="bus.routeNumber"
+    :origin="bus.origin"
+    :destination="bus.destination"
+    :jsonUrl="bus.jsonUrl"
+  />
+</div>
+```
+
+To replicate this in React, we can use something as simple as **.map** to create a BusRoute for each item in our data object. Then, we can interpolate this value into the JSX tree we’re returning.
+
+```javascript
+const { buses } = this.state;
+
+const busRoutes = buses.map((bus) => {
+  return (
+    <BusRoute
+      key={`BusRoute-${bus.routeNumber}`}
+      routeNumber={bus.routeNumber}
+      origin={bus.origin}
+      destination={bus.destination}
+      jsonUrl={bus.jsonUrl}
+    />
+  );
+});
+
+return <div className="Work">{busRoutes}</div>;
+```
+
+### #3 Rendering Children
+
+This one probably seems straightforward, and for the most part, it is. However, coming from a React background, there was one “gotcha” when it came to working with child components.
+
+In React, this whole process is easy. You simply import the file and then use it in your renders.
+
+Vue components require an extra step. In addition to importing and using child components, Vue components must locally register their component dependencies using the Vue instance’s component field. This overhead is intended to help with efficient bundling, thus reducing client download sizes.
+
+**App.vue** would be the best example of this in our bus application as it is responsible for rendering three child components at various points in its lifecycle.
+
+```javascript
+export default {
+  name: "App",
+  components: {
+    Home,
+    Toggle,
+    Work,
+  },
+};
+```
+
+### #4 Rendering children
+
+Injecting data into your components in Vue is similar to how it was done in React before Hooks were released. Like React’s componentDidMount, Vue has a similar lifecycle method called created, which is where you would retrieve your data from an external source and ostensibly store it in local state.
+
+Here’s what these two lifecycle methods look like side by side:
+
+React:
+
+```javascript
+componentDidMount() {
+  axios({
+    method: "get",
+    url: this.props.jsonUrl
+  })
+    .then(res => {
+      const { routes } = res.data;
+      this.setState({
+        departureTime: routes[0].legs[0].departure_time.text
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+```
+
+Vue:
+
+```javascript
+created: function(jsonUrl) {
+  axios({
+    method: "get",
+    url: this.$props.jsonUrl
+  })
+    .then(res => {
+      const { routes } = res.data;
+      this.departureTime = routes[0].legs[0].departure_time.text;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+```
+
+And let’s not forget our new friend, Hooks! If you happen to be using React 16.8 (or newer), you may have already begun writing function components that use hooks, so here’s how the above would be done in React going forward:
+
+```javascript
+React.useEffect(() => {
+  axios({
+    method: "get",
+    url: props.jsonUrl,
+  })
+    .then((res) => {
+      const { routes } = res.data;
+
+      // setState is part of a useState hook unseen here
+      setRoute(routes[0].legs[0].departure_time.text);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, []);
+```
+
+### #5 Managing component state from a parent
+
+Earlier we used the local state (i.e., data.isHomeScreen in **App.vue**) to determine whether the user saw the Home or Work child component. But how was this value changing? Great question!
+
+If you looked at the Codesandbox, I’m sure you saw that **Home** and **Work** are not alone; they have a sibling called **Toggle**, which has some interesting markup we haven’t seen before.
+
+```javascript
+<Toggle @toggled="handleToggleChange"/>
+```
+
+The `@toggled=”handleToggleChange”` is shorthand for another v-binding, v-on, which tells Vue to fire the local method handleToggleChange.
+
+```javascript
+methods: {
+  handleToggleChange(newView) {
+    this.isWorkScreen = Boolean(newView === "work");
+  }
+}
+```
+
+This function simply changes the local state to flip between the **Home** and **Work** screens. But what is toggled?
+
+To answer this, we have to look inside the **Toggle** component. In the template, there are two **ToggleButtons**, both which have v-on:clicked bindings. These are essentially the equivalent of an onClick prop in React.
+
+```javascript
+<template>
+  <div class="toggle">
+    <ToggleButton
+      @clicked="workClicked"
+      :class="{'toggle__button': true, 'active': workActive}"
+      text="Work"
+    />
+    <ToggleButton
+      @clicked="homeClicked"
+      :class="{'toggle__button': true, 'active': homeActive}"
+      text="Home"
+    />
+  </div>
+</template>
+```
+
+Both of the callback functions toggle some local state, but the important part here is the last line of each function: `this.$emit(...)`.
+
+```javascript
+methods: {
+  workClicked() {
+    this.workActive = true;
+    this.homeActive = false;
+    this.$emit("toggled", "work");
+  },
+  homeClicked() {
+    this.workActive = false;
+    this.homeActive = true;
+    this.$emit("toggled", "home");
+  }
+}
+```
+
+Notice the first argument, toggled. Essentially, this line triggers an event that **App** is now listening for due to the @toggled binding we added above.
+
+In React, we do something similar, but instead of listening for an event emitted from the child, we pass a function prop from parent to child and execute that function inside the local event listener within the child component.
+
+```javascript
+function Child(props) {
+  return (
+    <div>
+      <button onClick={() => props.toggleView("work")}>Work</button>
+      <button onClick={() => props.toggleView("home")}>Home</button>
+    </div>
+  );
+}
+
+function Parent() {
+  const [isWorkView, setWorkView] = React.useState(true);
+  return <Child toggleView={setWorkView} />;
+}
+```
+
+Again, the result here is the same: a child component is manipulating the state of its parent.
+
+## In the end...
+
+Building an app, even one this small, in a framework other than React was an interesting exercise for a couple reasons. Not only did I gain experience working with another framework, but I was also forced to think in a non-React way for the first time since I started using it.
+
+This, perhaps, is the most important thing to take away: it is important to explore other technologies to help us think outside the box our usual tools have put us in. Though I think I still prefer React, I don’t think I can say it’s better than Vue — just different.
+
+Here are some other thoughts I had after going through this process:
+
+1. I prefer working with React. Admittedly, this is most likely due to my past experience and familiarity with it, but I do prefer its HTML-in-JavaScript approach to Vue’s template-based one.
+2. I think Vue would be easier for developers coming from a traditional MVC background to pick up due to its similarity to templates.
+3. I would love to try building with Vue at a larger scale in order to really get a feel for it. So far, I am loving Single-File Components!
+
+_Originally [published](https://blog.logrocket.com/5-vue-tips-for-react-developers/) on [LogRocket](https://logrocket.com/)_
+
+---
+
+# 3 Steps to Getting Started with Open Source
+
+URL: https://ryanharris.dev/three-steps-to-open-source/
+Published: 2019-03-09
+Description: Contributing to open-source projects during my career transition taught me a lot about being a developer. Here's how you can get started with OSS.
+Tags: open-source, career
+Category: oss
+
+Before becoming a developer, I spent a decade working in film and television, so when I first started transitioning into tech, I spent a lot of time networking, going to Meetups and having coffee with other developers. I was primarily interested in **finding out what I needed to know to become employable and how I could go about learning those skills**. I heard a few answers consistently: do online tutorials, build your portfolio and contribute to open source projects.
+
+The first two are relatively straightforward, but contributing to open source software (OSS) is a bit more opaque, especially for new developers. While the “hows” of contributing can be a bit unclear, the “whys” are much more tangible.
+
+**Employers are often looking for developers who have worked on a team** before, which can be a catch-22 for new developers who have only built side projects or done freelance work by themselves. By contributing to OSS, you will learn tools teams use industry-wide to collaborate, including version control systems and platforms like GitHub.
+
+You will also gain experience in the “soft-skills” of engineering like how to communicate and collaborate with other developers. It also gives you an opportunity to give back to the community and help others who are earlier in their developer journey, much like you were before.
+
+**Open source projects provide an opportunity for developers to learn skills that will make them more employable.** Here’s how you can get started!
+
+## How do I find an open source project?
+
+Figuring out where to start is hard. There are tons of projects out there that are currently being worked on, but how do you know which one is the right one for you? There are a few small ways you can make the search a bit easier.
+
+First off, I’d recommend looking at repositories for tools you use on a daily basis. This will give you an advantage because you will be more familiar with the product, what it’s intended to do, and how it can be improved.
+
+Another way to find good projects is to search GitHub for repos built using your strongest programming language. When getting started, **you want to reduce your barrier to entry**, so adding a completely new language to the mix could dramatically slow your progress.
+
+Lastly, I suggest looking for projects that are being actively developed. The last thing you want to do is spend a lot of time and effort working on a project that has been deprecated. A few easy ways to determine a project’s vitality are:
+
+1. Look at when the last commit was made. If it’s been a long time, odds are the project has lost momentum.
+2. Check out how many stars the repo has. Stars indicate community interest in the project.
+3. See how many contributors the project has. The more, the better because you’ll have plenty of people to ask for help.
+
+## How do I contribute to an open source project?
+
+Now that you’ve found a project to work on, let’s talk about OSS workflows and how you get your code merged.
+
+First things first, **look at the project’s website (or README file) for a contribution guide**. These guides will usually describe the projects’s preferred code style, general workflow and provide instructions for setting up your local development environment.
+
+A very common workflow used in open source projects goes something like this:
+
+1. Fork the project repo and make a copy for yourself
+2. Clone the repo to your local machine and boot up the development environment
+3. Commit your code changes to git
+4. Push your work to a feature branch in your fork
+5. Open a PR against the original project repo
+
+One thing to note here is that your local git repo will be tracking TWO different repos on GitHub, which are often called “origin” and “upstream”. Origin refers to the forked repo in your GH account whereas “upstream” points to the original project repo. To keep you local copy up to date, you’ll want to `git pull upstream [branch]` before starting on a new issue. Then, when you’re done and ready to push up your code, you’d run `git push origin [branch]` and then open a pull request.
+
+If the paragraph above confused you, don’t worry—you’re definitely not alone! **I use git every day and still find myself needing to reference documentation** on a regular basis. Before you proceed, feel free to check out this [handy git guide from Atlassian](https://www.atlassian.com/git/tutorials/syncing) if you want to brush up.
+
+Once you’ve opened your pull request, project maintainers will review your code, potentially ask for changes and merge your code in. This process is a great opportunity to learn from more experienced developers, which can help build your real-world development skill set.
+
+## How do I find issues to work on?
+
+Now that you’ve found a project and understand the general workflow, where do you find issues to work on? **The best place to look is on the project repo’s issues page.** On large projects, this page may have hundreds, if not thousands of open issues for you to choose.
+
+Large repositories like [Gatsby](https://github.com/gatsbyjs/gatsby/issues) will usually be well organized and make use of GitHub’s project management features like labels and assignees. Projects of this scale often have a core team maintaining the project while simultaneously coordinating the work done by community contributors.
+
+Labels can be very helpful when trying to find your first issue. Many projects will make use of labels like “good first issue”, “beginners”, or “help wanted” to denote issues where the maintainers are looking for help. If someone has already begun work on an issue, you’ll often see them assigned to the issue or a status label indicating it’s in progress.
+
+Another great place to find things you can work on is the project’s Slack channel or Discord server. Often, **the project’s core team will be available to offer guidance, answer questions and provide general feedback** on your work. As they will have a more intimate knowledge of the codebase, they are also great resources, especially when first getting started.
+
+If you don’t have any luck finding issues in a specific repo, be on the lookout for seasonal community events like [Hacktoberfest](https://hacktoberfest.digitalocean.com/) or [24 Pull Requests](https://24pullrequests.com/). These events aggregate beginner-friendly issues from a wide variety of projects, which helps make it easier to find things to work on. Awesome!
+
+## Learning from open source
+
+My first contribution to an open source project was [a simple documentation change for Brunch](https://github.com/brunch/brunch.github.io/pull/207), a build tool I was using at the time. Simply because I was using it, I noticed a typo in the docs and decided to fix it. It certainly wasn’t a mind-blowing enhancement, but at least the next person reading the docs would have a slightly better experience.
+
+Not too after, I discovered the GitLab repo, which had a lot of open style related issues. Since CSS was my strong suit at the time, I made a habit of submitting PRs to the project on a regular basis. **Ultimately, this helped me land my first development job because I was already familiar team-based workflows.** Had I not been working on open source projects, I would not have had this experience.
+
+Recently, I jumped back into the world of open source by updating some Gatsby documentation and logging on to their Discord server. In a short period, I’ve been able to help some new Gatsby developers, which has been a great reminder of how far I’ve come. I know more than some and less than others, which allows me to help the former while also learning from the latter. And that’s why the open source is so great!
+
+So, go find a project, learn something and have fun coding!
+
+---
+
+# What the heck is JSX?
+
+URL: https://ryanharris.dev/what-the-heck-is-jsx/
+Published: 2018-12-08
+Description: JSX is a syntax extension for JavaScript and is widely used in frontend frameworks like React.
+Tags: react, jsx
+Category: react
+
+As developers, we use a variety of tools and open source packages to make our jobs easier. Some of them are so widely used throughout the community that they seem native to JavaScript. Though they're not, they **can fundamentally change how you write code on a daily basis**.
+
+One of these technologies that you're already using is JSX, **a XML like syntax extension for JavaScript**. Created by the wizards at Facebook, it is intended to simplify the developer experience. As the spec says, the rationale for creating JSX was:
+
+> "…to define a concise and familiar syntax for defining tree structures with attributes." ~ [JSX Spec](https://react.dev/learn/writing-markup-with-jsx)
+
+Now, you're probably saying to yourself, "Hey, Ryan, this sounds great, but **get to the code already**", so here's our first example.
+
+```jsx
+const helloWorld = <h1>Hello, World!</h1>;
+```
+
+And that's it! The snippet above looks familiar, but have you ever stopped to think about its power? JSX makes it so we can **pass around tree structures composed of HTML or React elements as if they were standard JavaScript values**. Crazy!
+
+While you don't have to use JSX when writing React ([or use React in order to try JSX](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-jsx)), there's no denying it is an important part of the React ecosystem, so let's dive in and see what's going on under the hood!
+
+---
+
+## Getting started with JSX
+
+The first thing to note when using JSX syntax is that **React must be in scope**. This is due to how it gets compiled. Take this component for example:
+
+```jsx
+function Hello() {
+  return <h1>Hello, World!</h1>;
+}
+```
+
+Behind the scenes, each element rendered by the Hello component is transpiled into to a React.createElement call. In this case:
+
+```jsx
+function Hello() {
+  return React.createElement("h1", {}, "Hello, World!");
+}
+```
+
+The same is true for nested elements. The two examples below would ultimately render the same markup.
+
+```jsx
+// Example 1: Using JSX syntax
+function Nav() {
+  return (
+    <ul>
+      <li>Home</li>
+      <li>About</li>
+      <li>Portfolio</li>
+      <li>Contact</li>
+    </ul>
+  );
+}
+// Example 2: Not using JSX syntax
+function Nav() {
+  return React.createElement(
+    "ul",
+    {},
+    React.createElement("li", null, "Home"),
+    React.createElement("li", null, "About"),
+    React.createElement("li", null, "Portfolio"),
+    React.createElement("li", null, "Contact")
+  );
+}
+```
+
+## React.createElement
+
+When React creates elements, it calls this method, which takes three arguments.
+
+1. The element name
+2. An object representing the element's props
+3. An array of the element's children
+
+One thing to note here is that React interprets lowercase elements as HTML and Pascal case (ex. ThisIsPascalCase) elements as custom components. Because of this, **the following examples would be interpreted differently**.
+
+```jsx
+// 1. HTML element
+React.createElement("div", null, "Some content text here");
+
+// 2. React element
+React.createElement(Div, null, "Some content text here");
+```
+
+The first example would generate a div with the string "Some content text here" as its child. However, the second version would throw an error (unless, of course, a custom component Div was in scope) because Div is undefined.
+
+## Props in JSX
+
+When working in React, your components often render children and need to pass them data in order for the children to render properly. These are called props.
+
+I like to think of React components as a group of friends. And what do friends do? They give each other props. Thankfully, JSX offers us a number of ways to do that.
+
+```jsx
+// 1. Props defaulted to true
+<User loggedIn />
+
+// 2. String literals
+<User name="Jon Johnson" />
+
+// 3. JavaScript expressions
+<User balance={5 + 5 + 10} />
+
+// 4. Spread attributes
+<User preferences={...this.state} />
+```
+
+But beware! **You cannot pass if statements or for loops as props** because they are [statements, not expressions](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2).
+
+## Children in JSX
+
+As you're building your app, you eventually start having components render children. And then those components sometimes have to render children. And so on and so forth.
+
+Since **JSX is meant to make it easy for us to reason about tree-like structures of elements**, it makes all of this very easy. Basically, whatever elements a component returns become its children.
+
+There are four ways to render child elements using JSX:
+
+### Strings
+
+This is the simplest example of JSX children. In the case below, React creates a h1 HTML element with one child. The child, however, is not another HTML element, just a simple string.
+
+```jsx
+function AlertBanner() {
+  return <h1>Your bill is due in 2 days</h1>;
+}
+```
+
+### JSX Elements
+
+This is probably the use case new React developers would be the most familiar with. In the component below, we're returning an HTML child (the header), which has two children of its own Nav and ProfilePic both of which are custom defined JSX elements.
+
+```jsx
+function Header(props) {
+  return (
+    <header>
+      <Nav />
+      <ProfilePic />
+    </header>
+  );
+}
+```
+
+### Expressions
+
+Expressions allow us to easily render elements in our UI that are the result of a JavaScript computation. A simple example of this would be basic addition.
+
+Say we have a component called BillFooter that renders information about a bill or receipt. Let's assume it takes one prop called total that represents the pre-tax cost and another prop taxRate, which represents the applicable tax rate.
+
+Using expressions, we can easily render out some useful information for our users!
+
+```jsx
+function BillFooter(props) {
+  return (
+    <div>
+      <h5>Tax: {props.total * props.taxRate}</h5>
+      <h5>Total: {props.total + props.total * props.taxRate}</h5>
+    </div>
+  );
+}
+```
+
+### Functions
+
+With functions, we can programmatically create elements and structures, which React will then render for us. This makes it easy to create multiple instances of a component or render repeated UI elements.
+
+As an example, let's use JavaScript's .map() function to create a navigation bar.
+
+```jsx
+// Array of page information
+const pages = [
+  {
+    id: 1,
+    text: "Home",
+    link: "/",
+  },
+  {
+    id: 2,
+    text: "Portfolio",
+    link: "/portfolio",
+  },
+  {
+    id: 3,
+    text: "Contact",
+    link: "/contact",
+  },
+];
+// Renders a <ul> with programmatically created <li> children
+function Nav() {
+  return (
+    <ul>
+      {pages.map((page) => {
+        return (
+          <li key={page.id}>
+            <a href={page.link}>{page.text}</a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+```
+
+Now, if we want to add a new page to our site, all we need to do is add a new object to the pages array and React will take care of the rest!
+
+**Take note of the key prop**. Our function returns an array of sibling elements, in this case `li`s, and React needs a way to keep track of which mounts, unmounts or updates. To do that, it relies on this unique identifier for each element.
+
+---
+
+## Use the tools!
+
+Sure, you can write React applications without JSX, but I'm not really sure why you'd want to.
+
+The ability JSX gives us to pass around elements in JavaScript like they were first-class citizen lends itself well to working with the rest of the React ecosystem. So well, in fact, you may have been writing it every day and not even known it.
+
+Bottom line: just use JSX. You'll be happy you did 👍

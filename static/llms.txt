@@ -1,0 +1,49 @@
+# ryan harris
+
+> writing about code, tools, and things i'm figuring out
+
+Ryan Harris is a software engineer who writes about code, tools, and the things he is figuring out. This is a static, server-rendered blog with stable URLs and an Atom feed.
+
+## About
+
+- [about](https://ryanharris.dev/about/): About Ryan Harris, a software engineer working on distributed systems and internal tooling at dbt Labs.
+
+## Writing
+
+- [How to not get rekt: web3 wallet safety](https://ryanharris.dev/web3-wallet-strategy/): Create a web3 wallet strategy to keep your crypto assets safe. (2021-12-01)
+- [Takeaways from 'Shape Up'](https://ryanharris.dev/takeaways-from-shape-up/): My thoughts on 'Take Shape' by Ryan Singer. (2020-08-17)
+- [Planning my digital garden](https://ryanharris.dev/planning-my-digital-garden/): Thoughts about redesigning my website and turning it into a digital garden. (2020-08-11)
+- [Hooks Revisited: useDebugValue](https://ryanharris.dev/hooks-usedebugvalue/): useDebugValue is a hook aimed at helping developers troubleshoot the React applications they're building. (2020-08-10)
+- [Notes on 'Mastering emacs'](https://ryanharris.dev/mastering-emacs/): Raw notes from a 'Mastering emacs' bookclub I participated in. (2020-08-09)
+- [Add voice chat to your Twitch stream](https://ryanharris.dev/twitch-with-discord-audio/): Check out the setup I used to patch Discord audio into my Twitch livestream. (2020-08-08)
+- [Hooks Revisited: useReducer](https://ryanharris.dev/hooks-usereducer/): useReducer provides an alternate way to store component state beyond useState. It is especially useful for storing complex data structures and/or related values. (2020-05-18)
+- [Hooks Revisited: useCallback](https://ryanharris.dev/hooks-usecallback/): useCallback is similar to useMemo but returns a memoized function, not a memoized value. (2020-04-21)
+- [Hooks Revisited: useMemo](https://ryanharris.dev/hooks-usememo/): useMemo allows you to avoid recomputing expensive values by leveraging memoization under the hood. (2020-03-24)
+- [Hooks Revisited: useContext](https://ryanharris.dev/hooks-usecontext/): useContext provides an easy way to provide data from parent to child without having to 'prop drill'. (2020-03-16)
+- [Hooks Revisited: useRef](https://ryanharris.dev/hooks-useref/): useRef can be used to directly interact with the browser's DOM or store and update values without causing re-renders like useState. (2020-03-13)
+- [Hooks Revisited: useLayoutEffect](https://ryanharris.dev/hooks-uselayouteffect/): useLayoutEffect works exactly the same way useEffect does except it fires prior to the DOM's initial paint. (2020-03-02)
+- [Hooks Revisited: useEffect](https://ryanharris.dev/hooks-useeffect/): useEffect is one of the most commonly used hooks and is used for things like fetching data, setting up event listeners and manipulating the DOM. (2020-02-26)
+- [Hooks Revisited: useState](https://ryanharris.dev/hooks-usestate/): As the name suggests, the useState hook is used for storing component state. (2020-02-17)
+- [Hooks Revisited](https://ryanharris.dev/hooks-revisited/): This series is a holistic look at React's hooks API and how they each work. (2020-02-16)
+- [How to configure ESLint and Prettier to work together](https://ryanharris.dev/configure-eslint-and-prettier/): Learn how to use ESLint and Prettier to enforce code conventions and formatting. (2020-02-09)
+- [Managing SSH keys and identities for GitHub](https://ryanharris.dev/managing-ssh-keys-for-github/): If you use more than one GitHub account on the same machine, configuring multiple SSH keys will make authenticating with different repos much easier. (2020-01-19)
+- [How to setup your OBS scenes](https://ryanharris.dev/obs-scenes/): Once you're up and running with OBS, it's helpful to begin organizing your inputs and assets into separate scenes. (2019-12-11)
+- [Starting to livestream with OBS](https://ryanharris.dev/going-live-with-obs/): I just started live streaming. I’ve done it exactly twice. I wasn’t sure what to expect before I started and, at times, didn’t even know where to start. (2019-11-20)
+- [Redoing search UI with React Context and refs](https://ryanharris.dev/redoing-search/): See how I built a new search UI with React context and refs. (2019-10-27)
+- [5 Vue tips for React developers](https://ryanharris.dev/react-vs-vue/): Learn how to get started with Vue from the perspective of a React developer. (2019-06-27)
+- [3 Steps to Getting Started with Open Source](https://ryanharris.dev/three-steps-to-open-source/): Contributing to open-source projects during my career transition taught me a lot about being a developer. Here's how you can get started with OSS. (2019-03-09)
+- [What the heck is JSX?](https://ryanharris.dev/what-the-heck-is-jsx/): JSX is a syntax extension for JavaScript and is widely used in frontend frameworks like React. (2018-12-08)
+
+## Feeds
+
+- [Atom feed](https://ryanharris.dev/atom.xml)
+
+## Contact
+
+- Email: ryan@ryanharris.dev
+- GitHub: https://github.com/ryancharris
+- LinkedIn: https://www.linkedin.com/in/ryancharris/
+
+## Full text
+
+- [llms-full.txt](https://ryanharris.dev/llms-full.txt)

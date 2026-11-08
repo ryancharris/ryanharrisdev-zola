@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block structured_data %}
+{% set site_home = config.base_url ~ "/" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "url": {{ current_url | json_encode | safe }},
+  "name": {{ page_title | json_encode | safe }},
+  "description": {{ page_description | json_encode | safe }},
+  "isPartOf": { "@type": "WebSite", "url": {{ site_home | json_encode | safe }} }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="content-section" aria-labelledby="tag-title">
+  <p class="eyebrow"><a href="/tags/">← All tags</a></p>
+  <h1 id="tag-title">{{ term.name }}</h1>
+  <p class="site-description">{{ term.page_count }} {% if term.page_count == 1 %}post{% else %}posts{% endif %} tagged “{{ term.name }}”.</p>
+
+  <ul class="content-list">
+    {% for page in term.pages %}
+    <li class="post-item">
+      <div class="post-item-heading">
+        <h2 class="post-item-title"><a href="{{ page.path | safe }}">{{ page.title }}</a></h2>
+        {% if page.date %}
+        <time class="post-date" datetime="{{ page.date }}">{{ page.date | date(format="%b %Y") }}</time>
+        {% endif %}
+      </div>
+      {% if page.description %}<p class="post-item-description">{{ page.description }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock content %}

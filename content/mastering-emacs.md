@@ -1,11 +1,12 @@
 ---
 title: "Notes on 'Mastering emacs'"
 date: "2020-08-09"
-published: true
 description: "Raw notes from a 'Mastering emacs' bookclub I participated in."
-category: "general"
-tags:
-  - "emacs"
+taxonomies:
+  tags:
+    - "emacs"
+extra:
+  category: "general"
 ---
 
 I just started going through ['Mastering emacs'](https://www.masteringemacs.org/) by Mickey Petersen with a new Egghead book club cohort organized by [Ian Jones](https://www.ianjones.us).
@@ -14,9 +15,9 @@ I just started going through ['Mastering emacs'](https://www.masteringemacs.org/
 
 Below are my evolving notes as we make our way through the book.
 
-### Week 1 - Ch. 1 & 2
+## Week 1 - Ch. 1 & 2
 
-#### Reading and discussion notes
+### Reading and discussion notes
 
 - GNU emacs is most common
 - emacs is "for tinkerers"
@@ -29,7 +30,7 @@ Below are my evolving notes as we make our way through the book.
   - "yanking" -- pasting
   - "saving to the kill ring" -- copying
 
-#### Usage notes
+### Usage notes
 
 Commands are semantic:
 
@@ -67,9 +68,9 @@ To add Prettier formatting:
 (add-hook 'typescript-mode 'prettier-js-mode)
 ```
 
-### Week 2 - Chapter 3
+## Week 2 - Chapter 3
 
-#### Discussion notes
+### Discussion notes
 
 Everyone else is using org-roam for networked thought
 
@@ -113,11 +114,11 @@ Lauro and I want to have our markdown files with a preview window next to it
 
 - Being worked on
 
-#### Questions for the group
+### Questions for the group
 
 - I'm confused about the emacs client-server concept
 
-#### Usage notes
+### Usage notes
 
 `C-g`: Bailout command
 
@@ -127,7 +128,7 @@ Lauro and I want to have our markdown files with a preview window next to it
 
 `g d`: Global describe
 
-#### Reading notes
+### Reading notes
 
 Starting emacs
 

@@ -2,7 +2,9 @@ name = "ryanharrisdev-zola"
 compatibility_date = "2026-03-16"
 
 [build]
-command = "./build.sh"
+command = "bash ./build.sh"
 
 [assets]
 directory = "./public"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"

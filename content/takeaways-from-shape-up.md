@@ -1,9 +1,13 @@
 ---
 title: "Takeaways from 'Shape Up'"
 date: "2020-08-17"
-published: true
 description: "My thoughts on 'Take Shape' by Ryan Singer."
-category: "books"
+taxonomies:
+  tags:
+    - "books"
+    - "product"
+extra:
+  category: "books"
 ---
 
 Recently, I've been having discussions with my team about our product process. They have often centered on how to move quickly while shipping useful, well thought out and thoroughly tested features.
@@ -16,7 +20,7 @@ Generally, they broke their approach down into three sections:
 2. Betting
 3. Building
 
-### Shaping
+## Shaping
 
 Based on my reading, I would go as far as saying this is the most important part of the process. For it is here, not during development, where we need to think about problems and solutions in broad strokes.
 
@@ -28,7 +32,7 @@ Once a problem has been identified, the team needs to decide what their "appetit
 
 With the problem defined and a time-box established, the team is now prepared to think of solutions -- done in broad strokes so as not to commit to any designs, flows, etc. This is where **one of my biggest takeaways from the book comes in**: while it is important to define what work will be done over the course of a project, it is equally (if not more) important to define **what work will not be done**.
 
-### Betting
+## Betting
 
 Following the shaping process, folks should create pitches for the various problems/solutions the team wants to solve. These are then brought to the "betting table", where they're discussed at a high-level and given a 👍 or 👎.
 
@@ -42,7 +46,7 @@ This strategy helps alleviate the reactivity to customer feedback I mentioned in
 
 Theoretically, I like the idea of not having a backlog since an ever-growing, massive wall of backlog items can cause teams stress. However, I do think it's important to keep track of ideas/issues related to your product -- though I will say, I do not believe a ticketing system is where these things should live.
 
-### Building
+## Building
 
 At Basecamp, teams work on six-week cycles. This includes phases for design, engineering and testing (marketing announcements and documentation updates can be done afterwards) with the expectation that the team ships the new feature at the end of the cycle.
 
@@ -62,7 +66,7 @@ As the cycle comes to an end, the team will have to decide when to stop. Since t
 
 Now you may ask: what about any of the work that remains undone? That's the beauty of this process -- instead of extending the development cycle, this work goes back into the shaping project and, eventually, makes its way to the betting table. If the work is truly important to the product, we should rely on the shaping process and that the work will make its way through the betting process once again.
 
-### Final thoughts
+## Final thoughts
 
 I have worked at a number of companies, all of whom had their own product process. What Singer lays out in "Shape Up" is an amalgamation of the disparate processes I've seen work best over the past few years organized into a coherent process.
 

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block structured_data %}
+{% set page_url = page.permalink %}
+{% set author_name = config.extra.author | default(value=config.author) %}
+{% set author_id = config.base_url ~ "/#person" %}
+{% set author_url = config.base_url ~ "/about/" %}
+{% set home_url = config.base_url ~ "/" %}
+{% set website_id = config.base_url ~ "/#website" %}
+{% set og_image = get_url(path='og-image.png') %}
+{% set description = page.description | default(value=config.description) %}
+{% set page_lang = page.lang | default(value=config.default_language) %}
+{% set page_tags = [] %}
+{% if page.taxonomies.tags is defined %}{% set page_tags = page.taxonomies.tags %}{% endif %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": {{ page.title | json_encode | replace(from="<", to="\\u003c") | safe }},
+      "description": {{ description | json_encode | replace(from="<", to="\\u003c") | safe }},
+      "url": {{ page_url | json_encode | safe }},
+      "mainEntityOfPage": { "@type": "WebPage", "@id": {{ page_url | json_encode | safe }} },
+      {% if page.date %}"datePublished": {{ page.date | date(format="%+") | json_encode | safe }},{% endif %}
+      {% if page.updated %}"dateModified": {{ page.updated | date(format="%+") | json_encode | safe }},{% else %}"dateModified": {{ page.date | date(format="%+") | json_encode | safe }},{% endif %}
+      "author": {
+        "@type": "Person",
+        "@id": {{ author_id | json_encode | safe }},
+        "name": {{ author_name | json_encode | safe }},
+        "url": {{ author_url | json_encode | safe }}
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": {{ author_id | json_encode | safe }},
+        "name": {{ author_name | json_encode | safe }}
+      },
+      "inLanguage": {{ page_lang | json_encode | safe }},
+      "wordCount": {{ page.word_count }},
+      {% if page.extra.category is defined and page.extra.category %}"articleSection": {{ page.extra.category | json_encode | safe }},{% endif %}
+      "keywords": {{ page_tags | join(sep=", ") | json_encode | safe }},
+      "image": [{{ og_image | json_encode | safe }}],
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": {{ website_id | json_encode | safe }},
+        "name": {{ config.title | json_encode | safe }},
+        "url": {{ home_url | json_encode | safe }}
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Writing",
+          "item": {{ home_url | json_encode | safe }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ page.title | json_encode | replace(from="<", to="\\u003c") | safe }},
+          "item": {{ page_url | json_encode | safe }}
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="post">
+  <header class="post-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p class="post-description">{{ page.description }}</p>{% endif %}
+    <p class="post-meta">
+      {% if page.date %}
+      <time datetime="{{ page.date }}">Published {{ page.date | date(format="%B %-d, %Y") }}</time>
+      {% endif %}
+      <span aria-hidden="true">·</span>
+      <span>{{ page.reading_time }} min read</span>
+      {% if page.updated and page.updated != page.date %}
+      <span aria-hidden="true">·</span>
+      <span>Updated <time datetime="{{ page.updated }}">{{ page.updated | date(format="%B %-d, %Y") }}</time></span>
+      {% endif %}
+    </p>
+  </header>
+
+  {% if page.toc and page.toc | length >= 3 %}
+  <details class="toc">
+    <summary>On this page</summary>
+    <ol>
+      {% for heading in page.toc %}
+      <li>
+        <a href="#{{ heading.id }}">{{ heading.title }}</a>
+        {% if heading.children %}
+        <ol>
+          {% for child in heading.children %}
+          <li><a href="#{{ child.id }}">{{ child.title }}</a></li>
+          {% endfor %}
+        </ol>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </details>
+  {% endif %}
+
+  <div class="post-content">
+    {{ page.content | safe }}
+  </div>
+
+  {% if page.taxonomies.tags is defined and page.taxonomies.tags %}
+  <div class="post-tags" role="group" aria-label="Tags">
+    <span class="post-tags-label">Tagged</span>
+    {% for tag in page.taxonomies.tags %}
+    <a class="tag" href="{{ get_taxonomy_url(kind='tags', name=tag) | replace(from=config.base_url, to='') | safe }}">#{{ tag }}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if page.higher or page.lower %}
+  <nav class="post-nav" aria-label="More posts">
+    {% if page.higher %}
+    <a class="post-nav-prev" href="{{ page.higher.path | safe }}" rel="prev">
+      <span aria-hidden="true">←</span> {{ page.higher.title }}
+    </a>
+    {% endif %}
+    {% if page.lower %}
+    <a class="post-nav-next" href="{{ page.lower.path | safe }}" rel="next">
+      {{ page.lower.title }} <span aria-hidden="true">→</span>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  <p class="back-to-top"><a href="#main">Back to top <span aria-hidden="true">↑</span></a></p>
+</article>
+{% endblock content %}

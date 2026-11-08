@@ -1,11 +1,39 @@
 {% extends "base.html" %}
 
+{% block structured_data %}
+{% set person_id = config.base_url ~ "/#person" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "url": {{ current_url | json_encode | safe }},
+      "name": {{ page.title | json_encode | safe }},
+      "description": {{ page.description | default(value=config.description) | json_encode | safe }},
+      "mainEntity": { "@id": {{ person_id | json_encode | safe }} }
+    },
+    {
+      "@type": "Person",
+      "@id": {{ person_id | json_encode | safe }},
+      "name": {{ config.extra.author | default(value=config.author) | json_encode | safe }},
+      "url": {{ current_url | json_encode | safe }},
+      "email": {{ config.extra.email | json_encode | safe }},
+      "sameAs": [
+        {{ config.extra.github | json_encode | safe }},
+        {{ config.extra.linkedin | json_encode | safe }}
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
-<h1>about</h1>
-
-<p>I've been writing software for over a decade, and I still think the best part of the job is making other engineers' lives less painful. These days I do that at dbt Labs, where I work on distributed systems and internal tooling — the kind of stuff that doesn't ship features but makes the people who do ship them a lot faster.</p>
-
-<p>My career started in Philly, bouncing through Revzilla, Guru, and Fauna, where I did everything from building UIs to leading full app re-platforming efforts. Somewhere in there I made some video courses on egghead.io and gave a few conference talks, which was terrifying and fun in equal measure.</p>
-
-<p>This blog is basically my thinking out loud in public — code, tools, whatever problem has taken over my brain that week. No editorial calendar, no content strategy, just whatever I find interesting.</p>
+<article class="page">
+  <h1>{{ page.title }}</h1>
+  <div class="page-content">
+    {{ page.content | safe }}
+  </div>
+</article>
 {% endblock content %}
