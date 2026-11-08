@@ -202,12 +202,11 @@ test('spacing regressions stay fixed', () => {
   for (const [pattern, message] of checks) assert.match(css, pattern, message);
 });
 
-test('h1 marker hangs snugly and hides on narrow screens', () => {
-  assert.match(css, /h1 \{[^}]*position: relative;/, 'h1 must anchor its marker');
-  assert.match(css, /h1::before \{[^}]*right: 100%;/, 'h1 marker must hang from the text edge');
-  assert.match(css, /h1::before \{[^}]*margin-right: 0\.2em;/, 'h1 marker gap changed');
-  assert.doesNotMatch(css, /h1::before \{[^}]*left: -1\.5ch;/, 'old wide h1 offset is back');
-  assert.match(css, /@media \(max-width: 767px\) \{\s*h1::before \{\s*content: none;/, 'marker must hide on mobile');
+test('h1 title has no decorative marker', () => {
+  const block = cssBlock(css, 'h1::before');
+  assert.ok(block, 'missing h1::before rule');
+  assert.match(block, /content:\s*none;/, 'h1 marker must be removed');
+  assert.doesNotMatch(block, /position:\s*absolute|left:|right:|margin-right:/, 'h1 marker offset is back');
 });
 
 test('mobile header stays one row', () => {

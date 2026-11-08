@@ -270,7 +270,6 @@ main {
 }
 
 h1 {
-    position: relative;
     margin-block: 0 0.75rem;
     font-size: 2rem;
     line-height: 1.2;
@@ -279,17 +278,7 @@ h1 {
 }
 
 h1::before {
-    content: "#" / "";
-    position: absolute;
-    right: 100%;
-    margin-right: 0.2em;
-    color: var(--accent);
-}
-
-@media (max-width: 767px) {
-    h1::before {
-        content: none;
-    }
+    content: none;
 }
 
 h2 {
@@ -1073,10 +1062,6 @@ details.toc[open] > summary + ol {
 
 .error-page > * {
     margin: 0;
-}
-
-.error-page h1::before {
-    content: none;
 }
 
 .error-page h1 {
