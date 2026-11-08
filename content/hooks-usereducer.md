@@ -81,6 +81,7 @@ In the sandbox below, I've built a form for scheduling an appointment. Though th
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/hooksusereducer-5rntg" target="_blank" rel="noopener noreferrer">hooks/useReducer on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Instead of storing each input value in its own useState hook, we can store and manage all of the values in our form using a single useReducer. In this case, its state is an object with many keys, each representing a different value we want to store. Personally, this reminds me a bit of this.state in class components before we had hooks.
 

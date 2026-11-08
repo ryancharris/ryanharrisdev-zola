@@ -120,7 +120,7 @@ Lauro and I want to have our markdown files with a preview window next to it
 
 ### Usage notes
 
-`C-g`: Bailout command
+<kbd>C-g</kbd>: Bailout command
 
 `M-x lunar-phases`: Shows a list of the upcoming lunar cycles
 
@@ -162,7 +162,7 @@ Modifier keys
 Discovering a remembering keys
 
 - emacs is auto documented, so you want to leverage this as you learn
-- `C-h` will show a help menu
+- <kbd>C-h</kbd> will show a help menu
 
 > Tinking with emacs is every emacs hacker's favorite pastime
 
@@ -208,7 +208,7 @@ Apropos
 
 - Helpful when you're not sure exactly what command you're looking for
 - Supports RegEx
-- EX: `C-h a -word$` lists all commands ending with "word"
+- EX: <kbd>C-h a -word$</kbd> lists all commands ending with "word"
 - To sort your apropos results by relevancy
 
 ```elisp
@@ -220,7 +220,7 @@ Apropos
 > The describe system is not static.
 
 - The describe system has multiple helpful commands
-  - `M-x describe-mode` or `C-h m` — Displays documentation for any major mode (uses your current buffer)
-  - `M-x describe-function` or `C-h f` — Describes a function
-  - `M-x describe-variable` or `C-h v` — Describes a variable
-  - `M-x describe-key` or `C-h k` — Describes what a given keybinding does
+  - `M-x describe-mode` or <kbd>C-h m</kbd> — Displays documentation for any major mode (uses your current buffer)
+  - `M-x describe-function` or <kbd>C-h f</kbd> — Describes a function
+  - `M-x describe-variable` or <kbd>C-h v</kbd> — Describes a variable
+  - `M-x describe-key` or <kbd>C-h k</kbd> — Describes what a given keybinding does

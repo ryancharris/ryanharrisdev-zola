@@ -14,6 +14,14 @@
     'catppuccin-mocha': 'dark',
     'pencil-light': 'light'
   };
+  var schemeAccents = {
+    'paper': '#2C5A4D',
+    'gruvbox': '#B8BB26',
+    'rose-pine': '#EBBCBA',
+    'monokai': '#A6E22E',
+    'catppuccin-mocha': '#94E2D5',
+    'pencil-light': '#B8056A'
+  };
 
   function storedScheme() {
     try {
@@ -62,18 +70,21 @@
     updateFavicon(theme);
   }
 
-  function updateSyntaxLinks(scheme) {
-    var light = document.getElementById('syntax-light');
-    var dark = document.getElementById('syntax-dark');
-    if (light) light.setAttribute('href', '/syntax/' + scheme + '-light.css');
-    if (dark) dark.setAttribute('href', '/syntax/' + scheme + '-dark.css');
+  function updateTriggerAccent(scheme) {
+    if (themeMenu) themeMenu.style.setProperty('--trigger-accent', schemeAccents[scheme] || '');
   }
 
-  function updateCodeTheme(theme) {
-    var light = document.getElementById('syntax-light');
-    var dark = document.getElementById('syntax-dark');
-    if (light) light.media = theme === 'light' ? 'all' : 'not all';
-    if (dark) dark.media = theme === 'dark' ? 'all' : 'not all';
+  function updateSyntaxLinks(scheme) {
+    var theme = themeForScheme(scheme);
+    var link = document.getElementById('syntax-active');
+    var url = '/syntax/' + scheme + '-' + theme + '.css';
+    if (!link) {
+      link = document.createElement('link');
+      link.id = 'syntax-active';
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    if (link.getAttribute('href') !== url) link.setAttribute('href', url);
   }
 
   function prefersReducedMotion() {
@@ -94,9 +105,9 @@
     root.setAttribute('data-scheme', scheme);
     root.setAttribute('data-theme', theme);
     syncSchemeInputs(scheme);
+    updateTriggerAccent(scheme);
     updateSyntaxLinks(scheme);
     updateUI(theme);
-    updateCodeTheme(theme);
     if (persist) {
       try {
         localStorage.setItem('scheme', scheme);
@@ -149,9 +160,42 @@
     }
   }
 
+  // Scroll-spy: highlight the TOC link for the heading currently in the
+  // reading band (top ~30% of the viewport).
+  function initTocScrollSpy() {
+    if (!('IntersectionObserver' in window)) return;
+    var headings = document.querySelectorAll('.post-content h2[id], .post-content h3[id]');
+    var linksById = {};
+    var links = document.querySelectorAll('.toc a[href^="#"]');
+    for (var i = 0; i < links.length; i += 1) {
+      linksById[links[i].getAttribute('href').slice(1)] = links[i];
+    }
+    if (!headings.length || !links.length) return;
+
+    var visible = {};
+    var observer = new IntersectionObserver(function (entries) {
+      for (var j = 0; j < entries.length; j += 1) {
+        visible[entries[j].target.id] = entries[j].isIntersecting;
+      }
+      var activeId = null;
+      for (var k = 0; k < headings.length; k += 1) {
+        if (visible[headings[k].id]) {
+          activeId = headings[k].id;
+          break;
+        }
+      }
+      for (var id in linksById) {
+        linksById[id].classList.toggle('is-active', id === activeId);
+      }
+    }, { rootMargin: '0px 0px -65% 0px', threshold: 0 });
+
+    for (var m = 0; m < headings.length; m += 1) observer.observe(headings[m]);
+  }
+
   makeScrollableCodeFocusable();
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(makeScrollableCodeFocusable);
   }
   window.addEventListener('resize', makeScrollableCodeFocusable);
+  initTocScrollSpy();
 })();

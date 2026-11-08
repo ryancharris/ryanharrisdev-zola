@@ -17,7 +17,7 @@ I love the Context API because it **allows you to compartmentalize aspects of yo
 
 {{ img(path="assets/images/hooks-usecontext/01-context-drawings.png", alt="With and without Context illustrations", caption="With and without Context.") }}
 
-In [class components](https://codesandbox.io/s/hooksusecontext-class-wdiii), we used a combination of Context.Provider and Context.Consumer tags to set up the relationship described above. However, in function components, the Context.Consumer syntax has been [replaced with the useContext hook](https://codesandbox.io/s/hooksusecontext-hooks-8ss8k).
+In [class components](https://codesandbox.io/s/hooksusecontext-class-wdiii) (sandbox may be unavailable), we used a combination of Context.Provider and Context.Consumer tags to set up the relationship described above. However, in function components, the Context.Consumer syntax has been [replaced with the useContext hook](https://codesandbox.io/s/hooksusecontext-hooks-8ss8k) (sandbox may be unavailable).
 
 For context (no pun intended), the snippets below show these two implementations of the same Context. Despite the syntax difference, the functionality is **identical**.
 

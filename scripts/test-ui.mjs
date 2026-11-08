@@ -163,11 +163,8 @@ try {
           checked: document.querySelector('input[name="scheme"]:checked')?.value,
           modeInputs: document.querySelectorAll('input[name="mode"]').length,
           toggles: document.querySelectorAll('.theme-toggle').length,
-          lightHref: document.getElementById('syntax-light').getAttribute('href'),
-          darkHref: document.getElementById('syntax-dark').getAttribute('href'),
-          lightMedia: document.getElementById('syntax-light').media,
-          darkMedia: document.getElementById('syntax-dark').media,
-          favicon: document.getElementById('favicon-svg').getAttribute('href'),
+          syntaxHref: document.getElementById('syntax-active')?.getAttribute('href') ?? null,
+          favicon: document.getElementById('favicon-svg')?.getAttribute('href') ?? null,
           meta: [...document.querySelectorAll('meta[name="theme-color"]')].map((meta) => meta.content),
           saved: localStorage.getItem('scheme'),
         }));
@@ -178,12 +175,9 @@ try {
         assert.equal(state.checked, slug);
         assert.equal(state.modeInputs, 0);
         assert.equal(state.toggles, 0);
-        assert.equal(state.lightHref, `/syntax/${slug}-light.css`);
-        assert.equal(state.darkHref, `/syntax/${slug}-dark.css`);
-        assert.equal(state.lightMedia, SCHEMES[slug].mode === 'light' ? 'all' : 'not all');
-        assert.equal(state.darkMedia, SCHEMES[slug].mode === 'dark' ? 'all' : 'not all');
+        assert.equal(state.syntaxHref, `/syntax/${slug}-${SCHEMES[slug].mode}.css`);
         assert.equal(state.favicon, SCHEMES[slug].mode === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg');
-        assert.deepEqual(state.meta, [SCHEMES[slug].hex, SCHEMES[slug].hex]);
+        assert.deepEqual(state.meta, [SCHEMES[slug].hex]);
         assert.equal(state.saved, slug);
 
         await context.close();
@@ -310,7 +304,7 @@ try {
   });
 
   for (const os of ['light', 'dark']) {
-    await check(`no-JS fallback follows ${os} OS with the menu hidden`, async () => {
+    await check(`no-JS default matches JS-on first paint on ${os} OS (paper) with menu hidden`, async () => {
       const context = await browser.newContext({
         viewport: { width: 1280, height: 900 },
         colorScheme: os,
@@ -322,7 +316,9 @@ try {
         bg: getComputedStyle(body).backgroundColor,
         menu: getComputedStyle(document.querySelector('.theme-menu')).display,
       }));
-      assert.equal(state.bg, os === 'dark' ? 'rgb(28, 24, 20)' : 'rgb(247, 243, 234)');
+      // No-JS always renders the Paper & Ink light default, matching what JS-on
+      // shows for a first-time visitor (schemes are fixed-mode; OS pref is dead).
+      assert.equal(state.bg, 'rgb(247, 243, 234)');
       assert.equal(state.menu, 'none');
       await context.close();
     });
@@ -395,6 +391,92 @@ try {
       await context.close();
     });
   }
+
+  await check('wordmark never takes the link color (visited state)', async () => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await page.goto(`${base}/`, { waitUntil: 'load' });
+    await settle(page);
+    await page.goto(`${base}/about/`, { waitUntil: 'load' });
+    await settle(page);
+    const state = await page.evaluate(() => {
+      const wordmark = document.querySelector('.site-wordmark');
+      return {
+        wordmark: getComputedStyle(wordmark).color,
+        body: getComputedStyle(document.body).color,
+      };
+    });
+    assert.equal(state.wordmark, state.body, `wordmark ${state.wordmark} != text ${state.body}`);
+    await context.close();
+  });
+
+  await check('structured posts get a TOC (2 top-level headings is enough)', async () => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    for (const url of ['/mastering-emacs/', '/planning-my-digital-garden/', '/hooks-useref/']) {
+      await page.goto(`${base}${url}`, { waitUntil: 'load' });
+      await settle(page);
+      assert.ok(await page.locator('.toc').count(), `missing TOC on ${url}`);
+    }
+    await context.close();
+  });
+
+  await check('post navigation skips dateless pages like /about/', async () => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await page.goto(`${base}/planning-my-digital-garden/`, { waitUntil: 'load' });
+    await settle(page);
+    const next = await page.evaluate(() => document.querySelector('.post-nav-next')?.getAttribute('href') || null);
+    assert.notEqual(next, '/about/', 'about leaked into post-nav');
+    await context.close();
+  });
+
+  await check('gruvbox titles use the authentic orange', async () => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await page.addInitScript(() => localStorage.setItem('scheme', 'gruvbox'));
+    await page.goto(`${base}/`, { waitUntil: 'load' });
+    await settle(page);
+    const color = await page.evaluate(() => getComputedStyle(document.querySelector('.post-item-title a')).color);
+    assert.equal(color, 'rgb(254, 128, 25)', color);
+    await context.close();
+  });
+
+  await check('meta link hovers keep AA contrast', async () => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await page.goto(`${base}/hooks-useref/`, { waitUntil: 'load' });
+    await settle(page);
+    const byline = page.locator('.post-byline a').first();
+    await byline.hover();
+    const state = await page.evaluate(() => {
+      const a = document.querySelector('.post-byline a');
+      const cs = getComputedStyle(a);
+      return { bg: cs.backgroundColor, color: cs.color };
+    });
+    assert.ok(state.bg === 'rgba(0, 0, 0, 0)' || state.bg === 'transparent', `byline hover bg ${state.bg}`);
+    await context.close();
+  });
+
+  await check('tag pages are not marked as the writing section', async () => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await page.goto(`${base}/tags/react/`, { waitUntil: 'load' });
+    await settle(page);
+    const current = await page.evaluate(() => [...document.querySelectorAll('.nav-actions a[aria-current]')].map((a) => a.textContent.trim()));
+    assert.deepEqual(current, [], JSON.stringify(current));
+    await context.close();
+  });
+
+  await check('mobile wordmark has an accessible name', async () => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await page.goto(`${base}/about/`, { waitUntil: 'load' });
+    await settle(page);
+    const label = await page.evaluate(() => document.querySelector('.site-wordmark').getAttribute('aria-label'));
+    assert.ok(label && label.length > 3, String(label));
+    await context.close();
+  });
 } finally {
   await browser.close();
   server.close();

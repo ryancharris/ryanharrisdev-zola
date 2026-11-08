@@ -106,6 +106,48 @@ function adjustTokenContrast(css, background) {
   });
 }
 
+// Per-scheme post-processing: retint GitHub's generic high-contrast palettes
+// onto the scheme's own colors (applied before the final contrast check).
+const retints = {
+  'paper-light': {
+    '#0E1116': '#211E19', // base text
+    '#66707B': '#756957', // comments / line numbers
+    '#68727E': '#756957',
+    '#032563': '#2C5A4D', // strings
+    '#023B95': '#575043', // constants / entities / support
+    '#702C00': '#6B4A2F', // variables / entity names
+    '#A0111F': '#8A2E22', // keywords / storage / invalid
+    '#6E011A': '#8A2E22',
+    '#024C1A': '#2C5A4D', // markup quote
+    '#FFFFFF': '#FCFAF4', // code background
+    '#E7ECF0': '#EDE7DA', // highlight background
+  },
+  'paper-dark': {
+    '#F0F3F6': '#EDE4D3', // base text
+    '#BDC4CC': '#8A7E6A', // comments
+    '#9EA7B3': '#756957', // line numbers
+    '#ADDCFF': '#93D2B7', // strings
+    '#72F088': '#93D2B7', // markup quote / inserted
+    '#91CBFF': '#BBAE98', // constants / entities / support
+    '#FF9492': '#EDAA80', // keywords / storage
+    '#FFB757': '#E0C08F', // variables / entity names / changed
+    '#FFB1AF': '#EDAA80', // invalid / deleted
+    '#0A0C10': '#120F0C', // code background
+  },
+};
+
+function retint(css, map) {
+  return css.replace(/#[0-9A-Fa-f]{6}\b/g, (hex) => map[hex.toUpperCase()] || hex);
+}
+
+// Rosé Pine italicizes every plain variable, which no other scheme does.
+function normalizeTokenStyle(slug, css) {
+  if (slug === 'rose-pine') {
+    css = css.replace(/\.z-variable \{ (color: #[0-9a-fA-F]{6};) font-style: italic; \}/g, '.z-variable { $1 }');
+  }
+  return css;
+}
+
 const schemes = [
   { slug: 'paper', light: 'github-light-high-contrast', dark: 'github-dark-high-contrast' },
   { slug: 'gruvbox', light: 'gruvbox-light-hard', dark: 'gruvbox-dark-hard' },
@@ -139,7 +181,10 @@ for (const scheme of schemes) {
     }
     const target = path.join(output, `${scheme.slug}-${mode}.css`);
     const background = codeBackgrounds[`${scheme.slug}-${mode}`];
-    const css = fs.readFileSync(source, 'utf8');
+    let css = fs.readFileSync(source, 'utf8');
+    const retintMap = retints[`${scheme.slug}-${mode}`];
+    if (retintMap) css = retint(css, retintMap);
+    css = normalizeTokenStyle(scheme.slug, css);
     fs.writeFileSync(target, adjustTokenContrast(css, background));
   }
   console.log(`Generated syntax CSS for ${scheme.slug}`);

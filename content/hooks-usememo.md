@@ -68,6 +68,7 @@ _Note: If you're unfamiliar with <a href="/hooks-useeffect/">useEffect</a> or <a
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/hooksusememo-kfgvu" target="_blank" rel="noopener noreferrer">hooks/useMemo on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Here, our App component does three things:
 

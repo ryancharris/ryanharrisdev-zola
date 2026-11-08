@@ -27,6 +27,7 @@ First things first, let's see what useDebugValue looks like in action:
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/hooksusedebugvalue-ccnju" target="_blank" rel="noopener noreferrer">hooks/useDebugValue on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 In the snippet above, we've defined our own custom hook, useDate (more about these in an upcoming article). Currently, the hook fires once on App's initial render -- due to the empty dependency array -- and displays it on the page.
 

@@ -47,6 +47,7 @@ In the sandbox below, I've taken the code from our <a href="/hooks-usememo/">use
   <span class="embed-callout-label">Interactive demo</span>
   <a href="https://codesandbox.io/s/hooksusecallback-89w2p" target="_blank" rel="noopener noreferrer">hooks/useCallback on CodeSandbox <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
 </div>
+  <p class="embed-callout-note">If the demo is unavailable, the full code is in this post.</p>
 
 Like with useMemo, our useCallback hook is returning a memoized value. However, in this case, it is a memoized version of the anonymous function passed to it, **not** the function's return value.
 

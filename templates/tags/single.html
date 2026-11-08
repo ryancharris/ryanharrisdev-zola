@@ -103,7 +103,7 @@
       <div class="post-item-heading">
         <h2 class="post-item-title p-name"><a class="u-url" href="{{ page.path | safe }}">{{ page.title }}</a></h2>
         {% if page.date %}
-        <time class="post-date dt-published" datetime="{{ page.date }}">{{ page.date | date(format="%b %Y") }}</time>
+        <time class="post-date dt-published" datetime="{{ page.date }}">{{ page.date | date(format="%b %-d, %Y") }}</time>
         {% endif %}
       </div>
       {% if page.description %}<p class="post-item-description p-summary">{{ page.description }}</p>{% endif %}
