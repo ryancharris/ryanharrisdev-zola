@@ -9,4 +9,5 @@ if [ -z "${ZOLA_BIN}" ] || [ ! -x "${ZOLA_BIN}" ]; then
     exit 1
 fi
 
+rm -f static/giallo-light.css static/giallo-dark.css
 exec "${ZOLA_BIN}" serve "$@"
