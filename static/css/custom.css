@@ -43,7 +43,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
+    :root:not([data-scheme]) {
         --bg: #1C1814;
         --bg-light: #2A241D;
         --text: #EDE4D3;
