@@ -61,6 +61,15 @@
 <article class="page">
   <h1>{{ page.title }}</h1>
   <div class="page-content">
+    {% set portrait = resize_image(path="assets/images/about/ryan-harris.png", width=320, height=320, op="fit", format="webp", quality=85) %}
+    <figure class="about-portrait">
+      <img
+        src="{{ portrait.url | replace(from=config.base_url, to='') | safe }}"
+        width="160"
+        height="160"
+        alt="Portrait of Ryan Harris"
+        decoding="async">
+    </figure>
     {{ page.content | safe }}
   </div>
 </article>
