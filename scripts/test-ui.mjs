@@ -283,7 +283,7 @@ try {
     await context.close();
   });
 
-  await check('h1 has no offset marker and sits on the body axis', async () => {
+  await check('h1 has no offset marker and the byline sits on the body axis', async () => {
     const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: 'dark' });
     const page = await context.newPage();
     await page.addInitScript(() => localStorage.setItem('scheme', 'gruvbox'));
@@ -291,15 +291,18 @@ try {
     await settle(page);
     const state = await page.evaluate(() => {
       const heading = document.querySelector('h1');
+      const avatar = document.querySelector('.home-avatar');
       const description = document.querySelector('.site-description');
       return {
         marker: getComputedStyle(heading, '::before').content,
+        avatarLeft: Math.round(avatar.getBoundingClientRect().left),
         headingLeft: Math.round(heading.getBoundingClientRect().left),
         descriptionLeft: Math.round(description.getBoundingClientRect().left),
       };
     });
     assert.equal(state.marker, 'none');
-    assert.equal(state.headingLeft, state.descriptionLeft);
+    assert.equal(state.avatarLeft, state.descriptionLeft);
+    assert.ok(state.headingLeft > state.avatarLeft, 'heading text follows the avatar');
     await context.close();
   });
 

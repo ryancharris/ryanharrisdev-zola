@@ -58,7 +58,17 @@
 
 {% block content %}
 <section class="content-section h-feed" aria-labelledby="writing-title">
-  <h1 id="writing-title" class="p-name">{{ config.title }}</h1>
+  {% set byline_avatar = resize_image(path="assets/images/about/ryan-harris.png", width=80, height=80, op="fit", format="webp", quality=85) %}
+  <div class="home-byline">
+    <img
+      class="home-avatar"
+      src="{{ byline_avatar.url | replace(from=config.base_url, to='') | safe }}"
+      width="40"
+      height="40"
+      alt=""
+      decoding="async">
+    <h1 id="writing-title" class="p-name">{{ config.title }}</h1>
+  </div>
   <p class="site-description p-summary">{{ config.description }}</p>
 
   {% set_global current_year = "" %}

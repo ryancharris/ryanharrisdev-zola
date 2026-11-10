@@ -602,6 +602,24 @@ h6::before {
 }
 
 /* Home / listings ------------------------------------------------------- */
+.home-byline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.home-byline h1 {
+    margin: 0.5em 0;
+}
+
+.home-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex: none;
+}
+
 .site-description {
     max-width: 38rem;
     margin: -0.5rem 0 2.5rem;
@@ -1406,4 +1424,43 @@ footer > hr {
 [data-theme="dark"] .toc,
 [data-theme="dark"] .embed-callout {
     background: var(--bg);
+}
+
+.page-content {
+    display: flow-root;
+}
+
+.page-content .about-portrait {
+    float: left;
+    margin: 0 1.5rem 0.75rem 0;
+}
+
+/* Top of the portrait and the first line of text share one edge. */
+.page-content .about-portrait + p {
+    margin-top: 0;
+}
+
+/* Text wraps beside the portrait only for the first paragraph;
+   everything after it runs full width below the image. */
+.page-content > p:nth-of-type(2) {
+    clear: left;
+}
+
+@media only screen and (max-width: 720px) {
+    .page-content .about-portrait {
+        float: none;
+        width: fit-content;
+        margin: 1.5rem auto;
+    }
+
+    .page-content > p:nth-of-type(2) {
+        clear: none;
+    }
+}
+
+.page-content .about-portrait img {
+    width: 10rem;
+    height: auto;
+    max-width: 100%;
+    border-radius: 50%;
 }
